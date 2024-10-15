@@ -53,7 +53,7 @@ class SumoEnv(gym.Env):
 		sumoBinary = "sumo"
 		if self.render_mode=="human":
 			sumoBinary = "sumo-gui"
-		sumoCmd = [sumoBinary, "-c", "sumo_networks/test.sumocfg","--lateral-resolution","3.8",
+		sumoCmd = [sumoBinary, "-c", "sumo_networks_mod/test.sumocfg","--lateral-resolution","3.8",
 		 "--start", "true", "--quit-on-end", "true","--no-warnings","True", "--no-step-log", "True"]
 		traci.start(sumoCmd)
 
