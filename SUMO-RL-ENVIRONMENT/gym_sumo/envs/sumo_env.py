@@ -1,10 +1,12 @@
 import os
 import gym
 from gym import spaces
-import pygame
+#import pygame
 import numpy as np 
 import sys
 from gym_sumo.envs import env_config as c
+
+#要使用该库，<SUMO_HOME>/tools 目录必须位于python加载路径上。 通常如下：
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'],'tools')
     sys.path.append(tools)
