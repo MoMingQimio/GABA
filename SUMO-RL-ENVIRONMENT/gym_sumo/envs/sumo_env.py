@@ -17,16 +17,42 @@ import sumolib
 ## add each lane density and mean_speed ##
 
 def creat_observation():
-	state_space_list = ['ego_speed','ego_acc','ego_dis_to_leader','leader_speed','leader_acc','dis_to_left_leader','left_leader_speed','left_leader_acc',
-	'dis_to_right_leader','right_leader_speed','right_leader_acc']
+	state_space_list = ['ego_speed', 'ego_acc', 'ego_heading_angle',
+						'ego_dis_to_leader', 'leader_speed', 'leader_acc',
+						'ego_dis_to_follower', 'follower_speed', 'follower_acc',
+						'dis_to_left_leader', 'left_leader_speed', 'left_leader_acc',
+						'dis_to_right_leader', 'right_leader_speed', 'right_leader_acc',
+						'dis_to_left_follower', 'left_follower_speed', 'left_follower_acc',
+						'dis_to_right_follower', 'right_follower_speed', 'right_follower_acc'
+						]
 	for i in range(c.NUM_OF_LANES):
 		state_space_list.append("lane_"+str(i)+"_mean_speed")
 		state_space_list.append("lane_"+str(i)+"_density")
 	#print(state_space_list)
-	state_space_low = np.array([c.RL_MIN_SPEED_LIMIT,-c.RL_DCE_RANGE,-c.RL_SENSING_RADIUS,c.RL_MIN_SPEED_LIMIT,-c.RL_DCE_RANGE,-c.RL_SENSING_RADIUS,c.RL_MIN_SPEED_LIMIT,-c.RL_DCE_RANGE,-c.RL_SENSING_RADIUS,c.RL_MIN_SPEED_LIMIT,-c.RL_DCE_RANGE
-		,c.RL_MIN_SPEED_LIMIT,c.MIN_LANE_DENSITY,c.RL_MIN_SPEED_LIMIT,c.MIN_LANE_DENSITY,c.RL_MIN_SPEED_LIMIT,c.MIN_LANE_DENSITY,c.RL_MIN_SPEED_LIMIT,c.MIN_LANE_DENSITY])
-	state_space_high = np.array([c.RL_MAX_SPEED_LIMIT,c.RL_ACC_RANGE,c.RL_SENSING_RADIUS,c.RL_MAX_SPEED_LIMIT,c.RL_ACC_RANGE,c.RL_SENSING_RADIUS,c.RL_MAX_SPEED_LIMIT,c.RL_ACC_RANGE,c.RL_SENSING_RADIUS,c.RL_MAX_SPEED_LIMIT,c.RL_ACC_RANGE
-		,c.RL_MAX_SPEED_LIMIT,c.MAX_LANE_DENSITY,c.RL_MAX_SPEED_LIMIT,c.MAX_LANE_DENSITY,c.RL_MAX_SPEED_LIMIT,c.MAX_LANE_DENSITY,c.RL_MAX_SPEED_LIMIT,c.MAX_LANE_DENSITY])
+	state_space_low = np.array([c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE, -c.HEADING_ANGLE,
+								-c.RL_SENSING_RADIUS, c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE,
+								-c.RL_SENSING_RADIUS, c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE,
+								-c.RL_SENSING_RADIUS, c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE,
+								-c.RL_SENSING_RADIUS, c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE,
+								-c.RL_SENSING_RADIUS, c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE,
+								-c.RL_SENSING_RADIUS, c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE,
+								c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY,
+								c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY,
+								c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY
+								])
+
+	state_space_high = np.array([c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE, c.HEADING_ANGLE,
+								 c.RL_SENSING_RADIUS, c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE,
+								 c.RL_SENSING_RADIUS, c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE,
+								 c.RL_SENSING_RADIUS, c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE,
+								 c.RL_SENSING_RADIUS, c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE,
+								 c.RL_SENSING_RADIUS, c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE,
+								 c.RL_SENSING_RADIUS, c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE,
+								 c.RL_MAX_SPEED_LIMIT, c.MAX_LANE_DENSITY,
+								 c.RL_MAX_SPEED_LIMIT, c.MAX_LANE_DENSITY,
+								 c.RL_MAX_SPEED_LIMIT, c.MAX_LANE_DENSITY
+								 ])
+
 
 	obs = spaces.Box(low=state_space_low,high=state_space_high,dtype=np.float64)
 	return obs
@@ -126,15 +152,20 @@ class SumoEnv(gym.Env):
 		if self._isEgoRunning() == False:
 			return
 		current_lane_index = traci.vehicle.getLaneIndex(self.ego)
+
 		if action == 0:
 			# do nothing: stay in the current lane
 			pass
 		elif action == 1:
+
 			target_lane_index = min(current_lane_index+1, self.num_of_lanes-1)
 			traci.vehicle.changeLane(self.ego, target_lane_index, 0.1)
+
 		elif action == 2:
+
 			target_lane_index = max(current_lane_index-1, 0)
 			traci.vehicle.changeLane(self.ego, target_lane_index, 0.1)
+
 		elif action == 3:
 			traci.vehicle.setAcceleration(self.ego,0.2, 0.1)
 		elif action == 4:
