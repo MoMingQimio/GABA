@@ -4,6 +4,9 @@ from gym import spaces
 #import pygame
 import numpy as np 
 import sys
+
+from sumo.tools.purgatory.binary2plain import followers
+
 from gym_sumo.envs import env_config as c
 
 #要使用该库，<SUMO_HOME>/tools 目录必须位于python加载路径上。 通常如下：
@@ -117,6 +120,66 @@ class SumoEnv(gym.Env):
 
 	def _get_rand_obs(self):
 		return np.array(self.observation_space.sample())
+
+	def get_observation(self,veh_id):
+		if self._isEgoRunning()==False:
+			return self._get_rand_obs()
+		speed = traci.vehicle.getSpeed(veh_id)
+		accleration = traci.vehicle.getAccel(veh_id)
+		heading_angle = (traci.vehicle.getAngle(veh_id) -90.0)/c.HEADING_ANGLE
+		leader = traci.vehicle.getLeader(veh_id)
+		if leader is not None:
+			leader_id, l_distance = leader
+		else:
+			leader_id, l_distance = "", -1
+		leader_speed = traci.vehicle.getSpeed(leader_id) if leader_id != "" else 0.01
+		leader_acc = traci.vehicle.getAccel(leader_id) if leader_id != "" else -2.6
+		left_leader, left_l_dis = self._getCloseLeader(traci.vehicle.getLeftLeaders(veh_id, blockingOnly=True))
+		left_l_speed = traci.vehicle.getSpeed(left_leader) if left_leader != "" else 0.01
+		left_l_acc = traci.vehicle.getAccel(left_leader) if left_leader != "" else -2.6
+
+		right_leader, right_l_dis = self._getCloseLeader(traci.vehicle.getRightLeaders(veh_id, blockingOnly=True))
+		right_l_speed = traci.vehicle.getSpeed(right_leader) if right_leader != "" else 0.01
+		right_l_acc = traci.vehicle.getAccel(right_leader) if right_leader != "" else -2.6
+
+		follower = traci.vehicle.getFollower(veh_id)
+		if follower is not None:
+			follower_id, f_distance = follower
+		else:
+			follower_id, f_distance = "", -1
+		follower_speed = traci.vehicle.getSpeed(follower_id) if follower_id != "" else 0.01
+		follower_acc = traci.vehicle.getAccel(follower_id) if follower_id != "" else -2.6
+
+		left_follower, left_f_dis = self._getCloseLeader(traci.vehicle.getLeftFollowers(veh_id, blockingOnly=True))
+		left_follower_speed = traci.vehicle.getSpeed(left_follower) if left_follower != "" else 0.01
+		left_follower_acc = traci.vehicle.getAccel(left_follower) if left_follower != "" else -2.6
+
+		right_follower, right_f_dis = self._getCloseLeader(traci.vehicle.getRightFollowers(veh_id, blockingOnly=True))
+		right_follower_speed = traci.vehicle.getSpeed(right_follower) if right_follower != "" else 0.01
+		right_follower_acc = traci.vehicle.getAccel(right_follower) if right_follower != "" else -2.6
+
+
+
+		states = [speed, accleration,heading_angle,
+				  l_distance, leader_speed, leader_acc,
+				  left_l_dis, left_l_speed, left_l_acc,
+				  right_l_dis, right_l_speed, right_l_acc,
+				  f_distance, follower_speed, follower_acc,
+				  left_f_dis, left_follower_speed, left_follower_acc,
+			      right_f_dis, right_follower_speed, right_follower_acc]
+
+		density, mean_speed = self._getLaneDensity()
+		for i in range(self.num_of_lanes):
+			states.append(density[i])
+			states.append(mean_speed[i])
+		observations = np.array(states)
+		# surounding vehicle id list
+		surrounding_vehicles =[leader_id, left_leader, right_leader, follower_id, left_follower, right_follower]
+
+		return observations , surrounding_vehicles
+
+
+
 	def _get_observation(self):
 		if self._isEgoRunning()==False:
 			return self._get_rand_obs()
@@ -207,6 +270,25 @@ class SumoEnv(gym.Env):
 		if done == False and traci.simulation.getTime() > 360:
 			done = True
 		return (observation, reward, done, {})
+
+	def isVehRunninng(self, veh_id):
+		"""
+		    Check if a vehicle is running on any of the specified edges.
+
+		    Parameters:
+		    self (object): The instance of the class.
+		    veh_id (str): The ID of the vehicle to check.
+
+		    Returns:
+		    bool: True if the vehicle is running on any of the edges E0, E1, or E2, False otherwise.
+		"""
+		v_ids_e0 = traci.edge.getLastStepVehicleIDs("E0")
+		v_ids_e1 = traci.edge.getLastStepVehicleIDs("E1")
+		v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
+		if veh_id in v_ids_e0 or veh_id in v_ids_e1 or veh_id in v_ids_e2:
+			return True
+		return False
+
 
 
 	def _isEgoRunning(self):
