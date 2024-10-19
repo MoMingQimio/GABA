@@ -1,5 +1,5 @@
 import numpy as np
-import env_config as c
+from gym_sumo.envs import env_config as c
 
 import math
 from typing import Dict, Tuple
@@ -43,7 +43,7 @@ class DriverModel:
         delta_v = v - surrounding_v
         s_star = self.s_0 + max(0, self.T * v + (v * delta_v) / (2 * math.sqrt(self.a * self.b)))
 
-        return (self.a * (1 - math.pow(v/self.v_0, self.delta) - math.pow(s_star/s, 2)))
+        return self.a * (1 - math.pow(v/self.v_0, self.delta) - math.pow(s_star/s, 2))
 
 
     def calc_disadvantage(self, v: float, new_surrounding_v: float, new_surrounding_dist: float, old_surrounding_v: float, old_surrounding_dist: float) -> Tuple[float, float]:

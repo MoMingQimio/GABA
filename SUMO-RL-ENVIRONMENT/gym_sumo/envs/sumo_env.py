@@ -5,10 +5,10 @@ from gym import spaces
 import numpy as np 
 import sys
 
-from sumo.tools.purgatory.binary2plain import followers
+
 
 from gym_sumo.envs import env_config as c
-
+from gym_sumo.envs.RuleBasedDriverModel import DriverModel as rb
 #要使用该库，<SUMO_HOME>/tools 目录必须位于python加载路径上。 通常如下：
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'],'tools')
@@ -58,7 +58,7 @@ def creat_observation():
 								 c.RL_MAX_SPEED_LIMIT, c.MAX_LANE_DENSITY
 								 ])
 
-
+	#obs = spaces.Tuple([spaces.Discrete(c.NUM_OF_LANES),spaces.Box(low=state_space_low,high=state_space_high,dtype=np.float64)])不改了，不太对
 	obs = spaces.Box(low=state_space_low,high=state_space_high,dtype=np.float64)
 	return obs
 
@@ -77,6 +77,7 @@ class SumoEnv(gym.Env):
 		self.is_collided = False
 		assert render_mode is None or render_mode in self.metadata['render_modes']
 		self.render_mode =render_mode
+		self.rbm = rb()
 		print(self.render_mode)
 
 	def _getInfo(self):
@@ -95,9 +96,15 @@ class SumoEnv(gym.Env):
 		self.is_collided = False
 		self._startSumo()
 		self._warmup()
+		#
+		index = np.array(np.random.randint(0, self.num_of_lanes))
 		obs = np.array(self.observation_space.sample())
+
+		#将index和obs连接在一起
+		obs =np.insert(obs, 0, index)
+
 		info = self._getInfo()
-		return obs, info
+		return obs, ["", "", "", "", "", ""], info
 
 	def _getCloseLeader(self, leaders):
 		if len(leaders) <= 0:
@@ -123,6 +130,7 @@ class SumoEnv(gym.Env):
 	def _get_rand_obs(self):
 		index = np.array(np.random.randint(0, self.num_of_lanes))
 		obs = np.concatenate(index,np.array(self.observation_space.sample()))
+		#obs = np.array(self.observation_space.sample())
 		return obs, ["", "", "", "", "", ""]
 
 	def get_observation(self,veh_id):
@@ -273,7 +281,8 @@ class SumoEnv(gym.Env):
 		self._applyAction(action)
 		traci.simulationStep()
 		reward = self._reward(action)
-		observation = self._get_observation()
+		#observation = self._get_observation()
+		observation, surrounding_vehicles = self.get_observation(self.ego)
 		done = self.is_collided or (self._isEgoRunning()==False)
 		if done == False and traci.simulation.getTime() > 360:
 			done = True
@@ -326,4 +335,11 @@ class SumoEnv(gym.Env):
 		if self.render_mode == "human":
 			x, y = traci.vehicle.getPosition('av_0')
 			traci.gui.setOffset("View #0",x-23.0,108.49)
+
+
+
+	def _applyBVaction(self):
+		pass
+
+
 		
