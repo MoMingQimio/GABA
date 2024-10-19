@@ -119,9 +119,9 @@ class DriverModel:
         return change_incentive and safety_criterion
 
 
-    def get_action(self, veh_id, obs) -> Tuple[str, bool]:
+    def get_action(self, obs) -> Tuple[str, bool]:
 
-        state_space_list = ['ego_speed', 'ego_acc', 'ego_heading_angle',
+        state_space_list = ['lane_index','ego_speed', 'ego_acc', 'ego_heading_angle',
                             'ego_dis_to_leader', 'leader_speed', 'leader_acc',
                             'ego_dis_to_follower', 'follower_speed', 'follower_acc',
                             'dis_to_left_leader', 'left_leader_speed', 'left_leader_acc',
@@ -148,10 +148,29 @@ class DriverModel:
 
 
 
+        #left lane change
+        left_disadvantage, new_back_accel_left = self.calc_disadvantage(state["ego_speed"], state["left_leader_speed"], state["dis_to_left_leader"], state["leader_speed"], state["ego_dis_to_leader"])
+        left_incentive = self.calc_incentive('left', state["ego_speed"], state["left_leader_speed"], state["dis_to_left_leader"], state["leader_speed"], state["ego_dis_to_leader"], left_disadvantage, new_back_accel_left, False)
+        if state["lane_index"] == 0:
+            left_incentive = False
+        #right lane change
+        right_disadvantage, new_back_accel_right = self.calc_disadvantage(state["ego_speed"], state["right_leader_speed"], state["dis_to_right_leader"], state["leader_speed"], state["ego_dis_to_leader"])
+        right_incentive = self.calc_incentive('right', state["ego_speed"], state["right_leader_speed"], state["dis_to_right_leader"], state["leader_speed"], state["ego_dis_to_leader"], right_disadvantage, new_back_accel_right, False)
+        if state["lane_index"] == c.NUM_OF_LANES - 1:
+            right_incentive = False
+
+        if left_incentive:
+            action_index = len(action_space) + 1
+        elif right_incentive:
+            action_index = len(action_space) + 2
+        else:
+            action_index = np.where(action_space == discrete_acc)[0][0]
+
+        return action_index
 
 
 
-        action_index = np.where(action_space == discrete_acc)[0][0]
+
 
 
 

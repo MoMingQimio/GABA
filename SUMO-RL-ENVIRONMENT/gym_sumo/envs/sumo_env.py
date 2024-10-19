@@ -121,18 +121,20 @@ class SumoEnv(gym.Env):
 		return density, mean_speed
 
 	def _get_rand_obs(self):
-		return np.array(self.observation_space.sample()) , ["", "", "", "", "", ""]
+		index = np.array(np.random.randint(0, self.num_of_lanes))
+		obs = np.concatenate(index,np.array(self.observation_space.sample()))
+		return obs, ["", "", "", "", "", ""]
 
 	def get_observation(self,veh_id):
 		if not self._isEgoRunning():
 			return self._get_rand_obs()
-		x = traci.vehicle.getPosition(veh_id)[0]
-		y = traci.vehicle.getPosition(veh_id)[1]
-
-
+		#Basic Information
+		lane_index = traci.vehicle.getLaneIndex(veh_id)
 		speed = traci.vehicle.getSpeed(veh_id)
 		acceleration = traci.vehicle.getAccel(veh_id)
 		heading_angle = (traci.vehicle.getAngle(veh_id) -90.0)/c.HEADING_ANGLE
+
+
 		leader = traci.vehicle.getLeader(veh_id)
 		if leader is not None:
 			leader_id, l_distance = leader
@@ -166,7 +168,7 @@ class SumoEnv(gym.Env):
 
 
 
-		states = [x,y,speed, acceleration,heading_angle,
+		states = [lane_index, speed, acceleration,heading_angle,
 				  l_distance, leader_speed, leader_acc,
 				  left_l_dis, left_l_speed, left_l_acc,
 				  right_l_dis, right_l_speed, right_l_acc,
