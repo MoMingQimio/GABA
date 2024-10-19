@@ -41,6 +41,7 @@ def creat_observation():
 								-c.RL_SENSING_RADIUS, c.RL_MIN_SPEED_LIMIT, -c.RL_DCE_RANGE,
 								c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY,
 								c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY,
+								c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY,
 								c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY
 								])
 
@@ -53,6 +54,7 @@ def creat_observation():
 								 c.RL_SENSING_RADIUS, c.RL_MAX_SPEED_LIMIT, c.RL_ACC_RANGE,
 								 c.RL_MAX_SPEED_LIMIT, c.MAX_LANE_DENSITY,
 								 c.RL_MAX_SPEED_LIMIT, c.MAX_LANE_DENSITY,
+								 c.RL_MIN_SPEED_LIMIT, c.MIN_LANE_DENSITY,
 								 c.RL_MAX_SPEED_LIMIT, c.MAX_LANE_DENSITY
 								 ])
 
@@ -119,13 +121,17 @@ class SumoEnv(gym.Env):
 		return density, mean_speed
 
 	def _get_rand_obs(self):
-		return np.array(self.observation_space.sample())
+		return np.array(self.observation_space.sample()) , ["", "", "", "", "", ""]
 
 	def get_observation(self,veh_id):
-		if self._isEgoRunning()==False:
+		if not self._isEgoRunning():
 			return self._get_rand_obs()
+		x = traci.vehicle.getPosition(veh_id)[0]
+		y = traci.vehicle.getPosition(veh_id)[1]
+
+
 		speed = traci.vehicle.getSpeed(veh_id)
-		accleration = traci.vehicle.getAccel(veh_id)
+		acceleration = traci.vehicle.getAccel(veh_id)
 		heading_angle = (traci.vehicle.getAngle(veh_id) -90.0)/c.HEADING_ANGLE
 		leader = traci.vehicle.getLeader(veh_id)
 		if leader is not None:
@@ -160,7 +166,7 @@ class SumoEnv(gym.Env):
 
 
 
-		states = [speed, accleration,heading_angle,
+		states = [x,y,speed, acceleration,heading_angle,
 				  l_distance, leader_speed, leader_acc,
 				  left_l_dis, left_l_speed, left_l_acc,
 				  right_l_dis, right_l_speed, right_l_acc,
@@ -173,7 +179,7 @@ class SumoEnv(gym.Env):
 			states.append(density[i])
 			states.append(mean_speed[i])
 		observations = np.array(states)
-		# surounding vehicle id list
+		# surrounding vehicle id list
 		surrounding_vehicles =[leader_id, left_leader, right_leader, follower_id, left_follower, right_follower]
 
 		return observations , surrounding_vehicles
@@ -181,11 +187,11 @@ class SumoEnv(gym.Env):
 
 
 	def _get_observation(self):
-		if self._isEgoRunning()==False:
+		if not self._isEgoRunning():
 			return self._get_rand_obs()
 
 		ego_speed = traci.vehicle.getSpeed(self.ego)
-		ego_accleration = traci.vehicle.getAccel(self.ego)
+		ego_acceleration = traci.vehicle.getAccel(self.ego)
 		ego_leader = traci.vehicle.getLeader(self.ego)
 		if ego_leader is not None:
 			leader_id, distance = ego_leader
@@ -201,7 +207,7 @@ class SumoEnv(gym.Env):
 		right_l_speed = traci.vehicle.getSpeed(right_leader) if right_leader != "" else 0.01
 		right_l_acc = traci.vehicle.getAccel(right_leader) if right_leader != "" else -2.6
 
-		states = [ego_speed, ego_accleration, distance, l_speed, l_acc, left_l_dis, left_l_speed, left_l_acc,
+		states = [ego_speed, ego_acceleration, distance, l_speed, l_acc, left_l_dis, left_l_speed, left_l_acc,
 			right_l_dis, right_l_speed, right_l_acc]
 		density, mean_speed = self._getLaneDensity()
 		for i in range(self.num_of_lanes):
