@@ -87,8 +87,17 @@ class SumoEnv(gym.Env):
 		sumoBinary = "sumo"
 		if self.render_mode=="human":
 			sumoBinary = "sumo-gui"
-		sumoCmd = [sumoBinary, "-c", "sumo_networks_mod/test.sumocfg","--lateral-resolution","3.8",
-		 "--start", "true", "--quit-on-end", "true","--no-warnings","True", "--no-step-log", "True"]
+		sumoCmd = [sumoBinary,
+				   "-c", "sumo_networks_mod/test.sumocfg",
+				   "--lateral-resolution","3.8",
+				   "--start", "true",
+				   "--quit-on-end", "true",
+				   "--no-warnings","True",
+				   "--no-step-log", "True",
+				   "--collision.mingap-factor", "0.0",
+				   "--collision.action", "warn",
+				   ]
+
 		traci.start(sumoCmd)
 
 	def reset(self, seed=None, options=None):
@@ -104,7 +113,7 @@ class SumoEnv(gym.Env):
 		obs =np.insert(obs, 0, index)
 
 		info = self._getInfo()
-		return obs, ["", "", "", "", "", ""], info
+		return obs, info
 
 	def _getCloseLeader(self, leaders):
 		if len(leaders) <= 0:
@@ -129,12 +138,13 @@ class SumoEnv(gym.Env):
 
 	def _get_rand_obs(self):
 		index = np.array(np.random.randint(0, self.num_of_lanes))
-		obs = np.concatenate(index,np.array(self.observation_space.sample()))
+		obs = np.array(self.observation_space.sample())
+		obs = np.insert(obs, 0, index)
 		#obs = np.array(self.observation_space.sample())
-		return obs, ["", "", "", "", "", ""]
+		return obs
 
 	def get_observation(self,veh_id):
-		if not self._isEgoRunning():
+		if not self._isVehRunning(veh_id):
 			return self._get_rand_obs()
 		#Basic Information
 		lane_index = traci.vehicle.getLaneIndex(veh_id)
@@ -278,12 +288,14 @@ class SumoEnv(gym.Env):
 
 
 	def step(self, action):
+		#print(action)
 		self._applyAction(action)
 		traci.simulationStep()
 		reward = self._reward(action)
 		#observation = self._get_observation()
 		observation, surrounding_vehicles = self.get_observation(self.ego)
 		done = self.is_collided or (self._isEgoRunning()==False)
+
 		if done == False and traci.simulation.getTime() > 360:
 			done = True
 		return (observation, reward, done, {})

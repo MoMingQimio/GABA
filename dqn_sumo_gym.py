@@ -90,6 +90,7 @@ class Agent(object):
 		self.lr = 1e-5
 		self.n_actions = 5
 		self.n_observations = 30
+		#self.n_observations = 19
 		self.writter = SummaryWriter()
 		self.episodic_loss = 0
 
@@ -182,8 +183,8 @@ class Agent(object):
 
 	def train_pole(self, env):
 		for e in range(5000):
-			#state, info = env.reset()
-			state, _ , info = env.reset()
+			state, info = env.reset()
+			#state, _ , info = env.reset()
 			print(state)
 			r_r = 0
 			state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
@@ -216,8 +217,8 @@ class Agent(object):
 
 	def train_RL(self, env):
 		for e in range(5000):
-			#state, info = env.reset() old
-			state,_, info = env.reset() #new
+			state, info = env.reset() #old
+			#state,_, info = env.reset() #new
 			r_r = 0
 			state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
 			for t in count():
