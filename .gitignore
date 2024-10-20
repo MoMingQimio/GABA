@@ -1,2 +1,3 @@
-*models
-*runs
+/runs/
+/models/
+training_reward_test.png

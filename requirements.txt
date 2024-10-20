@@ -4,3 +4,4 @@ torch~=2.4.1
 matplotlib~=3.7.2
 pygame~=2.6.1
 setuptools~=75.1.0
+traci
