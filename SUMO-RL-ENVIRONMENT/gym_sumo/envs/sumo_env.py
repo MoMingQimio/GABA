@@ -88,7 +88,7 @@ class SumoEnv(gym.Env):
 		if self.render_mode=="human":
 			sumoBinary = "sumo-gui"
 		sumoCmd = [sumoBinary,
-				   "-c", "sumo_networks_mod/test.sumocfg",
+				   "-c", "sumo_networks/test.sumocfg",
 				   "--lateral-resolution","3.8",
 				   "--start", "true",
 				   "--quit-on-end", "true",
@@ -144,7 +144,7 @@ class SumoEnv(gym.Env):
 		return obs
 
 	def get_observation(self,veh_id):
-		if not self._isVehRunning(veh_id):
+		if not self.isVehRunninng(veh_id):
 			return self._get_rand_obs()
 		#Basic Information
 		lane_index = traci.vehicle.getLaneIndex(veh_id)
