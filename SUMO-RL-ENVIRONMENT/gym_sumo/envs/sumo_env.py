@@ -180,11 +180,14 @@ class SumoEnv(gym.Env):
         left_follower, left_f_dis = self._getCloseLeader(traci.vehicle.getLeftFollowers(veh_id, blockingOnly=True))
         left_follower_speed = traci.vehicle.getSpeed(left_follower) if left_follower != "" else 0.01
         left_follower_acc = traci.vehicle.getAccel(left_follower) if left_follower != "" else -2.6
+        if left_follower == "":
+            left_f_dis = -1
 
         right_follower, right_f_dis = self._getCloseLeader(traci.vehicle.getRightFollowers(veh_id, blockingOnly=True))
         right_follower_speed = traci.vehicle.getSpeed(right_follower) if right_follower != "" else 0.01
         right_follower_acc = traci.vehicle.getAccel(right_follower) if right_follower != "" else -2.6
-
+        if right_follower == "":
+            right_f_dis = -1
 
 
         states = [lane_index, speed, acceleration,heading_angle,
@@ -218,14 +221,14 @@ class SumoEnv(gym.Env):
             leader_id, distance = ego_leader
         else:
             leader_id, distance = "", -1
-        l_speed = traci.vehicle.getSpeed(leader_id) if leader_id != "" else 0.01
+        l_speed = traci.vehicle.getSpeed(leader_id) if leader_id != "" else -0.01
         l_acc = traci.vehicle.getAccel(leader_id) if leader_id != "" else -2.6
         left_leader, left_l_dis = self._getCloseLeader(traci.vehicle.getLeftLeaders(self.ego, blockingOnly=True))
-        left_l_speed = traci.vehicle.getSpeed(left_leader) if left_leader != "" else 0.01
+        left_l_speed = traci.vehicle.getSpeed(left_leader) if left_leader != "" else -0.01
         left_l_acc = traci.vehicle.getAccel(left_leader) if left_leader != "" else -2.6
 
         right_leader, right_l_dis = self._getCloseLeader(traci.vehicle.getRightLeaders(self.ego, blockingOnly=True))
-        right_l_speed = traci.vehicle.getSpeed(right_leader) if right_leader != "" else 0.01
+        right_l_speed = traci.vehicle.getSpeed(right_leader) if right_leader != "" else -0.01
         right_l_acc = traci.vehicle.getAccel(right_leader) if right_leader != "" else -2.6
 
         states = [ego_speed, ego_acceleration, distance, l_speed, l_acc, left_l_dis, left_l_speed, left_l_acc,
@@ -295,6 +298,11 @@ class SumoEnv(gym.Env):
         reward = self._reward(action)
         #observation = self._get_observation()
         observation, surrounding_vehicles = self.get_observation(self.ego)
+
+        excepted_risk, total_risk = self.risk_assessment(observation,surrounding_vehicles)
+        #print(risk)
+
+
         done = self.is_collided or (self._isEgoRunning()==False)
 
         if done == False and traci.simulation.getTime() > 360:
@@ -361,14 +369,93 @@ class SumoEnv(gym.Env):
         SSM = [self.calc_safety_surrogate_metric(state['ego_speed'], state['leader_speed'], state['ego_dis_to_leader']),
                self.calc_safety_surrogate_metric(state['follower_speed'], state['ego_speed'],state['ego_dis_to_follower']),
                self.calc_safety_surrogate_metric(state['ego_speed'], state['left_leader_speed'],state['dis_to_left_leader']),
+               self.calc_safety_surrogate_metric(state['left_follower_speed'], state['ego_speed'],state['dis_to_left_follower']),
                self.calc_safety_surrogate_metric(state['ego_speed'], state['right_leader_speed'],state['dis_to_right_leader']),
-               self.calc_safety_surrogate_metric(state['left_follower_speed'], state['ego_speed'],state['ego_dis_to_left_follower']),
-               self.calc_safety_surrogate_metric(state['right_follower_speed'], state['ego_speed'],state['ego_dis_to_right_follower'])]
+               self.calc_safety_surrogate_metric(state['right_follower_speed'], state['ego_speed'],state['dis_to_right_follower'])]
+
+        prob_norm = self.calc_risk_prob(SSM)
+        #print(prob_norm)
+        #写一个tuple，将概率和风险等级连接在一起
+        lane_risk_prob = [] #中、左、右的风险概率
+        for i in range(3):
+            P_S = prob_norm[0][2*i]*prob_norm[0][2*i+1]
+            P_D = 1- (1-prob_norm[2][2*i])*(1-prob_norm[2][2*i+1])
+            P_A = 1- P_D -P_S
+            prob = [P_S,P_A,P_D]
+            lane_risk_prob.append(prob)
+        lane_risk_prob_ = np.array(lane_risk_prob).reshape(3,3)
+        #求出目标车辆的风险概率
+        p_s = lane_risk_prob_[0,0]*lane_risk_prob_[1,0]*lane_risk_prob_[2,0]
+        p_d = 1- (1-lane_risk_prob_[0,2])*(1-lane_risk_prob_[1,2])*(1-lane_risk_prob_[2,2])
+        p_a = 1 - p_s - p_d
+        total_prob = np.array([p_s,p_a,p_d])
 
 
 
+        #print(lane_risk_prob)
+        #risk_level = np.argmax(prob_norm, axis=0)
+        excepted_risk = np.dot(np.array([0, 1, 2]),prob_norm) #求出每个背景车辆的期望风险
 
-	def
+        total_risk = np.dot(np.array([0, 1, 2]),total_prob) #求出目标车辆的期望风险
+
+        return excepted_risk, total_risk
+
+
+
+    def calc_risk_prob(self, SSM):
+
+        dangerous_prob = self.calc_dangerous_prob(SSM)
+        attentive_prob = self.cal_attentive_prob(SSM)
+        safety_prob = self.cal_safety_prob(SSM)
+        risk_prob = np.array([safety_prob, attentive_prob, dangerous_prob])
+        c_sums = risk_prob.sum(axis=0)
+
+        # 然后除以行和，防止除以零，可以加上一个很小的数
+        c_sums[c_sums == 0] = 1e-10  # 防止除以0的情况
+
+        # 使用np.newaxis保持维度一致，以便进行广播除法
+        prob_norm = risk_prob / c_sums[np.newaxis,: ]
+        #print(prob_norm)
+        #prob_norm = risk_prob / np.linalg.norm(risk_prob, axis=0, keepdims=True)
+        return prob_norm
+
+
+    def calc_dangerous_prob(self, SSM):
+        dangerous_prob = []
+        for i in SSM:
+            if i < c.SSM_D_THRESHOLD:
+                prob = 1
+            else:
+                prob = np.exp(-np.square((i - c.SSM_D_THRESHOLD) / c.SSM_UNCERTAINTY)/2)
+            dangerous_prob.append(prob)
+        return np.array(dangerous_prob)
+
+
+    def cal_attentive_prob(self, SSM):
+        #
+        attentive_prob = []
+        for i in SSM:
+            if i < c.SSM_A_THRESHOLD:
+                prob = np.exp(-np.square((i - c.SSM_D_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
+            elif i > c.SSM_A_THRESHOLD:
+                prob = np.exp(-np.square((i - c.SSM_A_THRESHOLD) / c.SSM_UNCERTAINTY)/2)
+            else:
+                prob = 1
+            attentive_prob.append(prob)
+        return np.array(attentive_prob)
+
+
+
+    def cal_safety_prob(self, SSM):
+        safety_prob = []
+        for i in SSM:
+            if i < c.SSM_A_THRESHOLD:
+                prob = np.exp(-np.square((i - c.SSM_A_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
+            else:
+                prob = 1
+            safety_prob.append(prob)
+        return np.array(safety_prob)
+
 
     def calc_safety_surrogate_metric(self, ego_speed, leader_speed,dis_to_leader):
             """
@@ -378,8 +465,9 @@ class SumoEnv(gym.Env):
             :param dis_to_leader: 与前车的距离（m）
             :return: TTC（秒）
             """
+
             # 检查距离和速度
-            if ego_speed <= leader_speed:
+            if ego_speed <= leader_speed or dis_to_leader <= 0 or leader_speed <= 0 or ego_speed <= 0:
                 return float('inf')  # 如果后车速度不大于前车，TTC为无穷大
 
             ttc = dis_to_leader / (ego_speed - leader_speed)

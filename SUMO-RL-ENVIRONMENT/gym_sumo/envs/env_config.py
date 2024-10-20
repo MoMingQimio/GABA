@@ -24,3 +24,13 @@ IDM_delta = 4.0
 MOBIL_left_Bias = 0.3
 MOBIL_politeness = 0.3
 MOBIL_change_threshold = 0.2
+
+
+
+#Risk assignment parameters
+SSM_D_THRESHOLD = 0.5
+SSM_A_THRESHOLD = 3
+
+
+SSM_UNCERTAINTY = 0.5
+
