@@ -241,7 +241,7 @@ class Agent(object):
 				self.learn_model()
 				self.updateTargetNetwork()
 				if (e+1)%2 == 0:
-					torch.save(self.policy_net.state_dict(), "models/model_test.pth")
+					torch.save(self.policy_net.state_dict(), "./models/model_test.pth")
 
 				if done:
 					self.episode_durations.append(r_r)

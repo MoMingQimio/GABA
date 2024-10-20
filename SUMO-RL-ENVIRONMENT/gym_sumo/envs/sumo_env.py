@@ -145,7 +145,7 @@ class SumoEnv(gym.Env):
 
 	def get_observation(self,veh_id):
 		if not self.isVehRunninng(veh_id):
-			return self._get_rand_obs()
+			return self._get_rand_obs() ,["","","","","",""]
 		#Basic Information
 		lane_index = traci.vehicle.getLaneIndex(veh_id)
 		speed = traci.vehicle.getSpeed(veh_id)
