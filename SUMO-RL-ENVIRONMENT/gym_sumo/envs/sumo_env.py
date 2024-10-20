@@ -164,10 +164,14 @@ class SumoEnv(gym.Env):
         left_leader, left_l_dis = self._getCloseLeader(traci.vehicle.getLeftLeaders(veh_id, blockingOnly=True))
         left_l_speed = traci.vehicle.getSpeed(left_leader) if left_leader != "" else 0.01
         left_l_acc = traci.vehicle.getAccel(left_leader) if left_leader != "" else -2.6
+        if left_leader == "":
+            left_l_dis = -1
 
         right_leader, right_l_dis = self._getCloseLeader(traci.vehicle.getRightLeaders(veh_id, blockingOnly=True))
         right_l_speed = traci.vehicle.getSpeed(right_leader) if right_leader != "" else 0.01
         right_l_acc = traci.vehicle.getAccel(right_leader) if right_leader != "" else -2.6
+        if right_leader == "":
+            right_l_dis = -1
 
         follower = traci.vehicle.getFollower(veh_id)
         if follower is not None:
@@ -404,9 +408,9 @@ class SumoEnv(gym.Env):
 
     def calc_risk_prob(self, SSM):
 
-        dangerous_prob = self.calc_dangerous_prob(SSM)
-        attentive_prob = self.cal_attentive_prob(SSM)
-        safety_prob = self.cal_safety_prob(SSM)
+        dangerous_prob = self.calc_prob(SSM, 'dangerous')
+        attentive_prob = self.calc_prob(SSM, 'attentive')
+        safety_prob = self.calc_prob(SSM, 'safety')
         risk_prob = np.array([safety_prob, attentive_prob, dangerous_prob])
         c_sums = risk_prob.sum(axis=0)
 
@@ -419,43 +423,28 @@ class SumoEnv(gym.Env):
         #prob_norm = risk_prob / np.linalg.norm(risk_prob, axis=0, keepdims=True)
         return prob_norm
 
-
-    def calc_dangerous_prob(self, SSM):
-        dangerous_prob = []
+    def calc_prob(self, SSM, prob_type):
+        prob = []
         for i in SSM:
-            if i < c.SSM_D_THRESHOLD:
-                prob = 1
-            else:
-                prob = np.exp(-np.square((i - c.SSM_D_THRESHOLD) / c.SSM_UNCERTAINTY)/2)
-            dangerous_prob.append(prob)
-        return np.array(dangerous_prob)
-
-
-    def cal_attentive_prob(self, SSM):
-        #
-        attentive_prob = []
-        for i in SSM:
-            if i < c.SSM_A_THRESHOLD:
-                prob = np.exp(-np.square((i - c.SSM_D_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
-            elif i > c.SSM_A_THRESHOLD:
-                prob = np.exp(-np.square((i - c.SSM_A_THRESHOLD) / c.SSM_UNCERTAINTY)/2)
-            else:
-                prob = 1
-            attentive_prob.append(prob)
-        return np.array(attentive_prob)
-
-
-
-    def cal_safety_prob(self, SSM):
-        safety_prob = []
-        for i in SSM:
-            if i < c.SSM_A_THRESHOLD:
-                prob = np.exp(-np.square((i - c.SSM_A_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
-            else:
-                prob = 1
-            safety_prob.append(prob)
-        return np.array(safety_prob)
-
+            if prob_type == 'dangerous':
+                if i < c.SSM_D_THRESHOLD:
+                    prob_val = 1
+                else:
+                    prob_val = np.exp(-np.square((i - c.SSM_D_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
+            elif prob_type == 'attentive':
+                if i < c.SSM_A_THRESHOLD:
+                    prob_val = np.exp(-np.square((i - c.SSM_D_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
+                elif i > c.SSM_A_THRESHOLD:
+                    prob_val = np.exp(-np.square((i - c.SSM_A_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
+                else:
+                    prob_val = 1
+            elif prob_type == 'safety':
+                if i < c.SSM_A_THRESHOLD:
+                    prob_val = np.exp(-np.square((i - c.SSM_A_THRESHOLD) / c.SSM_UNCERTAINTY) / 2)
+                else:
+                    prob_val = 1
+            prob.append(prob_val)
+        return np.array(prob)
 
     def calc_safety_surrogate_metric(self, ego_speed, leader_speed,dis_to_leader):
             """
@@ -467,7 +456,7 @@ class SumoEnv(gym.Env):
             """
 
             # 检查距离和速度
-            if ego_speed <= leader_speed or dis_to_leader <= 0 or leader_speed <= 0 or ego_speed <= 0:
+            if ego_speed <= leader_speed or dis_to_leader <= 0:
                 return float('inf')  # 如果后车速度不大于前车，TTC为无穷大
 
             ttc = dis_to_leader / (ego_speed - leader_speed)
