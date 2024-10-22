@@ -2,7 +2,7 @@ import numpy as np
 from gym_sumo.envs import env_config as c
 
 import math
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Union, Any
 
 
 class DriverModel:
@@ -119,8 +119,7 @@ class DriverModel:
         return change_incentive and safety_criterion
 
 
-    def get_action(self, obs) -> Tuple[str, bool]:
-
+    def get_action(self, obs):
         state_space_list = ['lane_index','ego_speed', 'ego_acc', 'ego_heading_angle',
                             'ego_dis_to_leader', 'leader_speed', 'leader_acc',
                             'ego_dis_to_follower', 'follower_speed', 'follower_acc',
@@ -132,19 +131,20 @@ class DriverModel:
 
         for i in range(c.NUM_OF_LANES):
             state_space_list.append("lane_" + str(i) + "_mean_speed")
-        state_space_list.append("lane_" + str(i) + "_density")
+            state_space_list.append("lane_" + str(i) + "_density")
 
+        state = {key: value for key, value in zip(state_space_list, obs[0])}
 
-        state = dict(zip(state_space_list, obs))
+        #state = dict(zip(state_space_list, obs))
 
 
 
 
         #calculate the acceleration of the ego vehicle
-        action_space = np.arange(-4, 2.2, 0.2)
+        action_space = np.arange(-4, 2.0, 0.2)
         ego_acc = self.calc_acceleration(state["ego_speed"], state["leader_speed"], state["ego_dis_to_leader"])
         #写一个映射，将ego_acc映射到动作空间,这里有actions include 31 discrete longitudinal accelerations ([−4, 2] with 0.2 m s−2 discrete resolution)
-        discrete_acc = min(action_space, key=lambda x: abs(x - ego_acc))
+        index = np.searchsorted(action_space, ego_acc, side='left')
 
 
 
@@ -160,11 +160,11 @@ class DriverModel:
             right_incentive = False
 
         if left_incentive:
-            action_index = len(action_space) + 1
+            action_index = len(action_space)
         elif right_incentive:
-            action_index = len(action_space) + 2
+            action_index = len(action_space) + 1
         else:
-            action_index = np.where(action_space == discrete_acc)[0][0]
+            action_index = index
 
         return action_index
 

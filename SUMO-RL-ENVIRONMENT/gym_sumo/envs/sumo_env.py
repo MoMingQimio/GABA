@@ -67,7 +67,7 @@ class SumoEnv(gym.Env):
     metadata = {"render_modes": ["", "human", "rgb_array"], "render_fps": 4}
     def __init__(self,render_mode=None):
         super(SumoEnv, self).__init__()
-        self.action_space = spaces.Discrete(5)
+        self.action_space = spaces.MultiDiscrete([6,32])
         self.observation_space = creat_observation()
 
         ## class variable
@@ -76,9 +76,12 @@ class SumoEnv(gym.Env):
         self.max_speed_limit = c.RL_MAX_SPEED_LIMIT
         self.is_collided = False
         assert render_mode is None or render_mode in self.metadata['render_modes']
-        self.render_mode =render_mode
+        self.render_mode = render_mode
         self.rbm = RB()
+        self.action_list = np.arange(-4, 2, 0.2)
         print(self.render_mode)
+
+
 
 
     def _getInfo(self):
@@ -101,6 +104,16 @@ class SumoEnv(gym.Env):
 
         traci.start(sumoCmd)
 
+
+    @staticmethod
+    def seed(seed = None):
+        #设置numpy随机种子
+        np.random.seed(seed)
+
+
+
+
+
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.is_collided = False
@@ -113,8 +126,9 @@ class SumoEnv(gym.Env):
         #将index和obs连接在一起
         obs =np.insert(obs, 0, index)
 
-        info = self._getInfo()
-        return obs, info
+        #info = self._getInfo()
+        info = ["","","","","",""]
+        return obs, info, np.zeros((1,6))
 
     def _getCloseLeader(self, leaders):
         if len(leaders) <= 0:
@@ -245,28 +259,28 @@ class SumoEnv(gym.Env):
         observations = np.array(states)
         return observations
 
-    def _applyAction(self, action):
-        if self._isEgoRunning() == False:
-            return
-        current_lane_index = traci.vehicle.getLaneIndex(self.ego)
-
-        if action == 0:
-            # do nothing: stay in the current lane
-            pass
-        elif action == 1:
-
-            target_lane_index = min(current_lane_index+1, self.num_of_lanes-1)
-            traci.vehicle.changeLane(self.ego, target_lane_index, 0.1)
-
-        elif action == 2:
-
-            target_lane_index = max(current_lane_index-1, 0)
-            traci.vehicle.changeLane(self.ego, target_lane_index, 0.1)
-
-        elif action == 3:
-            traci.vehicle.setAcceleration(self.ego,0.2, 0.1)
-        elif action == 4:
-            traci.vehicle.setAcceleration(self.ego, -4.5, 0.1)
+    # def _applyAction(self, action):
+    #     if self._isEgoRunning() == False:
+    #         return
+    #     current_lane_index = traci.vehicle.getLaneIndex(self.ego)
+    #
+    #     if action == 0:
+    #         # do nothing: stay in the current lane
+    #         pass
+    #     elif action == 1:
+    #
+    #         target_lane_index = min(current_lane_index+1, self.num_of_lanes-1)
+    #         traci.vehicle.changeLane(self.ego, target_lane_index, 0.1)
+    #
+    #     elif action == 2:
+    #
+    #         target_lane_index = max(current_lane_index-1, 0)
+    #         traci.vehicle.changeLane(self.ego, target_lane_index, 0.1)
+    #
+    #     elif action == 3:
+    #         traci.vehicle.setAcceleration(self.ego,0.2, 0.1)
+    #     elif action == 4:
+    #         traci.vehicle.setAcceleration(self.ego, -4.5, 0.1)
 
 
     def _collision_reward(self):
@@ -293,25 +307,48 @@ class SumoEnv(gym.Env):
             return c_reward
         return c_reward + self._efficiency() + self._lane_change_reward(action)
 
+    def _BVreward(self, action):
+        c_reward = self._collision_reward()
+        return -c_reward
 
-
-    def step(self, action):
+    def step(self, final_actions):
         #print(action)
-        self._applyAction(action)
+        AV_action, Veh_id, BV_action, epsilon = final_actions
+        self._applyAction(self.ego,AV_action)
+
+        RB_action =  self.rbm.get_action(self.get_observation(Veh_id))
+        Adversarial_flag = False
+        if epsilon < np.random.rand():
+            Adversarial_flag = True
+            BV_action = RB_action
+        self._applyAction(Veh_id,BV_action)
+
+
         traci.simulationStep()
-        reward = self._reward(action)
+        reward = self._reward(AV_action)
+        BV_reward = self._BVreward(BV_action)
         #observation = self._get_observation()
         observation, surrounding_vehicles = self.get_observation(self.ego)
 
         excepted_risk, total_risk = self.risk_assessment(observation,surrounding_vehicles)
         #print(risk)
-
-
+        #bv = surrounding_vehicles[np.argmax(excepted_risk)]
+        #self._applyBVaction(bv)
         done = self.is_collided or (self._isEgoRunning()==False)
+        collision_flag = self.is_collided
 
         if done == False and traci.simulation.getTime() > 360:
             done = True
-        return (observation, reward, done, {})
+        #写一个字典储存其他信息
+        other_information = {"BV_reward" : BV_reward,
+                             "surrounding_vehicles" : surrounding_vehicles,
+                             "excepted_risk" :  excepted_risk,
+                             "total_risk" : total_risk,
+                             "collision_flag" : collision_flag,
+                             "Adversarial_flag" :Adversarial_flag}
+
+        #other_information = (BV_reward,surrounding_vehicles, excepted_risk, total_risk, collision_flag, Adversarial_flag)
+        return observation, reward, done, other_information
 
     def isVehRunninng(self, veh_id):
         """
@@ -463,8 +500,32 @@ class SumoEnv(gym.Env):
             return ttc
 
 
-    def _applyBVaction(self):
-        pass
+    def _applyAction(self,veh_id,action_index):
+        if not self.isVehRunninng(veh_id):
+            return
+        current_lane_index = traci.vehicle.getLaneIndex(veh_id)
+
+        if action_index == len(self.action_list):
+            target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
+            traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
+        elif action_index == len(self.action_list)+1:
+            target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
+            traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
+        else:
+            traci.vehicle.setAcceleration(veh_id, self.action_list[action_index],0.1)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
