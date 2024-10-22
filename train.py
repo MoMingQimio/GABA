@@ -190,10 +190,11 @@ def train():
         state ,surrounding_vehicles, excepted_risk= env.reset()
         current_ep_reward = 0
         r_r = 0
+        state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
         for t in range(1, max_ep_len+1):
 
             # select action with policy
-            state  = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+
 
             AV_action = AV_agent.select_action(state)
 
@@ -232,8 +233,9 @@ def train():
                 ppo_agent.buffer.rewards.append(BV_reward)
                 ppo_agent.buffer.is_terminals.append(done)
 
+                current_ep_reward += BV_reward
                 # update PPO agent
-                if collision_counts % update_timestep == 0:
+                if (collision_counts+1) % update_timestep == 0:
                     ppo_agent.update()
 
                 # if continuous action space; then decay action std of ouput action distribution
@@ -241,7 +243,8 @@ def train():
                     ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
 
                 # log in logging file
-                if collision_counts % log_freq == 0:
+                #需要修改
+                if (collision_counts+1) % log_freq == 0:
 
                     # log average reward till last episode
                     log_avg_reward = log_running_reward / log_running_episodes
@@ -254,7 +257,7 @@ def train():
                     log_running_episodes = 0
 
                 # printing average reward
-                if collision_counts % print_freq == 0:
+                if (collision_counts+1) % print_freq == 0:
 
                     # print average reward till last episode
                     print_avg_reward = print_running_reward / print_running_episodes
@@ -266,7 +269,7 @@ def train():
                     print_running_episodes = 0
 
                 # save model weights
-                if collision_counts % save_model_freq == 0:
+                if (collision_counts+1) % save_model_freq == 0:
                     print("--------------------------------------------------------------------------------------------")
                     print("saving model at : " + checkpoint_path)
                     ppo_agent.save(checkpoint_path)
@@ -274,12 +277,15 @@ def train():
                     print("Elapsed Time  : ", datetime.now().replace(microsecond=0) - start_time)
                     print("--------------------------------------------------------------------------------------------")
 
+
+
+
             collision_rate = collision_counts/time_step
             epsilon = 1 / (1+np.exp(-1*(2 - collision_rate - (total_risk + 1e-3)/2)))
 
 
 
-            current_ep_reward += reward
+
             #excepted_risk_last_time = excepted_risk
 
             r_r += reward
@@ -308,6 +314,9 @@ def train():
                 break
             env.move_gui()
 
+
+
+            i_episode += 1
 
             # # update PPO agent
             # if time_step % update_timestep == 0:
@@ -353,14 +362,12 @@ def train():
 
             # break; if the episode is over
 
-
         print_running_reward += current_ep_reward
         print_running_episodes += 1
 
         log_running_reward += current_ep_reward
         log_running_episodes += 1
 
-        i_episode += 1
 
     log_f.close()
     env.close()

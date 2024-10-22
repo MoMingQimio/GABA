@@ -89,7 +89,7 @@ class Agent(object):
 		self.tau = 0.05
 		self.lr = 1e-5
 		#self.n_actions = 5
-		self.n_actions = 31
+		self.n_actions = 32
 		self.n_observations = 30
 		#self.n_observations = 19
 		self.writter = SummaryWriter()

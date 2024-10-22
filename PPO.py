@@ -93,7 +93,10 @@ class ActorCritic(nn.Module):
         else:
             action_probs = self.actor(state)
             dist = Categorical(action_probs)
-
+            # if torch.isnan(action_probs).any():
+            # #if action_probs
+            #
+            #     print("action_probs", action_probs)
             # action_probs1 = action_probs[:self.action_dim[0]]
             # action_probs2 = action_probs[self.action_dim[0]:]
             # dist1 = Categorical(action_probs1)
@@ -126,7 +129,12 @@ class ActorCritic(nn.Module):
                 action = action.reshape(-1, self.action_dim)
         else:
             action_probs = self.actor(state)
-            dist = Categorical(action_probs)
+            #如果action_probs 中存在NAN
+            # if torch.isnan(action_probs).any():
+            # #if action_probs
+            #
+            #     print("action_probs", action_probs)
+            # dist = Categorical(action_probs)
         action_logprobs = dist.log_prob(action)
         dist_entropy = dist.entropy()
         state_values = self.critic(state)
