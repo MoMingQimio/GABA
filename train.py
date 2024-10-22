@@ -2,7 +2,7 @@ import os
 import glob
 import time
 from datetime import datetime
-
+from itertools import count
 import torch
 import numpy as np
 
@@ -191,7 +191,8 @@ def train():
         current_ep_reward = 0
         r_r = 0
         state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-        for t in range(1, max_ep_len+1):
+        #for t in range(1, max_ep_len+1):
+        for t in count():
 
             # select action with policy
 
@@ -308,7 +309,7 @@ def train():
 
             if done:
                 AV_agent.episode_durations.append(r_r)
-                AV_agent.plot_durations()
+                #AV_agent.plot_durations()
                 env.closeEnvConnection()
                 print(f'Episodes:{i_episode + 1}, Reward: {r_r}')
                 break
@@ -316,7 +317,7 @@ def train():
 
 
 
-            i_episode += 1
+        i_episode += 1
 
             # # update PPO agent
             # if time_step % update_timestep == 0:
@@ -370,7 +371,7 @@ def train():
 
 
     log_f.close()
-    env.close()
+    env.closeEnvConnection()
 
     # print total training time
     print("============================================================================================")
