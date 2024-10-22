@@ -64,7 +64,7 @@ def train():
 
     print("training environment name : " + env_name)
 
-    env = gym.make(env_name,render_mode="")
+    env = gym.make(env_name,render_mode="human")
 
     # state space dimension
     state_dim = env.observation_space.shape[0]
