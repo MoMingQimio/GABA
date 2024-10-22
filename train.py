@@ -197,10 +197,11 @@ def train():
 
             AV_action = AV_agent.select_action(state)
 
-            BV_action = ppo_agent.select_action(state)
+            BV_action,BV_action_logprob,BV_state_val = ppo_agent.select_action(state)
             # BV_action = BV_action.numpy().flatten()
-            BV_candidate_index = BV_action % env.action_space.nvec[0]
-            BV_action_index = BV_action // env.action_space.nvec[0]
+
+            BV_candidate_index = BV_action.item() % env.action_space.nvec[0]
+            BV_action_index = BV_action.item() // env.action_space.nvec[0]
             Veh_id= surrounding_vehicles[BV_candidate_index]
 
             # BV_candidate_index = np.where(surrounding_vehicles == Veh_id)[0][0]
@@ -223,8 +224,14 @@ def train():
                 collision_counts += 1
             if Adversarial_flag:
                 BV_reward = BV_reward + excepted_risk[BV_candidate_index]
+
+                ppo_agent.buffer.states.append(state)
+                ppo_agent.buffer.actions.append(BV_action)
+                ppo_agent.buffer.logprobs.append(BV_action_logprob)
+                ppo_agent.buffer.state_values.append(BV_state_val)
                 ppo_agent.buffer.rewards.append(BV_reward)
                 ppo_agent.buffer.is_terminals.append(done)
+
                 # update PPO agent
                 if collision_counts % update_timestep == 0:
                     ppo_agent.update()

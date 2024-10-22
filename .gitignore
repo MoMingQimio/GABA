@@ -1,3 +1,5 @@
 /runs/
 /models/
+/PPO_logs/
+/PPO_preTrained/
 training_reward_test.png

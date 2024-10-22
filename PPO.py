@@ -207,12 +207,12 @@ class PPO:
                 #action1, action2, action_logprob1, action_logprob_2, state_val = self.policy_old.act(state)
                 # action = [action1, action2]
                 # action_logprob = [action_logprob1, action_logprob_2]
-            self.buffer.states.append(state)
-            self.buffer.actions.append(action)
-            self.buffer.logprobs.append(action_logprob)
-            self.buffer.state_values.append(state_val)
+            # self.buffer.states.append(state)
+            # self.buffer.actions.append(action)
+            # self.buffer.logprobs.append(action_logprob)
+            # self.buffer.state_values.append(state_val)
 
-            return action.item()
+            return action, action_logprob, state_val
 
     def update(self):
         # Monte Carlo estimate of returns
