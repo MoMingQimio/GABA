@@ -3,7 +3,7 @@ from gym_sumo.envs import env_config as c
 
 import math
 from typing import Dict, Tuple, Union, Any
-
+#import traci
 
 class DriverModel:
 
@@ -22,6 +22,12 @@ class DriverModel:
         self.b = c.IDM_b # Comfortable deceleration
         self.delta = c.IDM_delta # Acceleration component
         self.T = c.IDM_delta #  Time safe headway
+        #
+        # self.tau = c.IDM_TAU  # Reaction time
+        # self.action_step_length = c.IDM_ACTIONSTEPLENGTH  # Action step length
+        # self.last_decision_time = 0
+
+
         self.left_bias = c.MOBIL_left_Bias # Keep left bias
         self.politeness = c.MOBIL_politeness # Change lane politeness
         self.change_threshold = c.MOBIL_change_threshold # Change lane threshold
@@ -39,6 +45,24 @@ class DriverModel:
         Returns:
             float: vehicle acceleration
         """
+        # current_time = traci.simulation.getTime()
+        # if current_time - self.last_decision_time < self.action_step_length:
+        #     return 0  # 在非决策时间步中，保持不变的加速度
+        #
+        #     # 更新最后决策时间
+        # self.last_decision_time = current_time
+        #
+        # # 计算反应时间后的速度和距离
+        # effective_v = v  # 在此版本中，假设当前速度在反应时间内不变
+        # effective_surrounding_v = surrounding_v  # 假设前车速度也保持不变
+        # effective_s = s - effective_surrounding_v * self.tau  # 修正与前车的距离，考虑反应时间
+        #
+        # delta_v = effective_v - effective_surrounding_v
+        # # 计算期望安全距离 s_star
+        # s_star = self.s_0 + max(0, self.T * effective_v + (effective_v * delta_v) / (2 * math.sqrt(self.a * self.b)))
+        #
+        # # 计算并返回加速度
+        # return self.a * (1 - math.pow(effective_v / self.v_0, self.delta) - math.pow(s_star / effective_s, 2))
 
         delta_v = v - surrounding_v
         s_star = self.s_0 + max(0, self.T * v + (v * delta_v) / (2 * math.sqrt(self.a * self.b)))

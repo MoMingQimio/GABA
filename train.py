@@ -319,50 +319,6 @@ def train():
 
         i_episode += 1
 
-            # # update PPO agent
-            # if time_step % update_timestep == 0:
-            #     ppo_agent.update()
-            #
-            # # if continuous action space; then decay action std of ouput action distribution
-            # if has_continuous_action_space and time_step % action_std_decay_freq == 0:
-            #     ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
-            #
-            # # log in logging file
-            # if time_step % log_freq == 0:
-            #
-            #     # log average reward till last episode
-            #     log_avg_reward = log_running_reward / log_running_episodes
-            #     log_avg_reward = round(log_avg_reward, 4)
-            #
-            #     log_f.write('{},{},{}\n'.format(i_episode, time_step, log_avg_reward))
-            #     log_f.flush()
-            #
-            #     log_running_reward = 0
-            #     log_running_episodes = 0
-            #
-            # # printing average reward
-            # if time_step % print_freq == 0:
-            #
-            #     # print average reward till last episode
-            #     print_avg_reward = print_running_reward / print_running_episodes
-            #     print_avg_reward = round(print_avg_reward, 2)
-            #
-            #     print("Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step, print_avg_reward))
-            #
-            #     print_running_reward = 0
-            #     print_running_episodes = 0
-            #
-            # # save model weights
-            # if time_step % save_model_freq == 0:
-            #     print("--------------------------------------------------------------------------------------------")
-            #     print("saving model at : " + checkpoint_path)
-            #     ppo_agent.save(checkpoint_path)
-            #     print("model saved")
-            #     print("Elapsed Time  : ", datetime.now().replace(microsecond=0) - start_time)
-            #     print("--------------------------------------------------------------------------------------------")
-
-            # break; if the episode is over
-
         print_running_reward += current_ep_reward
         print_running_episodes += 1
 
