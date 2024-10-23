@@ -513,7 +513,7 @@ class SumoEnv(gym.Env):
             target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
             traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
         elif action_index == len(self.action_list)+1:
-            target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
+            target_lane_index = max(current_lane_index - 1, 1)
             traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
         elif action_index == len(self.action_list)+2:
             pass

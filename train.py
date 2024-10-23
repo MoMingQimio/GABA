@@ -7,6 +7,8 @@ import torch
 import numpy as np
 
 import gym
+#from networkx.conftest import collect_ignore
+
 #from sympy.abc import epsilon
 
 from PPO import PPO
@@ -31,6 +33,7 @@ def train():
 
     ####### initialize environment hyperparameters ######
     env_name = "sumo-v0"
+
 
     has_continuous_action_space = False  # continuous action space; else discrete
 
@@ -98,6 +101,22 @@ def train():
     #### create new log file for each run
     log_f_name = log_dir + '/PPO_' + env_name + "_log_" + str(run_num) + ".csv"
 
+
+    #### create new log file for each run
+    av_dir = "runs"
+    if not os.path.exists(av_dir):
+        os.makedirs(av_dir)
+    av_dir = av_dir + '/' + env_name + '/'
+    if not os.path.exists(av_dir):
+        os.makedirs(av_dir)
+
+    av_run_num = 0
+    current_num_files = next(os.walk(av_dir))[2]
+    av_run_num = len(current_num_files)
+
+    av_log_f_name = av_dir +"DQN_" + env_name + "_log_" + str(av_run_num) + ".csv"
+
+
     print("current logging run number for " + env_name + " : ", run_num)
     print("logging at : " + log_f_name)
     #####################################################
@@ -115,6 +134,18 @@ def train():
 
 
     checkpoint_path = directory + "PPO_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
+
+    directory = "AV_preTrained"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    directory = directory + '/' + env_name + '/'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
+    av_checkpoint_path = directory + "AV_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
+
+
     print("save checkpoint path : " + checkpoint_path)
     #####################################################
 
@@ -170,7 +201,9 @@ def train():
 
     # logging file
     log_f = open(log_f_name,"w+")
-    log_f.write('episode,timestep,reward\n')
+    log_f.write('episode,timestep,collision_counts,adversarial_counts,reward\n')
+    av_log_f = open(av_log_f_name,"w+")
+    log_f.write("episode,timestep,reward\n")
 
     # printing and logging variables
     print_running_reward = 0
@@ -179,10 +212,14 @@ def train():
     log_running_reward = 0
     log_running_episodes = 0
 
+    av_log_reward = 0
+    av_log_episodes = 0
+
     time_step = 0
     i_episode = 0
 
     collision_counts = 0
+    adversarial_counts = 0
     # training loop
     epsilon = 0
     while time_step <= max_training_timesteps:
@@ -225,6 +262,7 @@ def train():
             if collision_flag:
                 collision_counts += 1
             if Adversarial_flag:
+                adversarial_counts += 1
                 BV_reward = BV_reward + excepted_risk[BV_candidate_index]
 
                 ppo_agent.buffer.states.append(state)
@@ -247,11 +285,11 @@ def train():
                 #需要修改
                 if (collision_counts+1) % log_freq == 0:
 
-                    # log average reward till last episode
+                    # log average reward till last episode4s
                     log_avg_reward = log_running_reward / log_running_episodes
                     log_avg_reward = round(log_avg_reward, 4)
 
-                    log_f.write('{},{},{}\n'.format(i_episode, time_step, log_avg_reward))
+                    log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,log_avg_reward))
                     log_f.flush()
 
                     log_running_reward = 0
@@ -304,15 +342,30 @@ def train():
 
             AV_agent.learn_model()
             AV_agent.updateTargetNetwork()
-            if (i_episode + 1) % 2 == 0:
-                torch.save(AV_agent.policy_net.state_dict(), "models/model_test.pth")
+
+
+            if (i_episode + 1) % 2000 == 0:
+                torch.save(AV_agent.policy_net.state_dict(), av_checkpoint_path+"/model_test.pth")
 
             if done:
                 AV_agent.episode_durations.append(r_r)
+
                 #AV_agent.plot_durations()
                 env.closeEnvConnection()
                 print(f'Episodes:{i_episode + 1}, Reward: {r_r}')
                 break
+
+            if (i_episode + 1) % log_freq == 0:
+                # log average reward till last episode4s
+                av_log_avg_reward = av_log_reward / av_log_episodes
+                av_log_avg_reward = round(av_log_avg_reward, 4)
+
+                av_log_f.write('{},{},{}\n'.format(i_episode, time_step,av_log_avg_reward))
+                av_log_f.flush()
+
+                av_log_reward = 0
+                av_log_episodes = 0
+
             env.move_gui()
 
 
@@ -324,6 +377,9 @@ def train():
 
         log_running_reward += current_ep_reward
         log_running_episodes += 1
+
+        av_log_reward += r_r
+        av_log_episodes += 1
 
 
     log_f.close()
