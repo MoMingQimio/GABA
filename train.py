@@ -161,7 +161,7 @@ def train():
 
     # initialize a PPO agent
     ppo_agent = PPO(state_dim+1, action_dim, lr_actor, lr_critic, gamma, K_epochs, eps_clip, has_continuous_action_space, action_std)
-    AV_agent = Agent("Agent")
+    AV_agent = Agent("Agent", env.action_space.nvec[1],state_dim+1)
     # track total training time
     start_time = datetime.now().replace(microsecond=0)
     print("Started training at (GMT) : ", start_time)
@@ -201,7 +201,7 @@ def train():
 
             BV_action,BV_action_logprob,BV_state_val = ppo_agent.select_action(state)
             # BV_action = BV_action.numpy().flatten()
-
+            #print(f'AV_action:{AV_action},BV_action:{BV_action}')
             BV_candidate_index = BV_action.item() % env.action_space.nvec[0]
             BV_action_index = BV_action.item() // env.action_space.nvec[0]
             Veh_id= surrounding_vehicles[BV_candidate_index]

@@ -67,7 +67,8 @@ class SumoEnv(gym.Env):
     metadata = {"render_modes": ["", "human", "rgb_array"], "render_fps": 4}
     def __init__(self,render_mode=None):
         super(SumoEnv, self).__init__()
-        self.action_space = spaces.MultiDiscrete([6,32])
+        self.action_list = np.arange(-c.RL_DCE_RANGE, c.RL_ACC_RANGE, c.ACC_INTERVAL)
+        self.action_space = spaces.MultiDiscrete([6,len(self.action_list)+3])
         self.observation_space = creat_observation()
 
         ## class variable
@@ -78,7 +79,7 @@ class SumoEnv(gym.Env):
         assert render_mode is None or render_mode in self.metadata['render_modes']
         self.render_mode = render_mode
         self.rbm = RB()
-        self.action_list = np.arange(-4, 2, 0.2)
+
         print(self.render_mode)
 
 
@@ -128,6 +129,7 @@ class SumoEnv(gym.Env):
 
         #info = self._getInfo()
         info = ["","","","","",""]
+        #traci.vehicle.setSpeed(self.ego, 20)
         return obs, info, np.zeros((1,6))
 
     def _getCloseLeader(self, leaders):
@@ -314,6 +316,7 @@ class SumoEnv(gym.Env):
     def step(self, final_actions):
         #print(action)
         AV_action, Veh_id, BV_action, epsilon = final_actions
+        #print(AV_action)
         self._applyAction(self.ego,AV_action)
 
         RB_action =  self.rbm.get_action(self.get_observation(Veh_id))
@@ -325,6 +328,7 @@ class SumoEnv(gym.Env):
 
 
         traci.simulationStep()
+        #print(traci.vehicle.getSpeed(self.ego))
         reward = self._reward(AV_action)
         BV_reward = self._BVreward(BV_action)
         #observation = self._get_observation()
@@ -511,6 +515,8 @@ class SumoEnv(gym.Env):
         elif action_index == len(self.action_list)+1:
             target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
             traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
+        elif action_index == len(self.action_list)+2:
+            pass
         else:
             traci.vehicle.setAcceleration(veh_id, self.action_list[action_index],0.1)
 

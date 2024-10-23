@@ -78,7 +78,7 @@ class DQN(nn.Module):
 
 class Agent(object):
 	"""docstring for Agent"""
-	def __init__(self, arg):
+	def __init__(self, arg, n_actions, n_observations):
 		super(Agent, self).__init__()
 		self.arg = arg
 		self.batch_size = 32
@@ -89,8 +89,10 @@ class Agent(object):
 		self.tau = 0.05
 		self.lr = 1e-5
 		#self.n_actions = 5
-		self.n_actions = 32
-		self.n_observations = 30
+		#self.n_actions = 32
+		self.n_actions = n_actions
+		self.n_observations = n_observations
+		#self.n_observations = 30
 		#self.n_observations = 19
 		self.writter = SummaryWriter()
 		self.episodic_loss = 0

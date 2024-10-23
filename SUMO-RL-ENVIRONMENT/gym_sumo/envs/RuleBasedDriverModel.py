@@ -141,10 +141,15 @@ class DriverModel:
 
 
         #calculate the acceleration of the ego vehicle
-        action_space = np.arange(-4, 2.0, 0.2)
+        action_space = np.arange(-c.RL_DCE_RANGE, c.RL_ACC_RANGE, c.ACC_INTERVAL)
         ego_acc = self.calc_acceleration(state["ego_speed"], state["leader_speed"], state["ego_dis_to_leader"])
         #写一个映射，将ego_acc映射到动作空间,这里有actions include 31 discrete longitudinal accelerations ([−4, 2] with 0.2 m s−2 discrete resolution)
-        index = np.searchsorted(action_space, ego_acc, side='left')
+        if ego_acc < -c.RL_DCE_RANGE:
+            index = 0
+        elif ego_acc > c.RL_ACC_RANGE:
+            index = len(action_space) - 1
+        else:
+            index = np.searchsorted(action_space, ego_acc, side='left')
 
 
 
