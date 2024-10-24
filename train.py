@@ -203,8 +203,11 @@ def train():
     log_f = open(log_f_name,"w+")
     log_f.write('episode,timestep,collision_counts,adversarial_counts,reward\n')
     av_log_f = open(av_log_f_name,"w+")
-    log_f.write("episode,timestep,reward\n")
-
+    log_f.write("episode,timestep,reward,if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg\n")
+    # av_log_f.write(
+    #     '{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg,
+    #                                                     av_total_risk_avg, av_distance, av_running_time, av_acc_avg,
+    #                                                     av_dece_avg, av_left_avg, av_right_avg))
     # printing and logging variables
     print_running_reward = 0
     print_running_episodes = 0
@@ -229,16 +232,13 @@ def train():
         current_ep_reward = 0
         r_r = 0
         state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-        #for t in range(1, max_ep_len+1):
+
+
         av_speed = []
         av_acceleration = []
-        av_acc_counts = 0
         av_deceleration = []
-        av_dece_counts = 0
         av_left_change = []
-        av_left_counts = 0
         av_right_change = []
-        av_right_counts = 0
         av_total_risk = []
         av_distance = 0
         av_running_time = 0
@@ -276,16 +276,16 @@ def train():
             av_speed.append(observation[1])
             if observation[2]>0:
                 av_acceleration.append(observation[2])
-                av_acc_counts += 1
+                #av_acc_counts += 1
             else:
                 av_deceleration.append(observation[2])
-                av_dece_counts += 1
+                #av_dece_counts += 1
             if AV_action.item() == env.action_space.nvec[1]:
                 av_left_change.append(1)
-                av_left_counts += 1
+                #av_left_counts += 1
             if AV_action.item() == env.action_space.nvec[1]+1:
                 av_right_change.append(1)
-                av_right_counts += 1
+                #av_right_counts += 1
             av_total_risk.append(total_risk)
 
 
@@ -386,8 +386,8 @@ def train():
             if done:
                 #AV_agent.episode_durations.append(r_r)
 
-                av_running_time = env._getRuninningTime()
-                av_distance = env._getDistance()
+                av_running_time = env.getRunningTime()
+                av_distance = env.getDistance()
 
 
                 #AV_agent.plot_durations()
@@ -423,7 +423,7 @@ def train():
         av_total_risk_avg = np.mean(av_total_risk)
 
 
-        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_counts, av_dece_counts, av_left_counts, av_right_counts))
+        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg))
         av_log_f.flush()
 
 
@@ -440,6 +440,7 @@ def train():
 
 
     log_f.close()
+    av_log_f.close()
     env.closeEnvConnection()
 
     # print total training time

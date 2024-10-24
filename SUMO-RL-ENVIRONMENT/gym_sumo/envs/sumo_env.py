@@ -507,7 +507,7 @@ class SumoEnv(gym.Env):
                 return float('inf')  # 如果后车速度不大于前车，TTC为无穷大
 
             ttc = dis_to_leader / (ego_speed - leader_speed)
-            print(ttc)
+            #print(ttc)
             return ttc
 
 
@@ -528,12 +528,12 @@ class SumoEnv(gym.Env):
         else:
             traci.vehicle.setAcceleration(veh_id, self.action_list[action_index],0.1)
 
-    def _getRunningTime(self):
+    def getRunningTime(self):
         start = traci.vehicle.getDeparture(self.ego)
         end = traci.simulation.getTime()
         return end - start
 
-    def _getDistance(self):
+    def getDistance(self):
         return traci.vehicle.getDistance(self.ego)
 
 
