@@ -323,8 +323,9 @@ class SumoEnv(gym.Env):
         Adversarial_flag = False
         if epsilon < np.random.rand():
             Adversarial_flag = True
-            traci.vehicle.setSpeedMode(Veh_id, 32)
-            traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+            if Veh_id != "":
+                traci.vehicle.setSpeedMode(Veh_id, 32)
+                traci.vehicle.setLaneChangeMode(Veh_id, 1109)
         else:
             BV_action = RB_action
             #traci.vehicle.set
@@ -516,15 +517,24 @@ class SumoEnv(gym.Env):
         current_lane_index = traci.vehicle.getLaneIndex(veh_id)
 
         if action_index == len(self.action_list):
-            target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
+            target_lane_index = max(current_lane_index - 1, 0)
             traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
+
         elif action_index == len(self.action_list)+1:
-            target_lane_index = max(current_lane_index - 1, 1)
+            target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
             traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
         elif action_index == len(self.action_list)+2:
             pass
         else:
             traci.vehicle.setAcceleration(veh_id, self.action_list[action_index],0.1)
+
+    def _getRunningTime(self):
+        start = traci.vehicle.getDeparture(self.ego)
+        end = traci.simulation.getTime()
+        return end - start
+
+    def _getDistance(self):
+        return traci.vehicle.getDistance(self.ego)
 
 
 

@@ -230,6 +230,21 @@ def train():
         r_r = 0
         state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
         #for t in range(1, max_ep_len+1):
+        av_speed = []
+        av_acceleration = []
+        av_acc_counts = 0
+        av_deceleration = []
+        av_dece_counts = 0
+        av_left_change = []
+        av_left_counts = 0
+        av_right_change = []
+        av_right_counts = 0
+        av_total_risk = []
+        av_distance = 0
+        av_running_time = 0
+        collision_flag = False
+
+
         for t in count():
 
             # select action with policy
@@ -258,11 +273,24 @@ def train():
 
             epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
 
+            av_speed.append(observation[1])
+            if observation[2]>0:
+                av_acceleration.append(observation[2])
+                av_acc_counts += 1
+            else:
+                av_deceleration.append(observation[2])
+                av_dece_counts += 1
+            if AV_action.item() == env.action_space.nvec[1]:
+                av_left_change.append(1)
+                av_left_counts += 1
+            if AV_action.item() == env.action_space.nvec[1]+1:
+                av_right_change.append(1)
+                av_right_counts += 1
+            av_total_risk.append(total_risk)
+
 
             time_step +=1
-            if collision_flag:
-                print("Collision detected")
-                collision_counts += 1
+
             if Adversarial_flag:
                 adversarial_counts += 1
                 BV_reward = BV_reward + excepted_risk[BV_candidate_index]
@@ -276,49 +304,53 @@ def train():
 
                 current_ep_reward += BV_reward
                 # update PPO agent
-                if (collision_counts+1) % update_timestep == 0:
+                if (adversarial_counts + 1) % update_timestep == 0:
                     ppo_agent.update()
 
-                # if continuous action space; then decay action std of ouput action distribution
-                if has_continuous_action_space and collision_counts % action_std_decay_freq == 0:
+                    # if continuous action space; then decay action std of ouput action distribution
+                if has_continuous_action_space and adversarial_counts % action_std_decay_freq == 0:
                     ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
 
-                # log in logging file
-                #需要修改
-                if (collision_counts+1) % log_freq == 0:
+            if collision_flag:
+                print("Collision detected")
+                collision_counts += 1
 
+                    # log in logging file
+                    # 需要修改
+                #if (collision_counts + 1) % log_freq == 0:
                     # log average reward till last episode4s
-                    log_avg_reward = log_running_reward / log_running_episodes
-                    log_avg_reward = round(log_avg_reward, 4)
+                log_avg_reward = log_running_reward / log_running_episodes
+                log_avg_reward = round(log_avg_reward, 4)
 
-                    log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,log_avg_reward))
-                    log_f.flush()
+                log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,
+                                                      log_avg_reward))
+                log_f.flush()
 
-                    log_running_reward = 0
-                    log_running_episodes = 0
+                log_running_reward = 0
+                log_running_episodes = 0
 
-                # printing average reward
-                if (collision_counts+1) % print_freq == 0:
-
+                    # printing average reward
+                if (collision_counts + 1) % print_freq == 0:
                     # print average reward till last episode
                     print_avg_reward = print_running_reward / print_running_episodes
                     print_avg_reward = round(print_avg_reward, 2)
 
-                    print("Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step, print_avg_reward))
+                    print("Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
+                                                                                            print_avg_reward))
 
                     print_running_reward = 0
                     print_running_episodes = 0
 
-                # save model weights
-                if (collision_counts+1) % save_model_freq == 0:
-                    print("--------------------------------------------------------------------------------------------")
+                    # save model weights
+                if (collision_counts + 1) % save_model_freq == 0:
+                    print(
+                        "--------------------------------------------------------------------------------------------")
                     print("saving model at : " + checkpoint_path)
                     ppo_agent.save(checkpoint_path)
                     print("model saved")
                     print("Elapsed Time  : ", datetime.now().replace(microsecond=0) - start_time)
-                    print("--------------------------------------------------------------------------------------------")
-
-
+                    print(
+                        "--------------------------------------------------------------------------------------------")
 
 
 
@@ -332,6 +364,8 @@ def train():
             # if reward == -10:
             #     print(f'Collision: {reward}')
             reward = torch.tensor([reward], device=device)
+
+
             # done = terminated
             if done:
                 next_state = None
@@ -350,11 +384,15 @@ def train():
 
 
             if done:
-                AV_agent.episode_durations.append(r_r)
+                #AV_agent.episode_durations.append(r_r)
+
+                av_running_time = env._getRuninningTime()
+                av_distance = env._getDistance()
+
 
                 #AV_agent.plot_durations()
                 env.closeEnvConnection()
-                print(f'Episodes:{i_episode + 1}, Reward: {r_r}')
+                #print(f'Episodes:{i_episode + 1}, Reward: {r_r}')
                 break
 
 
@@ -374,7 +412,18 @@ def train():
 
 
         r_r = round(r_r, 4)
-        av_log_f.write('{},{},{}\n'.format(i_episode, time_step, r_r))
+        if_collision = 0
+        if collision_flag:
+            if_collision = 1
+        av_speed_avg = np.mean(av_speed)
+        av_acc_avg = np.mean(av_acceleration)
+        av_dece_avg = np.mean(av_deceleration)
+        av_left_avg = np.mean(av_left_change)
+        av_right_avg = np.mean(av_right_change)
+        av_total_risk_avg = np.mean(av_total_risk)
+
+
+        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_counts, av_dece_counts, av_left_counts, av_right_counts))
         av_log_f.flush()
 
 
