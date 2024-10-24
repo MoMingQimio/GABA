@@ -31,9 +31,9 @@ MOBIL_change_threshold = 0.1
 
 
 #Risk assignment parameters
-SSM_D_THRESHOLD = 0.5
-SSM_A_THRESHOLD = 3
+SSM_D_THRESHOLD = 0.6
+SSM_A_THRESHOLD = 4.8
 
 
-SSM_UNCERTAINTY = 0.5
+SSM_UNCERTAINTY = 20.8
 

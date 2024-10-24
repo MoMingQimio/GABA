@@ -323,7 +323,12 @@ class SumoEnv(gym.Env):
         Adversarial_flag = False
         if epsilon < np.random.rand():
             Adversarial_flag = True
+            traci.vehicle.setSpeedMode(Veh_id, 32)
+            traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+        else:
             BV_action = RB_action
+            #traci.vehicle.set
+
         self._applyAction(Veh_id,BV_action)
 
 
@@ -501,6 +506,7 @@ class SumoEnv(gym.Env):
                 return float('inf')  # 如果后车速度不大于前车，TTC为无穷大
 
             ttc = dis_to_leader / (ego_speed - leader_speed)
+            print(ttc)
             return ttc
 
 

@@ -5,7 +5,7 @@ from datetime import datetime
 from itertools import count
 import torch
 import numpy as np
-
+import math
 import gym
 #from networkx.conftest import collect_ignore
 
@@ -220,6 +220,7 @@ def train():
 
     collision_counts = 0
     adversarial_counts = 0
+    collision_rate = 0
     # training loop
     epsilon = 0
     while time_step <= max_training_timesteps:
@@ -255,11 +256,12 @@ def train():
             #other_information
             # saving reward and is_terminals
 
-
+            epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
 
 
             time_step +=1
             if collision_flag:
+                print("Collision detected")
                 collision_counts += 1
             if Adversarial_flag:
                 adversarial_counts += 1
@@ -319,8 +321,7 @@ def train():
 
 
 
-            collision_rate = collision_counts/time_step
-            epsilon = 1 / (1+np.exp(-1*(2 - collision_rate - (total_risk + 1e-3)/2)))
+
 
 
 
@@ -328,8 +329,8 @@ def train():
             #excepted_risk_last_time = excepted_risk
 
             r_r += reward
-            if reward == -10:
-                print(f'Collision: {reward}')
+            # if reward == -10:
+            #     print(f'Collision: {reward}')
             reward = torch.tensor([reward], device=device)
             # done = terminated
             if done:
@@ -344,8 +345,9 @@ def train():
             AV_agent.updateTargetNetwork()
 
 
-            if (i_episode + 1) % 2000 == 0:
-                torch.save(AV_agent.policy_net.state_dict(), av_checkpoint_path+"/model_test.pth")
+
+
+
 
             if done:
                 AV_agent.episode_durations.append(r_r)
@@ -355,19 +357,25 @@ def train():
                 print(f'Episodes:{i_episode + 1}, Reward: {r_r}')
                 break
 
-            if (i_episode + 1) % log_freq == 0:
-                # log average reward till last episode4s
-                av_log_avg_reward = av_log_reward / av_log_episodes
-                av_log_avg_reward = round(av_log_avg_reward, 4)
 
-                av_log_f.write('{},{},{}\n'.format(i_episode, time_step,av_log_avg_reward))
-                av_log_f.flush()
-
-                av_log_reward = 0
-                av_log_episodes = 0
 
             env.move_gui()
 
+
+            #print(f'epsilon:{epsilon}')
+
+        collision_rate = collision_counts / (i_episode + 1)
+        # epsilon = 1 / (1+np.exp(-1*(2 - collision_rate - (total_risk + 1e-3)/2)))
+        # epsilon = 1 / (1 + np.exp((np.array(collision_rate) * np.array(total_risk))))
+
+
+        if (i_episode + 1) % 200 == 0:
+            torch.save(AV_agent.policy_net.state_dict(), av_checkpoint_path + "/model_test.pth")
+
+
+        r_r = round(r_r, 4)
+        av_log_f.write('{},{},{}\n'.format(i_episode, time_step, r_r))
+        av_log_f.flush()
 
 
         i_episode += 1
@@ -378,8 +386,8 @@ def train():
         log_running_reward += current_ep_reward
         log_running_episodes += 1
 
-        av_log_reward += r_r
-        av_log_episodes += 1
+
+
 
 
     log_f.close()
