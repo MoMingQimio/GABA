@@ -79,6 +79,8 @@ class SumoEnv(gym.Env):
         assert render_mode is None or render_mode in self.metadata['render_modes']
         self.render_mode = render_mode
         self.rbm = RB()
+        self.running_distance = 0
+        self.running_time = 0
 
         print(self.render_mode)
 
@@ -332,6 +334,7 @@ class SumoEnv(gym.Env):
 
         self._applyAction(Veh_id,BV_action)
 
+        self.running_distance = traci.vehicle.getDistance(self.ego)
 
         traci.simulationStep()
         #print(traci.vehicle.getSpeed(self.ego))
@@ -529,12 +532,12 @@ class SumoEnv(gym.Env):
             traci.vehicle.setAcceleration(veh_id, self.action_list[action_index],0.1)
 
     def getRunningTime(self):
-        start = traci.vehicle.getDeparture(self.ego)
-        end = traci.simulation.getTime()
-        return end - start
+        #start = traci.vehicle.getDeparture(self.ego)
+        # end =
+        return traci.simulation.getTime()
 
     def getDistance(self):
-        return traci.vehicle.getDistance(self.ego)
+        return self.running_distance
 
 
 

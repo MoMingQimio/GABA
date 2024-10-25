@@ -40,8 +40,8 @@ def train():
     max_ep_len = 1000                   # max timesteps in one episode
     max_training_timesteps = int(3e6)   # break training loop if timeteps > max_training_timesteps
 
-    print_freq = max_ep_len * 10        # print avg reward in the interval (in num timesteps)
-    log_freq = max_ep_len * 2           # log avg reward in the interval (in num timesteps)
+    print_freq = 10        # print avg reward in the interval (in num timesteps)
+    log_freq = 1           # log avg reward in the interval (in num timesteps)
     save_model_freq = int(1e5)          # save model frequency (in num timesteps)
 
     action_std = 0.6                    # starting std for action distribution (Multivariate Normal)
@@ -213,7 +213,7 @@ def train():
     print_running_episodes = 0
 
     log_running_reward = 0
-    log_running_episodes = 0
+    log_running_episodes = 1
 
     av_log_reward = 0
     av_log_episodes = 0
@@ -234,12 +234,12 @@ def train():
         state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
 
 
-        av_speed = []
-        av_acceleration = []
-        av_deceleration = []
-        av_left_change = []
-        av_right_change = []
-        av_total_risk = []
+        av_speed = [0]
+        av_acceleration = [0]
+        av_deceleration = [0]
+        av_left_change = [0]
+        av_right_change = [0]
+        av_total_risk = [0]
         av_distance = 0
         av_running_time = 0
         collision_flag = False
@@ -280,10 +280,10 @@ def train():
             else:
                 av_deceleration.append(observation[2])
                 #av_dece_counts += 1
-            if AV_action.item() == env.action_space.nvec[1]:
+            if AV_action.item() == env.action_space.nvec[1]-3:
                 av_left_change.append(1)
                 #av_left_counts += 1
-            if AV_action.item() == env.action_space.nvec[1]+1:
+            if AV_action.item() == env.action_space.nvec[1]-2:
                 av_right_change.append(1)
                 #av_right_counts += 1
             av_total_risk.append(total_risk)
@@ -304,12 +304,12 @@ def train():
 
                 current_ep_reward += BV_reward
                 # update PPO agent
-                if (adversarial_counts + 1) % update_timestep == 0:
-                    ppo_agent.update()
+                # if (adversarial_counts + 1) % update_timestep == 0:
+                ppo_agent.update()
 
                     # if continuous action space; then decay action std of ouput action distribution
-                if has_continuous_action_space and adversarial_counts % action_std_decay_freq == 0:
-                    ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
+                # if has_continuous_action_space and adversarial_counts % action_std_decay_freq == 0:
+                #     ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
 
             if collision_flag:
                 print("Collision detected")
@@ -327,7 +327,7 @@ def train():
                 log_f.flush()
 
                 log_running_reward = 0
-                log_running_episodes = 0
+                log_running_episodes = 1
 
                     # printing average reward
                 if (collision_counts + 1) % print_freq == 0:
@@ -418,14 +418,26 @@ def train():
         av_speed_avg = np.mean(av_speed)
         av_acc_avg = np.mean(av_acceleration)
         av_dece_avg = np.mean(av_deceleration)
-        av_left_avg = np.mean(av_left_change)
-        av_right_avg = np.mean(av_right_change)
+        av_left_avg = np.sum(av_left_change)/t
+        av_right_avg = np.sum(av_right_change)/t
         av_total_risk_avg = np.mean(av_total_risk)
+
+        av_speed_avg = round(av_speed_avg, 4)
+        av_total_risk_avg = round(av_total_risk_avg, 4)
+        av_distance = round(av_distance, 4)
+        av_running_time = round(av_running_time, 4)
+        av_acc_avg = round(av_acc_avg, 4)
+        av_dece_avg = round(av_dece_avg, 4)
+        av_left_avg = round(av_left_avg, 4)
+        av_right_avg = round(av_right_avg, 4)
 
 
         av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg))
         av_log_f.flush()
-
+        print(
+            '{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg,
+                                                            av_total_risk_avg, av_distance, av_running_time, av_acc_avg,
+                                                            av_dece_avg, av_left_avg, av_right_avg))
 
         i_episode += 1
 
