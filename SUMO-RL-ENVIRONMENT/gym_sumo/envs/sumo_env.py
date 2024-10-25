@@ -393,6 +393,7 @@ class SumoEnv(gym.Env):
         v_ids_e0 = traci.edge.getLastStepVehicleIDs("E0")
         v_ids_e1 = traci.edge.getLastStepVehicleIDs("E1")
         v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
+        
         if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
             return True
         return False
