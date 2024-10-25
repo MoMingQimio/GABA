@@ -99,10 +99,11 @@ class SumoEnv(gym.Env):
                    "--lateral-resolution","3.8",
                    "--start", "true",
                    "--quit-on-end", "true",
-                   "--no-warnings","True",
+                   #"--no-warnings","True",
                    "--no-step-log", "True",
                    "--collision.mingap-factor", "0.0",
-                   "--collision.action", "warn",
+                   #"--collision.action", "warn",
+                   #"--log","/runs/sumo_log.txt",
                    ]
 
         traci.start(sumoCmd)
@@ -317,10 +318,12 @@ class SumoEnv(gym.Env):
 
     def step(self, final_actions):
         #print(action)
+        color = None
         AV_action, Veh_id, BV_action, epsilon = final_actions
         #print(AV_action)
         self._applyAction(self.ego,AV_action)
-
+        if Veh_id != "":
+            color = traci.vehicle.getColor(Veh_id)
         RB_action =  self.rbm.get_action(self.get_observation(Veh_id))
         Adversarial_flag = False
         if epsilon < np.random.rand():
@@ -328,6 +331,7 @@ class SumoEnv(gym.Env):
             if Veh_id != "":
                 traci.vehicle.setSpeedMode(Veh_id, 32)
                 traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+                traci.vehicle.setColor(Veh_id, (255, 0, 0, 0))
         else:
             BV_action = RB_action
             #traci.vehicle.set
@@ -337,6 +341,8 @@ class SumoEnv(gym.Env):
         self.running_distance = traci.vehicle.getDistance(self.ego)
 
         traci.simulationStep()
+        if color is not None:
+            traci.vehicle.setColor(Veh_id, color)
         #print(traci.vehicle.getSpeed(self.ego))
         reward = self._reward(AV_action)
         BV_reward = self._BVreward(BV_action)

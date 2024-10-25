@@ -226,6 +226,7 @@ def train():
     collision_rate = 0
     # training loop
     epsilon = 0
+
     while time_step <= max_training_timesteps:
 
         state ,surrounding_vehicles, excepted_risk= env.reset()
@@ -271,7 +272,8 @@ def train():
             #other_information
             # saving reward and is_terminals
 
-            epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
+            #epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
+            epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3))))
 
             av_speed.append(observation[1])
             if observation[2]>0:
@@ -385,7 +387,7 @@ def train():
 
             if done:
                 #AV_agent.episode_durations.append(r_r)
-
+                #print(done)
                 av_running_time = env.getRunningTime()
                 av_distance = env.getDistance()
 
@@ -407,8 +409,8 @@ def train():
         # epsilon = 1 / (1 + np.exp((np.array(collision_rate) * np.array(total_risk))))
 
 
-        if (i_episode + 1) % 200 == 0:
-            torch.save(AV_agent.policy_net.state_dict(), av_checkpoint_path + "/model_test.pth")
+        if (i_episode + 1) % 2 == 0:
+            torch.save(AV_agent.policy_net.state_dict(), av_checkpoint_path)
 
 
         r_r = round(r_r, 4)
@@ -418,26 +420,27 @@ def train():
         av_speed_avg = np.mean(av_speed)
         av_acc_avg = np.mean(av_acceleration)
         av_dece_avg = np.mean(av_deceleration)
-        av_left_avg = np.sum(av_left_change)/t
-        av_right_avg = np.sum(av_right_change)/t
+        av_left_avg = np.sum(av_left_change)/(t+1)
+        av_right_avg = np.sum(av_right_change)/(t+1)
         av_total_risk_avg = np.mean(av_total_risk)
 
-        av_speed_avg = round(av_speed_avg, 4)
-        av_total_risk_avg = round(av_total_risk_avg, 4)
-        av_distance = round(av_distance, 4)
-        av_running_time = round(av_running_time, 4)
-        av_acc_avg = round(av_acc_avg, 4)
-        av_dece_avg = round(av_dece_avg, 4)
-        av_left_avg = round(av_left_avg, 4)
-        av_right_avg = round(av_right_avg, 4)
+        # av_speed_avg = round(av_speed_avg, 4)
+        # av_total_risk_avg = round(av_total_risk_avg, 4)
+        # av_distance = round(av_distance, 4)
+        # av_running_time = round(av_running_time, 4)
+        # av_acc_avg = round(av_acc_avg, 4)
+        # av_dece_avg = round(av_dece_avg, 4)
+        # av_left_avg = round(av_left_avg, 4)
+        # av_right_avg = round(av_right_avg, 4)
 
 
         av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg))
         av_log_f.flush()
         print(
-            '{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg,
-                                                            av_total_risk_avg, av_distance, av_running_time, av_acc_avg,
-                                                            av_dece_avg, av_left_avg, av_right_avg))
+            'Ep = {}, Step = {}, Reward = {}, Colli = {}, Speed = {}, Risk = {}, Dis = {}, Time = {}, Acc = {}, Dec = {}, Left = {}, Right = {}'.format(
+                i_episode, time_step, r_r, if_collision, round(av_speed_avg,4),
+                round(av_total_risk_avg,4), round(av_distance,4), round(av_running_time,4), round(av_acc_avg,4),
+                round(av_dece_avg,4), round(av_left_avg,4), round(av_right_avg,4)))
 
         i_episode += 1
 
