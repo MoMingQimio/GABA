@@ -322,16 +322,16 @@ class SumoEnv(gym.Env):
         AV_action, Veh_id, BV_action, epsilon = final_actions
         #print(AV_action)
         self._applyAction(self.ego,AV_action)
-        if Veh_id != "":
-            color = traci.vehicle.getColor(Veh_id)
+        # if Veh_id != "":
+        #     color = traci.vehicle.getColor(Veh_id)
         RB_action =  self.rbm.get_action(self.get_observation(Veh_id))
         Adversarial_flag = False
-        if epsilon < np.random.rand():
+        if epsilon > np.random.rand():
             Adversarial_flag = True
             if Veh_id != "":
                 traci.vehicle.setSpeedMode(Veh_id, 32)
                 traci.vehicle.setLaneChangeMode(Veh_id, 1109)
-                traci.vehicle.setColor(Veh_id, (255, 0, 0, 0))
+                # traci.vehicle.setColor(Veh_id, (255, 0, 0, 0))
         else:
             BV_action = RB_action
             #traci.vehicle.set
@@ -341,8 +341,8 @@ class SumoEnv(gym.Env):
         self.running_distance = traci.vehicle.getDistance(self.ego)
 
         traci.simulationStep()
-        if color is not None:
-            traci.vehicle.setColor(Veh_id, color)
+        # if color is not None:
+        #     traci.vehicle.setColor(Veh_id, color)
         #print(traci.vehicle.getSpeed(self.ego))
         reward = self._reward(AV_action)
         BV_reward = self._BVreward(BV_action)
@@ -396,7 +396,9 @@ class SumoEnv(gym.Env):
         
         if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
             return True
-        return False
+        else:
+            print("Ego vehicle is not running")
+            return False
 
     def _warmup(self):
         while True:
