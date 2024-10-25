@@ -2,4 +2,6 @@
 /models/
 /PPO_logs/
 /PPO_preTrained/
+/AV_preTrained/
+/images/
 training_reward_test.png
