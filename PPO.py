@@ -61,7 +61,7 @@ class ActorCritic(nn.Module):
                             nn.Tanh(),
                             nn.Linear(64, 64),
                             nn.Tanh(),
-                            nn.Linear(64, action_dim),
+                            nn.Linear(64, action_dim[0]+action_dim[1]),
                             nn.Softmax(dim=-1)
                         )
         # critic
@@ -86,33 +86,34 @@ class ActorCritic(nn.Module):
     
     def act(self, state):
 
-        if self.has_continuous_action_space:
-            action_mean = self.actor(state)
-            cov_mat = torch.diag(self.action_var).unsqueeze(dim=0)
-            dist = MultivariateNormal(action_mean, cov_mat)
-        else:
-            action_probs = self.actor(state)
-            # 如果action_probs 中存在NAN
-            if torch.isnan(action_probs).any():
-                action_probs = torch.rand_like(action_probs)
-            dist = Categorical(action_probs)
-            # if torch.isnan(action_probs).any():
-            # #if action_probs
-            #
-            #     print("action_probs", action_probs)
-            # action_probs1 = action_probs[:self.action_dim[0]]
-            # action_probs2 = action_probs[self.action_dim[0]:]
-            # dist1 = Categorical(action_probs1)
-            # dist2 = Categorical(action_probs2)
+        # if self.has_continuous_action_space:
+        #     action_mean = self.actor(state)
+        #     cov_mat = torch.diag(self.action_var).unsqueeze(dim=0)
+        #     dist = MultivariateNormal(action_mean, cov_mat)
+        # else:
+        action_probs = self.actor(state)
+        # 如果action_probs 中存在NAN
+        if torch.isnan(action_probs).any():
+            action_probs = torch.rand_like(action_probs)
+        # dist = Categorical(action_probs)
+
+        action_probs1 = action_probs[:,:self.action_dim[0]]
+        action_probs2 = action_probs[:,self.action_dim[0]:]
+        dist1 = Categorical(action_probs1)
+        dist2 = Categorical(action_probs2)
 
 
-        # action1 = dist1.sample()
-        # action2 = dist2.sample()
-        # action_logprob1 = dist.log_prob(action1)
-        # action_logprob2 = dist.log_prob(action2)
-        action = dist.sample()
-        action_logprob = dist.log_prob(action)
+        action1 = dist1.sample()
+        action2 = dist2.sample()
+        action_logprob1 = dist1.log_prob(action1)
+        action_logprob2 = dist2.log_prob(action2)
+        action = torch.concat([action1, action2])
+        action_logprob = torch.concat([action_logprob1, action_logprob2])
+        # action = dist.sample()
+        # action_logprob = dist.log_prob(action)
         state_val = self.critic(state)
+
+
 
         # return action1.detach(),action2.detach(),  action_logprob1.detach(),action_logprob2.detach(), state_val.detach()
 
@@ -120,24 +121,39 @@ class ActorCritic(nn.Module):
 
     def evaluate(self, state, action):
 
-        if self.has_continuous_action_space:
-            action_mean = self.actor(state)
-            
-            action_var = self.action_var.expand_as(action_mean)
-            cov_mat = torch.diag_embed(action_var).to(device)
-            dist = MultivariateNormal(action_mean, cov_mat)
-            
-            # For Single Action Environments.
-            if self.action_dim == 1:
-                action = action.reshape(-1, self.action_dim)
-        else:
-            action_probs = self.actor(state)
-            #如果action_probs 中存在NAN
-            if torch.isnan(action_probs).any():
-                action_probs = torch.rand_like(action_probs)
-            dist = Categorical(action_probs)
-        action_logprobs = dist.log_prob(action)
-        dist_entropy = dist.entropy()
+        # if self.has_continuous_action_space:
+        #     action_mean = self.actor(state)
+        #
+        #     action_var = self.action_var.expand_as(action_mean)
+        #     cov_mat = torch.diag_embed(action_var).to(device)
+        #     dist = MultivariateNormal(action_mean, cov_mat)
+        #
+        #     # For Single Action Environments.
+        #     if self.action_dim == 1:
+        #         action = action.reshape(-1, self.action_dim)
+        # else:
+        state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+        action_probs = self.actor(state)
+        #如果action_probs 中存在NAN
+        if torch.isnan(action_probs).any():
+            action_probs = torch.rand_like(action_probs)
+        action_probs1 = action_probs[:, :self.action_dim[0]]
+        action_probs2 = action_probs[:, self.action_dim[0]:]
+        dist1 = Categorical(action_probs1)
+        dist2 = Categorical(action_probs2)
+
+            #dist = Categorical(action_probs)
+
+        # action_logprobs = dist.log_prob(action)
+        action_logprobs1 = dist1.log_prob(action[0])
+        action_logprobs2 = dist2.log_prob(action[1])
+        action_logprobs = torch.concat([action_logprobs1,action_logprobs2])
+
+
+        # dist_entropy = dist.entropy()
+        dist_entropy1 = dist1.entropy()
+        dist_entropy2 = dist2.entropy()
+        dist_entropy = dist_entropy1+dist_entropy2
         state_values = self.critic(state)
         
         return action_logprobs, state_values, dist_entropy

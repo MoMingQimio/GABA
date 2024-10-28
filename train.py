@@ -77,7 +77,7 @@ def train():
         action_dim = env.action_space.shape[0]
     else:
         #取出action_space中的两个维度
-        action_dim = env.action_space.nvec[0] *env.action_space.nvec[1]
+        action_dim = [env.action_space.nvec[0],env.action_space.nvec[1]]
 
 
         #action_dim = env.action_space.n
@@ -256,8 +256,10 @@ def train():
             BV_action,BV_action_logprob,BV_state_val = ppo_agent.select_action(state)
             # BV_action = BV_action.numpy().flatten()
             #print(f'AV_action:{AV_action},BV_action:{BV_action}')
-            BV_candidate_index = BV_action.item() % env.action_space.nvec[0]
-            BV_action_index = BV_action.item() // env.action_space.nvec[0]
+            # BV_candidate_index = BV_action.item() % env.action_space.nvec[0]
+            # BV_action_index = BV_action.item() // env.action_space.nvec[0]
+            BV_candidate_index = BV_action[0]
+            BV_action_index = BV_action[1]
             Veh_id= surrounding_vehicles[BV_candidate_index]
 
             # BV_candidate_index = np.where(surrounding_vehicles == Veh_id)[0][0]
