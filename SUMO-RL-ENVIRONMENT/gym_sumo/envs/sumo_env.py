@@ -99,11 +99,11 @@ class SumoEnv(gym.Env):
                    "--lateral-resolution","3.8",
                    "--start", "true",
                    "--quit-on-end", "true",
-                   "--no-warnings","True",
+                   #"--no-warnings","True",
                    "--no-step-log", "True",
                    "--collision.mingap-factor", "0.0",
-                   #"--collision.action", "warn",
-                   #"--log","/runs/sumo_log.txt",
+                   "--collision.action", "warn",
+                   "-l", "sumo_networks/test.add.xml",
                    ]
 
         traci.start(sumoCmd)
