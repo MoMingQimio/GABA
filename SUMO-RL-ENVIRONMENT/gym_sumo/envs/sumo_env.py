@@ -317,13 +317,11 @@ class SumoEnv(gym.Env):
         return -10 * c_reward
 
     def step(self, final_actions):
-        #print(action)
-        #color = None
+
         AV_action, Veh_id, BV_action, epsilon = final_actions
-        #print(AV_action)
+
         self._applyAction(self.ego,AV_action)
-        # if Veh_id != "":
-        #     color = traci.vehicle.getColor(Veh_id)
+
         RB_action =  self.rbm.get_action(self.get_observation(Veh_id))
         Adversarial_flag = False
         if epsilon > np.random.rand():
@@ -331,28 +329,15 @@ class SumoEnv(gym.Env):
             if Veh_id != "":
                 traci.vehicle.setSpeedMode(Veh_id, 32)
                 traci.vehicle.setLaneChangeMode(Veh_id, 1109)
-                # traci.vehicle.setColor(Veh_id, (255, 0, 0, 0))
         else:
             BV_action = RB_action
-            #traci.vehicle.set
-
         self._applyAction(Veh_id,BV_action)
-
         self.running_distance = traci.vehicle.getDistance(self.ego)
-
         traci.simulationStep()
-        # if color is not None:
-        #     traci.vehicle.setColor(Veh_id, color)
-        #print(traci.vehicle.getSpeed(self.ego))
         reward = self._reward(AV_action)
         BV_reward = self._BVreward(BV_action)
-        #observation = self._get_observation()
         observation, surrounding_vehicles = self.get_observation(self.ego)
-
         excepted_risk, total_risk = self.risk_assessment(observation,surrounding_vehicles)
-        #print(risk)
-        #bv = surrounding_vehicles[np.argmax(excepted_risk)]
-        #self._applyBVaction(bv)
         done = self.is_collided or (self._isEgoRunning()==False)
         collision_flag = self.is_collided
 
@@ -396,8 +381,6 @@ class SumoEnv(gym.Env):
         if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
             return True
         return False
-            # #print("Ego vehicle is not running")
-            # return False
 
     def _warmup(self):
         while True:
@@ -406,7 +389,6 @@ class SumoEnv(gym.Env):
             v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
             if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
                 traci.vehicle.setLaneChangeMode(self.ego,0)
-                #traci.vehicle.setSpeedMode(self.ego,0)
                 return True
             traci.simulationStep()
 
@@ -456,9 +438,9 @@ class SumoEnv(gym.Env):
 
         #print(lane_risk_prob)
         #risk_level = np.argmax(prob_norm, axis=0)
-        excepted_risk = np.dot(np.array([0, 1, 2]),prob_norm) #求出每个背景车辆的期望风险
+        excepted_risk = np.dot(np.array([-0.5, 1, 2]),prob_norm) #求出每个背景车辆的期望风险
 
-        total_risk = np.dot(np.array([0, 1, 2]),total_prob) #求出目标车辆的期望风险
+        total_risk = np.dot(np.array([-0.5, 1, 2]),total_prob) #求出目标车辆的期望风险
 
         return excepted_risk, total_risk
 

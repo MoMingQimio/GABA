@@ -31,9 +31,9 @@ plt.ion()
 # if GPU
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 device = torch.device("cpu")
-# import platform
-# if platform.system() == "Windows":
-# 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+import platform
+if platform.system() == "Windows":
+	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 Transition = namedtuple('Transition', ('state','action','next_state','reward'))
 
