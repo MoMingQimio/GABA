@@ -314,11 +314,11 @@ class SumoEnv(gym.Env):
 
     def _BVreward(self, action):
         c_reward = self._collision_reward()
-        return -c_reward
+        return -10 * c_reward
 
     def step(self, final_actions):
         #print(action)
-        color = None
+        #color = None
         AV_action, Veh_id, BV_action, epsilon = final_actions
         #print(AV_action)
         self._applyAction(self.ego,AV_action)

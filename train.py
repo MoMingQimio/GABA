@@ -21,12 +21,12 @@ def train():
     print("============================================================================================")
     # set device to cpu or cuda
     device = torch.device('cpu')
-    if torch.cuda.is_available():
-        device = torch.device('cuda:0')
-        torch.cuda.empty_cache()
-        print("Device set to : " + str(torch.cuda.get_device_name(device)))
-    else:
-        print("Device set to : cpu")
+    # if torch.cuda.is_available():
+    #     device = torch.device('cuda:0')
+    #     torch.cuda.empty_cache()
+    #     print("Device set to : " + str(torch.cuda.get_device_name(device)))
+    # else:
+    #     print("Device set to : cpu")
     print("============================================================================================")
 
     print("============================================================================================")
@@ -38,7 +38,7 @@ def train():
     has_continuous_action_space = False  # continuous action space; else discrete
 
     max_ep_len = 1000                   # max timesteps in one episode
-    max_training_timesteps = int(3e6)   # break training loop if timeteps > max_training_timesteps
+    max_training_timesteps = int(3e5)   # break training loop if timeteps > max_training_timesteps
 
     print_freq = 10        # print avg reward in the interval (in num timesteps)
     log_freq = 1           # log avg reward in the interval (in num timesteps)
@@ -203,7 +203,7 @@ def train():
     log_f = open(log_f_name,"w+")
     log_f.write('episode,timestep,collision_counts,adversarial_counts,reward\n')
     av_log_f = open(av_log_f_name,"w+")
-    log_f.write("episode,timestep,reward,if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg\n")
+    av_log_f.write("episode,timestep,reward,if_collision,collision_rate,adversarial_counts,epsilon,av_speed_avg,av_total_risk_avg,av_distance,av_running_time,av_acc_avg,av_dece_avg,av_left_avg,av_right_avg\n")
     # av_log_f.write(
     #     '{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg,
     #                                                     av_total_risk_avg, av_distance, av_running_time, av_acc_avg,
@@ -326,22 +326,24 @@ def train():
 
                 log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,
                                                       log_avg_reward))
+                print("BV--> Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
+                                                                                             log_avg_reward))
                 log_f.flush()
 
                 log_running_reward = 0
                 log_running_episodes = 1
 
                     # printing average reward
-                if (collision_counts + 1) % print_freq == 0:
-                    # print average reward till last episode
-                    print_avg_reward = print_running_reward / print_running_episodes
-                    print_avg_reward = round(print_avg_reward, 2)
-
-                    print("Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
-                                                                                            print_avg_reward))
-
-                    print_running_reward = 0
-                    print_running_episodes = 0
+                # if (collision_counts + 1) % print_freq == 0:
+                #     # print average reward till last episode
+                #     print_avg_reward = print_running_reward / print_running_episodes
+                #     print_avg_reward = round(print_avg_reward, 2)
+                #
+                #     print("Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
+                #                                                                             print_avg_reward))
+                #
+                #     print_running_reward = 0
+                #     print_running_episodes = 0
 
                     # save model weights
                 if (collision_counts + 1) % save_model_freq == 0:
@@ -434,11 +436,11 @@ def train():
         # av_right_avg = round(av_right_avg, 4)
 
 
-        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg))
+        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision,collision_rate,adversarial_counts,epsilon, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg))
         av_log_f.flush()
         print(
-            'Ep = {}, Step = {}, Reward = {}, Colli = {}, Speed = {}, Risk = {}, Dis = {}, Time = {}, Acc = {}, Dec = {}, Left = {}, Right = {}'.format(
-                i_episode, time_step, r_r, if_collision, round(av_speed_avg,4),
+            'Ep={},Step={},R={},C_F={},C_R = {},Adv_c={},epsilon={},SPD={},Risk={},Dis={},T={},Acc={},Dec={},Left={},Right={}'.format(
+                i_episode, time_step, r_r, if_collision,round(collision_rate,4),adversarial_counts,round(epsilon,4), round(av_speed_avg,4),
                 round(av_total_risk_avg,4), round(av_distance,4), round(av_running_time,4), round(av_acc_avg,4),
                 round(av_dece_avg,4), round(av_left_avg,4), round(av_right_avg,4)))
 

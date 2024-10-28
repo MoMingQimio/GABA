@@ -9,7 +9,7 @@ from collections import namedtuple,deque
 from itertools import count
 
 import torch
-from torch.utils.tensorboard import SummaryWriter
+# from torch.utils.tensorboard import SummaryWriter
 torch.manual_seed(0)
 import torch.nn as nn
 import torch.optim as optim
@@ -31,9 +31,9 @@ plt.ion()
 # if GPU
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 device = torch.device("cpu")
-import platform
-if platform.system() == "Windows":
-	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# import platform
+# if platform.system() == "Windows":
+# 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 Transition = namedtuple('Transition', ('state','action','next_state','reward'))
 
@@ -94,7 +94,7 @@ class Agent(object):
 		self.n_observations = n_observations
 		#self.n_observations = 30
 		#self.n_observations = 19
-		self.writter = SummaryWriter()
+		# self.writter = SummaryWriter()
 		self.episodic_loss = 0
 
 		self.episode_durations = []
