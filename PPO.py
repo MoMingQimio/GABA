@@ -48,29 +48,29 @@ class ActorCritic(nn.Module):
         # actor
         if has_continuous_action_space :
             self.actor = nn.Sequential(
-                            nn.Linear(state_dim, 64),
+                            nn.Linear(state_dim, 128),
                             nn.Tanh(),
-                            nn.Linear(64, 64),
+                            nn.Linear(128, 128),
                             nn.Tanh(),
-                            nn.Linear(64, action_dim),
+                            nn.Linear(128, action_dim),
                             nn.Tanh()
                         )
         else:
             self.actor = nn.Sequential(
-                            nn.Linear(state_dim, 64),
+                            nn.Linear(state_dim, 128),
                             nn.Tanh(),
-                            nn.Linear(64, 64),
+                            nn.Linear(128, 128),
                             nn.Tanh(),
-                            nn.Linear(64, action_dim[0]+action_dim[1]),
+                            nn.Linear(128, action_dim[0]+action_dim[1]),
                             nn.Softmax(dim=-1)
                         )
         # critic
         self.critic = nn.Sequential(
-                        nn.Linear(state_dim, 64),
+                        nn.Linear(state_dim, 128),
                         nn.Tanh(),
-                        nn.Linear(64, 64),
+                        nn.Linear(128, 128),
                         nn.Tanh(),
-                        nn.Linear(64, 1)
+                        nn.Linear(128, 1)
                     )
         
     def set_action_std(self, new_action_std):

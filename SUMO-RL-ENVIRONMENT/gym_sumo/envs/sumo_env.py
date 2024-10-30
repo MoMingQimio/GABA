@@ -102,7 +102,7 @@ class SumoEnv(gym.Env):
                    "--no-warnings","True",
                    "--no-step-log", "True",
                    "--collision.mingap-factor", "0.0",
-                   #"--collision.action", "warn",
+                   "--collision.action", "warn",
                    #"--log","/runs/sumo_log.txt",
                    ]
 
@@ -329,6 +329,11 @@ class SumoEnv(gym.Env):
             if Veh_id != "":
                 traci.vehicle.setSpeedMode(Veh_id, 32)
                 traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+                # The lane change mode when controlling BV is 0b010001010101 = 1109
+                # which means that the laneChangeModel may execute all changes unless in conflict
+                # with TraCI.Requests from TraCI are handled urgently without consideration for safety constraints.
+
+                #traci.vehicle.setLaneChangeMode(Veh_id, 1621)
         else:
             BV_action = RB_action
         self._applyAction(Veh_id,BV_action)
@@ -388,7 +393,9 @@ class SumoEnv(gym.Env):
             v_ids_e1 = traci.edge.getLastStepVehicleIDs("E1")
             v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
             if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
-                traci.vehicle.setLaneChangeMode(self.ego,0)
+                # traci.vehicle.setLaneChangeMode(self.ego,0)
+                traci.vehicle.setSpeedMode(self.ego, 32)
+                traci.vehicle.setLaneChangeMode(self.ego, 1109)
                 return True
             traci.simulationStep()
 

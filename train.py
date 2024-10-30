@@ -460,7 +460,7 @@ def train():
 
     log_f.close()
     av_log_f.close()
-    env.closeEnvConnection()
+    #env.closeEnvConnection()
 
     # print total training time
     print("============================================================================================")
