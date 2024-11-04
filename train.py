@@ -440,7 +440,7 @@ def train():
         # av_right_avg = round(av_right_avg, 4)
 
 
-        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision,collision_rate,adversarial_counts,epsilon, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg))
+        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}\n'.format(i_episode, time_step, r_r, if_collision,collision_rate,adversarial_counts,epsilon, av_speed_avg, av_total_risk_avg, av_distance, av_running_time, av_acc_avg, av_dece_avg, av_left_avg, av_right_avg))
         av_log_f.flush()
         print(
             'Ep={}, Step={},R={},C_F={},C_R = {},Adv_c={},epsilon={},SPD={},Risk={},Dis={},T={},Acc={},Dec={},Left={},Right={}'.format(
