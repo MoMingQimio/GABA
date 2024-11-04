@@ -55,7 +55,7 @@ def train(seed = 0):
     ## Note : print/log frequencies should be > than max_ep_len
 
     ################ PPO hyperparameters ################
-    update_timestep = max_ep_len * 4  # update policy every n timesteps
+    update_timestep = 1000 # update policy every n timesteps
     K_epochs = 80  # update policy for K epochs in one PPO update
 
     eps_clip = 0.2  # clip parameter for PPO
@@ -271,7 +271,7 @@ def train(seed = 0):
             # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
 
             # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3)))) sigmoid function, but not work
-            epsilon = 1 - math.exp(0.5 * (1 - 1 / (collision_rate + 1e-3)))
+            epsilon = 1 - math.exp(0.05 * (1 - 1 / (collision_rate + 1e-3)))
 
             av_speed.append(observation[1])
             if observation[2] > 0:
@@ -302,9 +302,11 @@ def train(seed = 0):
                 ppo_agent.buffer.is_terminals.append(done)
 
                 current_ep_reward += BV_reward
+                if (adversarial_counts+1) % update_timestep == 0:
+                    ppo_agent.update()
                 # update PPO agent
                 # if (adversarial_counts + 1) % update_timestep == 0:
-                ppo_agent.update()
+                
 
                 # if continuous action space; then decay action std of ouput action distribution
                 # if has_continuous_action_space and adversarial_counts % action_std_decay_freq == 0:
@@ -313,22 +315,23 @@ def train(seed = 0):
             if collision_flag:
                 print("Collision detected")
                 collision_counts += 1
-
+                
                 # log in logging file
                 # 需要修改
                 # if (collision_counts + 1) % log_freq == 0:
                 # log average reward till last episode4s
-                log_avg_reward = log_running_reward / log_running_episodes
-                log_avg_reward = round(log_avg_reward, 4)
+                # log_avg_reward = log_running_reward / log_running_episodes
+                current_ep_reward = round(current_ep_reward, 4)
+                
 
                 log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,
-                                                      log_avg_reward))
+                                                      current_ep_reward))
                 # print("BV--> Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
                 #                                                                               log_avg_reward))
                 log_f.flush()
 
-                log_running_reward = 0
-                log_running_episodes = 1
+                # log_running_reward = 0
+                # log_running_episodes = 1
 
                 # printing average reward
                 # if (collision_counts + 1) % print_freq == 0:
@@ -414,7 +417,7 @@ def train(seed = 0):
         # av_left_avg = round(av_left_avg, 4)
         # av_right_avg = round(av_right_avg, 4)
 
-        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},\n'.format(i_episode, time_step, r_r, if_collision,
+        av_log_f.write('{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}\n'.format(i_episode, time_step, r_r, if_collision,
                                                                                 collision_rate, adversarial_counts,
                                                                                 epsilon, av_speed_avg,
                                                                                 av_total_risk_avg, av_distance,
@@ -430,11 +433,11 @@ def train(seed = 0):
 
         i_episode += 1
 
-        print_running_reward += current_ep_reward
-        print_running_episodes += 1
+        # print_running_reward += current_ep_reward
+        # print_running_episodes += 1
 
-        log_running_reward += current_ep_reward
-        log_running_episodes += 1
+        # log_running_reward += current_ep_reward
+        # log_running_episodes += 1
 
     log_f.close()
     av_log_f.close()
@@ -462,7 +465,7 @@ def train(seed = 0):
 import multiprocessing as mp
 from multiprocessing import Pool, Process
 def main():
-	ra = [i for i in range(5)]
+	ra = [i for i in range(3)]
 	proces = []
 	for i in ra:
 	    proc = Process(target=train, args=(str(i+1),))

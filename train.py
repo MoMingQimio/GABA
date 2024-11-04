@@ -53,7 +53,7 @@ def train():
     ## Note : print/log frequencies should be > than max_ep_len
 
     ################ PPO hyperparameters ################
-    update_timestep = max_ep_len * 4      # update policy every n timesteps
+    update_timestep = 1000      # update policy every n timesteps
     K_epochs = 80               # update policy for K epochs in one PPO update
 
     eps_clip = 0.2          # clip parameter for PPO
@@ -310,8 +310,9 @@ def train():
 
                 current_ep_reward += BV_reward
                 # update PPO agent
-                # if (adversarial_counts + 1) % update_timestep == 0:
-                ppo_agent.update()
+                if adversarial_counts  % update_timestep == 0:
+                    ppo_agent.update()
+                
 
                     # if continuous action space; then decay action std of ouput action distribution
                 # if has_continuous_action_space and adversarial_counts % action_std_decay_freq == 0:
@@ -320,22 +321,23 @@ def train():
             if collision_flag:
                 print("Collision detected")
                 collision_counts += 1
+                
 
                     # log in logging file
                     # 需要修改
                 #if (collision_counts + 1) % log_freq == 0:
                     # log average reward till last episode4s
-                log_avg_reward = log_running_reward / log_running_episodes
-                log_avg_reward = round(log_avg_reward, 4)
+                #log_avg_reward = log_running_reward / log_running_episodes
+                current_ep_reward = round(current_ep_reward, 4)
 
                 log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,
-                                                      log_avg_reward))
+                                                      current_ep_reward))
                 print("BV--> Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
-                                                                                             log_avg_reward))
+                                                                                             current_ep_reward))
                 log_f.flush()
 
-                log_running_reward = 0
-                log_running_episodes = 1
+                current_ep_reward = 0
+                #log_running_episodes = 1
 
                     # printing average reward
                 # if (collision_counts + 1) % print_freq == 0:
@@ -450,11 +452,11 @@ def train():
 
         i_episode += 1
 
-        print_running_reward += current_ep_reward
-        print_running_episodes += 1
+        # print_running_reward += current_ep_reward
+        # print_running_episodes += 1
 
-        log_running_reward += current_ep_reward
-        log_running_episodes += 1
+        # log_running_reward += current_ep_reward
+        # log_running_episodes += 1
 
 
 

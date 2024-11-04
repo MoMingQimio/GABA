@@ -132,22 +132,25 @@ class ActorCritic(nn.Module):
         #     if self.action_dim == 1:
         #         action = action.reshape(-1, self.action_dim)
         # else:
+
         state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
         action_probs = self.actor(state)
         #如果action_probs 中存在NAN
         if torch.isnan(action_probs).any():
             action_probs = torch.rand_like(action_probs)
-        action_probs1 = action_probs[:, :self.action_dim[0]]
-        action_probs2 = action_probs[:, self.action_dim[0]:]
+        action_probs1 = action_probs[:,:, :self.action_dim[0]]
+        action_probs2 = action_probs[:,:, self.action_dim[0]:]
         dist1 = Categorical(action_probs1)
         dist2 = Categorical(action_probs2)
 
             #dist = Categorical(action_probs)
 
         # action_logprobs = dist.log_prob(action)
-        action_logprobs1 = dist1.log_prob(action[0])
-        action_logprobs2 = dist2.log_prob(action[1])
-        action_logprobs = torch.concat([action_logprobs1,action_logprobs2])
+        action_logprobs1 = dist1.log_prob(action[:,0])
+        action_logprobs2 = dist2.log_prob(action[:,1])
+        #action_logprobs1 = action_logprobs1.unsqueeze(2)
+        # action_logprobs = torch.concat([action_logprobs1.unsqueeze(2),action_logprobs2.unsqueeze(2)],dim=-1)
+        action_logprobs = torch.concat([action_logprobs1, action_logprobs2]).reshape(action_logprobs1.shape[1],2)
 
 
         # dist_entropy = dist.entropy()
@@ -275,11 +278,11 @@ class PPO:
             ratios = torch.exp(logprobs - old_logprobs.detach())
 
             # Finding Surrogate Loss  
-            surr1 = ratios * advantages
-            surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * advantages
+            surr1 = ratios * advantages.unsqueeze(1)
+            surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * advantages.unsqueeze(1)
 
             # final loss of clipped objective PPO
-            loss = -torch.min(surr1, surr2) + 0.5 * self.MseLoss(state_values, rewards) - 0.01 * dist_entropy
+            loss = torch.mm(-torch.min(surr1, surr2),torch.tensor([[0.5],[0.5]])).squeeze()+ 0.5 * self.MseLoss(state_values, rewards) - 0.01 * dist_entropy.squeeze()
             
             # take gradient step
             self.optimizer.zero_grad()
