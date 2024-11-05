@@ -271,7 +271,7 @@ def train(seed = 0):
             # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
 
             # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3)))) sigmoid function, but not work
-            epsilon = 1 - math.exp(0.05 * (1 - 1 / (collision_rate + 1e-3)))
+            epsilon = 1 - math.exp(0.01* (1 - 1 / (collision_rate + 1e-3)))
 
             av_speed.append(observation[1])
             if observation[2] > 0:
