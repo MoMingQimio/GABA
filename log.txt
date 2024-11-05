@@ -1,0 +1,462 @@
+Collision detected
+Ep = 0, Step = 2096, Reward = -6270.7472, Colli = 1, Speed = 1.0933, Risk = 0.1791, Dis = 229.2212, Time = 269.7, Acc = 2.9986, Dec = 0.0, Left = 0.0902, Right = 0.0897
+Collision detected
+Ep = 1, Step = 3782, Reward = -4239.1205, Colli = 1, Speed = 5.1243, Risk = 0.426, Dis = 864.3044, Time = 228.7, Acc = 2.9982, Dec = 0.0, Left = 0.0884, Right = 0.0913
+Collision detected
+Collision detected4, Reward = -5165.0773, Colli = 1, Speed = 1.085, Risk = 0.1562, Dis = 186.8213, Time = 232.3, Acc = 2.9983, Dec = 0.0, Left = 0.0912, Right = 0.0941
+Ep = 3, Step = 8433, Reward = -7701.9946, Colli = 1, Speed = 3.9003, Risk = 0.5348, Dis = 1142.3214, Time = 353.0, Acc = 2.999, Dec = 0.0, Left = 0.0959, Right = 0.1041
+Collision detected
+Ep = 4, Step = 9684, Reward = -3678.1504, Colli = 1, Speed = 1.3844, Risk = 0.1717, Dis = 173.3309, Time = 185.2, Acc = 2.9976, Dec = 0.0, Left = 0.0807, Right = 0.0855
+Collision detected
+Ep = 5, Step = 12576, Reward = -8595.8024, Colli = 1, Speed = 1.121, Risk = 0.2507, Dis = 324.2525, Time = 349.3, Acc = 2.999, Dec = 0.0, Left = 0.0902, Right = 0.0875
+Collision detected
+Ep = 6, Step = 14014, Reward = -4191.5941, Colli = 1, Speed = 1.6422, Risk = 0.2463, Dis = 236.2254, Time = 203.9, Acc = 2.9979, Dec = 0.0, Left = 0.0862, Right = 0.0911
+Collision detected
+Ep = 7, Step = 16412, Reward = -6851.5745, Colli = 1, Speed = 1.933, Risk = 0.446, Dis = 463.3077, Time = 299.9, Acc = 2.9987, Dec = 0.0, Left = 0.0917, Right = 0.1001
+Ep = 8, Step = 19412, Reward = -7984.1908, Colli = 0, Speed = 3.5702, Risk = 0.5052, Dis = 1071.1715, Time = 360.1, Acc = 2.999, Dec = 0.0, Left = 0.101, Right = 0.0963
+Ep = 9, Step = 22412, Reward = -5476.0716, Colli = 0, Speed = 10.6919, Risk = 0.5205, Dis = 3206.8241, Time = 360.1, Acc = 2.999, Dec = 0.0, Left = 0.1017, Right = 0.0927
+Ep = 10, Step = 25412, Reward = -2397.9563, Colli = 0, Speed = 18.7925, Risk = 0.5001, Dis = 5636.6448, Time = 360.1, Acc = 2.999, Dec = 0.0, Left = 0.106, Right = 0.09
+Ep = 11, Step = 28392, Reward = -1522.1496, Colli = 0, Speed = 23.4724, Risk = 0.4178, Dis = 6994.3557, Time = 358.1, Acc = 2.9984, Dec = 0.0, Left = 0.1302, Right = 0.0809
+Ep = 12, Step = 31392, Reward = -1313.5364, Colli = 0, Speed = 21.8415, Risk = 0.4877, Dis = 6551.6354, Time = 360.1, Acc = 2.999, Dec = 0.0, Left = 0.1283, Right = 0.0737
+Ep = 13, Step = 34392, Reward = -750.7064, Colli = 0, Speed = 21.8727, Risk = 0.4238, Dis = 6560.9409, Time = 360.1, Acc = 2.999, Dec = 0.0, Left = 0.122, Right = 0.0777
+Ep = 14, Step = 37001, Reward = -879.6646, Colli = 0, Speed = 26.8052, Risk = 0.552, Dis = 6993.5051, Time = 321.0, Acc = 2.9989, Dec = -0.4772, Left = 0.1092, Right = 0.1138
+Ep = 15, Step = 39641, Reward = 309.5138, Colli = 0, Speed = 26.4914, Risk = 0.3616, Dis = 6993.8789, Time = 324.1, Acc = 2.9989, Dec = -1.0197, Left = 0.1178, Right = 0.0856
+Ep = 16, Step = 42240, Reward = 156.2297, Colli = 0, Speed = 26.9144, Risk = 0.3528, Dis = 6994.5848, Time = 320.0, Acc = 2.9981, Dec = 0.0, Left = 0.1281, Right = 0.0762
+Ep = 17, Step = 44807, Reward = 472.0416, Colli = 0, Speed = 27.2489, Risk = 0.4849, Dis = 6994.4979, Time = 316.8, Acc = 2.9988, Dec = 0.0, Left = 0.1282, Right = 0.0779
+Collision detected
+Episode : 18             Timestep : 45107                Average Reward : 154.81
+Ep = 18, Step = 45107, Reward = -615.9034, Colli = 1, Speed = 8.5457, Risk = 0.1206, Dis = 255.5168, Time = 90.1, Acc = 2.99, Dec = 0.0, Left = 0.0667, Right = 0.0667
+Ep = 19, Step = 45750, Reward = -754.5649, Colli = 0, Speed = 15.4436, Risk = 0.2998, Dis = 991.7026, Time = 124.4, Acc = 2.9953, Dec = -0.6559, Left = 0.098, Right = 0.0684
+Ep = 20, Step = 48316, Reward = 297.5246, Colli = 0, Speed = 27.2494, Risk = 0.3813, Dis = 6992.0883, Time = 316.7, Acc = 2.9988, Dec = 0.0, Left = 0.1091, Right = 0.1122
+Ep = 21, Step = 50898, Reward = 464.2845, Colli = 0, Speed = 27.0815, Risk = 0.3614, Dis = 6992.5254, Time = 318.3, Acc = 2.9988, Dec = 0.0, Left = 0.1394, Right = 0.0821
+Ep = 22, Step = 53361, Reward = -130.8915, Colli = 0, Speed = 28.3941, Risk = 0.6422, Dis = 6993.0738, Time = 306.4, Acc = 2.9988, Dec = 0.0, Left = 0.0784, Right = 0.0934
+Ep = 23, Step = 55935, Reward = 315.3407, Colli = 0, Speed = 27.1677, Risk = 0.5208, Dis = 6993.1353, Time = 317.5, Acc = 2.9989, Dec = 0.0, Left = 0.1131, Right = 0.1235
+Collision detected
+Ep = 24, Step = 57146, Reward = -292.9576, Colli = 1, Speed = 25.0775, Risk = 0.5172, Dis = 3036.5591, Time = 181.2, Acc = 2.9957, Dec = 0.0, Left = 0.1131, Right = 0.071
+Ep = 25, Step = 59705, Reward = 580.6701, Colli = 0, Speed = 27.3331, Risk = 0.4372, Dis = 6994.3032, Time = 316.0, Acc = 2.9988, Dec = -0.4057, Left = 0.0746, Right = 0.1032
+Ep = 26, Step = 62156, Reward = 290.4411, Colli = 0, Speed = 28.5359, Risk = 0.5631, Dis = 6993.9033, Time = 305.2, Acc = 2.9988, Dec = 0.0, Left = 0.0942, Right = 0.1069
+Ep = 27, Step = 64452, Reward = -82.8098, Colli = 0, Speed = 30.4646, Risk = 0.6269, Dis = 6994.5159, Time = 289.7, Acc = 2.9987, Dec = -0.6555, Left = 0.0749, Right = 0.1084
+Ep = 28, Step = 66945, Reward = 367.4968, Colli = 0, Speed = 28.0504, Risk = 0.5624, Dis = 6993.0115, Time = 309.4, Acc = 2.9985, Dec = 0.0, Left = 0.1211, Right = 0.0858
+Ep = 29, Step = 69328, Reward = 335.7164, Colli = 0, Speed = 29.3424, Risk = 0.5027, Dis = 6992.0246, Time = 298.4, Acc = 2.9987, Dec = -0.296, Left = 0.0915, Right = 0.0906
+Ep = 30, Step = 71871, Reward = 765.1362, Colli = 0, Speed = 27.5025, Risk = 0.4271, Dis = 6993.8092, Time = 314.4, Acc = 2.9988, Dec = -1.6736, Left = 0.1054, Right = 0.0747
+Ep = 31, Step = 74150, Reward = 379.777, Colli = 0, Speed = 30.6899, Risk = 0.5165, Dis = 6994.7516, Time = 288.0, Acc = 2.9987, Dec = -1.7386, Left = 0.1128, Right = 0.1088
+Ep = 32, Step = 76888, Reward = 646.8554, Colli = 0, Speed = 25.5413, Risk = 0.4344, Dis = 6993.1519, Time = 333.9, Acc = 2.998, Dec = 0.0, Left = 0.1202, Right = 0.0679
+Ep = 33, Step = 79567, Reward = 695.1647, Colli = 0, Speed = 26.1094, Risk = 0.507, Dis = 6994.148, Time = 328.0, Acc = 2.9979, Dec = 0.0, Left = 0.1004, Right = 0.112
+Ep = 34, Step = 82380, Reward = 642.0277, Colli = 0, Speed = 24.8609, Risk = 0.5351, Dis = 6993.3282, Time = 341.4, Acc = 2.9989, Dec = -0.2051, Left = 0.1248, Right = 0.0814
+Ep = 35, Step = 85030, Reward = 1116.2228, Colli = 0, Speed = 26.3907, Risk = 0.6179, Dis = 6993.5787, Time = 325.1, Acc = 2.9985, Dec = 0.0, Left = 0.0875, Right = 0.0706
+Ep = 36, Step = 87631, Reward = 329.1426, Colli = 0, Speed = 26.8944, Risk = 0.3947, Dis = 6994.9411, Time = 320.2, Acc = 2.9985, Dec = 0.0, Left = 0.0807, Right = 0.103
+Ep = 37, Step = 90292, Reward = 1287.2363, Colli = 0, Speed = 26.2874, Risk = 0.5144, Dis = 6994.7849, Time = 326.2, Acc = 2.9989, Dec = -1.0475, Left = 0.0913, Right = 0.1473
+Ep = 38, Step = 92848, Reward = 1259.0438, Colli = 0, Speed = 27.3636, Risk = 0.3343, Dis = 6993.7112, Time = 315.7, Acc = 2.9978, Dec = 0.0, Left = 0.0872, Right = 0.1166
+Ep = 39, Step = 93377, Reward = -371.3925, Colli = 0, Speed = 18.7846, Risk = 0.3727, Dis = 992.5898, Time = 113.0, Acc = 2.9942, Dec = 0.0, Left = 0.1059, Right = 0.0662
+Ep = 40, Step = 96005, Reward = 1339.1628, Colli = 0, Speed = 26.6159, Risk = 0.3774, Dis = 6994.465, Time = 322.9, Acc = 2.9988, Dec = 0.0, Left = 0.1119, Right = 0.132
+Ep = 41, Step = 98561, Reward = 1427.6058, Colli = 0, Speed = 27.3664, Risk = 0.3338, Dis = 6994.9693, Time = 315.7, Acc = 2.9984, Dec = 0.0, Left = 0.1307, Right = 0.1561
+Ep = 42, Step = 101150, Reward = 1503.8445, Colli = 0, Speed = 27.018, Risk = 0.3253, Dis = 6994.8666, Time = 319.0, Acc = 2.9988, Dec = -0.4569, Left = 0.1456, Right = 0.1309
+Ep = 43, Step = 103696, Reward = 1404.8291, Colli = 0, Speed = 27.4684, Risk = 0.4495, Dis = 6993.162, Time = 314.7, Acc = 2.9988, Dec = -1.8017, Left = 0.1697, Right = 0.1449
+Ep = 44, Step = 106352, Reward = 1256.8774, Colli = 0, Speed = 26.3349, Risk = 0.4133, Dis = 6994.6865, Time = 325.7, Acc = 2.9989, Dec = -0.6595, Left = 0.1062, Right = 0.1261
+Ep = 45, Step = 108867, Reward = 1555.5653, Colli = 0, Speed = 27.8057, Risk = 0.384, Dis = 6992.8278, Time = 311.6, Acc = 2.9986, Dec = 0.0, Left = 0.1038, Right = 0.1245
+Ep = 46, Step = 111470, Reward = 1404.3564, Colli = 0, Speed = 26.8711, Risk = 0.3509, Dis = 6993.9151, Time = 320.4, Acc = 2.9988, Dec = -0.7658, Left = 0.1172, Right = 0.1375
+Ep = 47, Step = 114010, Reward = 1418.4588, Colli = 0, Speed = 27.5415, Risk = 0.356, Dis = 6994.9992, Time = 314.1, Acc = 2.9988, Dec = -0.7058, Left = 0.0791, Right = 0.1063
+Ep = 48, Step = 116529, Reward = 1654.2718, Colli = 0, Speed = 27.7642, Risk = 0.3325, Dis = 6993.7721, Time = 312.0, Acc = 2.9984, Dec = 0.0, Left = 0.1262, Right = 0.106
+Ep = 49, Step = 119066, Reward = 1357.0621, Colli = 0, Speed = 27.5673, Risk = 0.4157, Dis = 6993.5358, Time = 313.8, Acc = 2.9988, Dec = -0.2214, Left = 0.1048, Right = 0.108
+Ep = 50, Step = 121558, Reward = 1551.4026, Colli = 0, Speed = 28.0659, Risk = 0.3075, Dis = 6994.3284, Time = 309.3, Acc = 2.9986, Dec = 0.0, Left = 0.1268, Right = 0.1268
+Ep = 51, Step = 124087, Reward = 1374.3197, Colli = 0, Speed = 27.6537, Risk = 0.2917, Dis = 6993.3222, Time = 313.0, Acc = 2.9981, Dec = 0.0, Left = 0.0862, Right = 0.0846
+Ep = 52, Step = 126528, Reward = 1395.8991, Colli = 0, Speed = 28.6555, Risk = 0.2502, Dis = 6994.5072, Time = 304.2, Acc = 2.9988, Dec = -0.2032, Left = 0.0643, Right = 0.0729
+Ep = 53, Step = 128999, Reward = 1515.0337, Colli = 0, Speed = 28.3041, Risk = 0.2945, Dis = 6993.4309, Time = 307.2, Acc = 2.9986, Dec = 0.0, Left = 0.0708, Right = 0.0886
+Ep = 54, Step = 131457, Reward = 1495.0046, Colli = 0, Speed = 28.4554, Risk = 0.3652, Dis = 6993.9689, Time = 305.9, Acc = 2.9988, Dec = -1.6728, Left = 0.0635, Right = 0.0708
+Ep = 55, Step = 133915, Reward = 1588.5744, Colli = 0, Speed = 28.4468, Risk = 0.2442, Dis = 6992.5091, Time = 305.9, Acc = 2.9986, Dec = 0.0, Left = 0.0688, Right = 0.1139
+Ep = 56, Step = 136406, Reward = 1658.1297, Colli = 0, Speed = 28.0784, Risk = 0.3438, Dis = 6994.6246, Time = 309.2, Acc = 2.9988, Dec = -1.4776, Left = 0.0971, Right = 0.0678
+Ep = 57, Step = 138813, Reward = 844.9038, Colli = 0, Speed = 29.0576, Risk = 0.5042, Dis = 6994.4766, Time = 300.8, Acc = 2.9988, Dec = -0.512, Left = 0.1159, Right = 0.0465
+Ep = 58, Step = 141302, Reward = 1473.7451, Colli = 0, Speed = 28.0929, Risk = 0.0972, Dis = 6991.8855, Time = 309.0, Acc = 2.9988, Dec = -0.9441, Left = 0.0808, Right = 0.0575
+Ep = 59, Step = 143840, Reward = 1465.2605, Colli = 0, Speed = 27.5537, Risk = 0.5134, Dis = 6992.7811, Time = 313.9, Acc = 2.9988, Dec = -1.3833, Left = 0.1151, Right = 0.1391
+Ep = 60, Step = 146346, Reward = 1437.3247, Colli = 0, Speed = 27.9097, Risk = 0.3639, Dis = 6994.2911, Time = 310.7, Acc = 2.9983, Dec = 0.0, Left = 0.0778, Right = 0.0878
+Ep = 61, Step = 148781, Reward = 1623.5122, Colli = 0, Speed = 28.7245, Risk = 0.3205, Dis = 6994.4353, Time = 303.6, Acc = 2.9988, Dec = -0.48, Left = 0.0501, Right = 0.1117
+Ep = 62, Step = 151272, Reward = 1507.9927, Colli = 0, Speed = 28.0782, Risk = 0.2933, Dis = 6994.537, Time = 309.2, Acc = 2.9983, Dec = 0.0, Left = 0.063, Right = 0.067
+Ep = 63, Step = 153729, Reward = 1701.0815, Colli = 0, Speed = 28.4643, Risk = 0.1928, Dis = 6993.9403, Time = 305.8, Acc = 2.9988, Dec = -1.9351, Left = 0.0741, Right = 0.107
+Ep = 64, Step = 156200, Reward = 1578.4768, Colli = 0, Speed = 28.3061, Risk = 0.2512, Dis = 6994.7713, Time = 307.2, Acc = 2.9988, Dec = -0.97, Left = 0.0652, Right = 0.1109
+Ep = 65, Step = 158647, Reward = 1646.5112, Colli = 0, Speed = 28.5805, Risk = 0.3836, Dis = 6993.169, Time = 304.8, Acc = 2.9988, Dec = -1.691, Left = 0.0662, Right = 0.1214
+Ep = 66, Step = 161068, Reward = 1677.2914, Colli = 0, Speed = 28.8821, Risk = 0.4557, Dis = 6992.7788, Time = 302.2, Acc = 2.9988, Dec = -0.6355, Left = 0.0805, Right = 0.0938
+Ep = 67, Step = 163509, Reward = 1614.8438, Colli = 0, Speed = 28.646, Risk = 0.3424, Dis = 6992.8002, Time = 304.2, Acc = 2.9988, Dec = -1.6483, Left = 0.0676, Right = 0.0717
+Ep = 68, Step = 166056, Reward = 1515.9035, Colli = 0, Speed = 27.4518, Risk = 0.3134, Dis = 6992.0998, Time = 314.8, Acc = 2.9988, Dec = -1.7214, Left = 0.0824, Right = 0.0887
+Ep = 69, Step = 168555, Reward = 1629.5986, Colli = 0, Speed = 27.9872, Risk = 0.2907, Dis = 6993.9454, Time = 310.0, Acc = 2.9988, Dec = -0.0246, Left = 0.0852, Right = 0.0884
+Ep = 70, Step = 171044, Reward = 1666.6504, Colli = 0, Speed = 28.0939, Risk = 0.2193, Dis = 6992.511, Time = 309.0, Acc = 2.9982, Dec = 0.0, Left = 0.0771, Right = 0.1254
+Ep = 71, Step = 173454, Reward = 1590.0589, Colli = 0, Speed = 29.0251, Risk = 0.2157, Dis = 6994.7849, Time = 301.1, Acc = 2.9988, Dec = -0.9708, Left = 0.0938, Right = 0.0929
+Ep = 72, Step = 175821, Reward = 1607.9189, Colli = 0, Speed = 29.5468, Risk = 0.2886, Dis = 6993.7164, Time = 296.8, Acc = 2.9987, Dec = -1.653, Left = 0.0448, Right = 0.0668
+Ep = 73, Step = 178238, Reward = 1701.654, Colli = 0, Speed = 28.936, Risk = 0.2097, Dis = 6993.5043, Time = 301.8, Acc = 2.9988, Dec = -1.0457, Left = 0.0761, Right = 0.132
+Ep = 74, Step = 180647, Reward = 1670.9673, Colli = 0, Speed = 29.0309, Risk = 0.3498, Dis = 6993.5782, Time = 301.0, Acc = 2.9988, Dec = -0.9463, Left = 0.0432, Right = 0.0909
+Ep = 75, Step = 183094, Reward = 1664.7105, Colli = 0, Speed = 28.5764, Risk = 0.1294, Dis = 6992.6411, Time = 304.8, Acc = 2.9988, Dec = -0.1779, Left = 0.0821, Right = 0.1067
+Ep = 76, Step = 185512, Reward = 1706.0023, Colli = 0, Speed = 28.9199, Risk = 0.1763, Dis = 6992.5789, Time = 301.9, Acc = 2.9988, Dec = -0.5699, Left = 0.0703, Right = 0.0868
+Ep = 77, Step = 187952, Reward = 1735.7651, Colli = 0, Speed = 28.6604, Risk = 0.111, Dis = 6993.1684, Time = 304.1, Acc = 2.9981, Dec = 0.0, Left = 0.0631, Right = 0.1107
+Ep = 78, Step = 190396, Reward = 1685.3696, Colli = 0, Speed = 28.6093, Risk = 0.2021, Dis = 6992.212, Time = 304.5, Acc = 2.9979, Dec = 0.0, Left = 0.0516, Right = 0.1129
+Ep = 79, Step = 192827, Reward = 1775.352, Colli = 0, Speed = 28.7704, Risk = 0.3642, Dis = 6993.9634, Time = 303.2, Acc = 2.9979, Dec = 0.0, Left = 0.0884, Right = 0.1267
+Ep = 80, Step = 195229, Reward = 1758.8505, Colli = 0, Speed = 29.1095, Risk = 0.2516, Dis = 6992.4342, Time = 300.3, Acc = 2.9988, Dec = -1.8305, Left = 0.092, Right = 0.1037
+Ep = 81, Step = 197663, Reward = 1748.0468, Colli = 0, Speed = 28.7306, Risk = 0.1667, Dis = 6993.2254, Time = 303.5, Acc = 2.9988, Dec = -0.425, Left = 0.062, Right = 0.0616
+Ep = 82, Step = 200077, Reward = 1740.1036, Colli = 0, Speed = 28.9785, Risk = 0.1757, Dis = 6994.9687, Time = 301.5, Acc = 2.9978, Dec = 0.0, Left = 0.0886, Right = 0.0965
+Ep = 83, Step = 200804, Reward = 263.561, Colli = 0, Speed = 27.4067, Risk = 0.3687, Dis = 1991.8796, Time = 132.8, Acc = 2.9959, Dec = -1.6167, Left = 0.1018, Right = 0.121
+Ep = 84, Step = 203212, Reward = 1661.8877, Colli = 0, Speed = 29.0457, Risk = 0.2921, Dis = 6994.5985, Time = 300.9, Acc = 2.9988, Dec = -0.7559, Left = 0.0885, Right = 0.0905
+Ep = 85, Step = 205572, Reward = 1530.8274, Colli = 0, Speed = 29.629, Risk = 0.3975, Dis = 6992.2235, Time = 296.1, Acc = 2.9981, Dec = 0.0, Left = 0.1275, Right = 0.1347
+Ep = 86, Step = 207985, Reward = 1645.0472, Colli = 0, Speed = 28.989, Risk = 0.2516, Dis = 6994.6068, Time = 301.4, Acc = 2.9987, Dec = 0.0, Left = 0.0779, Right = 0.0763
+Ep = 87, Step = 210414, Reward = 1714.5615, Colli = 0, Speed = 28.7977, Risk = 0.2395, Dis = 6994.6042, Time = 303.0, Acc = 2.9977, Dec = 0.0, Left = 0.0424, Right = 0.1116
+Ep = 88, Step = 210909, Reward = -217.0333, Colli = 0, Speed = 20.0593, Risk = 0.5556, Dis = 991.9246, Time = 109.6, Acc = 2.9921, Dec = 0.0, Left = 0.2081, Right = 0.1374
+Collision detected
+Ep = 89, Step = 211301, Reward = -157.5266, Colli = 1, Speed = 20.3196, Risk = 0.3015, Dis = 795.523, Time = 99.3, Acc = 2.9924, Dec = 0.0, Left = 0.1429, Right = 0.1786
+Ep = 90, Step = 213713, Reward = 1761.8176, Colli = 0, Speed = 29.0017, Risk = 0.2431, Dis = 6994.9452, Time = 301.3, Acc = 2.9985, Dec = 0.0, Left = 0.0717, Right = 0.0572
+Ep = 91, Step = 216113, Reward = 1706.9283, Colli = 0, Speed = 29.1419, Risk = 0.2086, Dis = 6993.8801, Time = 300.1, Acc = 2.9987, Dec = -0.7735, Left = 0.0829, Right = 0.0883
+Ep = 92, Step = 218574, Reward = 1523.854, Colli = 0, Speed = 28.4135, Risk = 0.2702, Dis = 6992.5877, Time = 306.2, Acc = 2.9988, Dec = -1.7457, Left = 0.1024, Right = 0.0898
+Ep = 93, Step = 221033, Reward = 1527.6823, Colli = 0, Speed = 28.4418, Risk = 0.3948, Dis = 6993.3725, Time = 306.0, Acc = 2.9988, Dec = -0.6738, Left = 0.0651, Right = 0.1631
+Ep = 94, Step = 223423, Reward = 1693.2019, Colli = 0, Speed = 29.2654, Risk = 0.2214, Dis = 6994.3017, Time = 299.1, Acc = 2.9987, Dec = -0.442, Left = 0.0782, Right = 0.1067
+Ep = 95, Step = 225839, Reward = 1650.2193, Colli = 0, Speed = 28.9546, Risk = 0.2067, Dis = 6994.9752, Time = 301.7, Acc = 2.9988, Dec = -0.174, Left = 0.1089, Right = 0.1213
+Ep = 96, Step = 228260, Reward = 1721.7047, Colli = 0, Speed = 28.8912, Risk = 0.2016, Dis = 6994.1172, Time = 302.2, Acc = 2.9988, Dec = -0.2752, Left = 0.1033, Right = 0.138
+Ep = 97, Step = 230650, Reward = 1686.4294, Colli = 0, Speed = 29.2676, Risk = 0.1764, Dis = 6994.7583, Time = 299.1, Acc = 2.9984, Dec = 0.0, Left = 0.1138, Right = 0.1079
+Ep = 98, Step = 233061, Reward = 1735.6187, Colli = 0, Speed = 29.0077, Risk = 0.1541, Dis = 6993.3948, Time = 301.2, Acc = 2.9983, Dec = 0.0, Left = 0.0788, Right = 0.0888
+Ep = 99, Step = 235434, Reward = 1813.731, Colli = 0, Speed = 29.4639, Risk = 0.114, Dis = 6992.2515, Time = 297.4, Acc = 2.9987, Dec = -1.5394, Left = 0.0442, Right = 0.0936
+Ep = 100, Step = 237825, Reward = 1692.5238, Colli = 0, Speed = 29.2497, Risk = 0.1674, Dis = 6993.8962, Time = 299.2, Acc = 2.9981, Dec = 0.0, Left = 0.115, Right = 0.0803
+Ep = 101, Step = 240254, Reward = 1622.1101, Colli = 0, Speed = 28.7876, Risk = 0.2327, Dis = 6992.8491, Time = 303.0, Acc = 2.9985, Dec = 0.0, Left = 0.1346, Right = 0.0737
+Ep = 102, Step = 242626, Reward = 1741.7238, Colli = 0, Speed = 29.484, Risk = 0.2183, Dis = 6993.2077, Time = 297.3, Acc = 2.9984, Dec = 0.0, Left = 0.1332, Right = 0.0687
+Ep = 103, Step = 245027, Reward = 1792.6811, Colli = 0, Speed = 29.1304, Risk = 0.4431, Dis = 6993.8402, Time = 300.2, Acc = 2.9984, Dec = 0.0, Left = 0.0991, Right = 0.1591
+Ep = 104, Step = 247428, Reward = 1777.5874, Colli = 0, Speed = 29.1279, Risk = 0.1925, Dis = 6994.0008, Time = 300.2, Acc = 2.9988, Dec = -1.2667, Left = 0.0537, Right = 0.1133
+Ep = 105, Step = 249837, Reward = 1560.978, Colli = 0, Speed = 29.0228, Risk = 0.2491, Dis = 6991.7971, Time = 301.0, Acc = 2.9985, Dec = 0.0, Left = 0.0565, Right = 0.1171
+Ep = 106, Step = 252296, Reward = 1473.1027, Colli = 0, Speed = 28.4377, Risk = 0.4996, Dis = 6992.6902, Time = 306.0, Acc = 2.9976, Dec = 0.0, Left = 0.1192, Right = 0.1436
+Ep = 107, Step = 254694, Reward = 1668.367, Colli = 0, Speed = 29.1679, Risk = 0.1449, Dis = 6994.5051, Time = 299.9, Acc = 2.9979, Dec = 0.0, Left = 0.1113, Right = 0.1664
+Ep = 108, Step = 255475, Reward = 65.0127, Colli = 0, Speed = 25.5056, Risk = 0.6082, Dis = 1991.7473, Time = 138.2, Acc = 2.9962, Dec = -0.9268, Left = 0.1831, Right = 0.1268
+Ep = 109, Step = 257854, Reward = 1650.74, Colli = 0, Speed = 29.4028, Risk = 0.2237, Dis = 6994.6657, Time = 298.0, Acc = 2.9985, Dec = 0.0, Left = 0.1005, Right = 0.1509
+Ep = 110, Step = 260215, Reward = 1581.1892, Colli = 0, Speed = 29.6256, Risk = 0.391, Dis = 6994.8442, Time = 296.2, Acc = 2.9987, Dec = -0.0133, Left = 0.0885, Right = 0.1089
+Ep = 111, Step = 262674, Reward = 1430.7529, Colli = 0, Speed = 28.4356, Risk = 0.416, Dis = 6991.9211, Time = 306.0, Acc = 2.9987, Dec = 0.0, Left = 0.1082, Right = 0.137
+Ep = 112, Step = 265029, Reward = 1796.9925, Colli = 0, Speed = 29.6991, Risk = 0.2745, Dis = 6994.152, Time = 295.6, Acc = 2.9987, Dec = 0.0, Left = 0.0985, Right = 0.0442
+Ep = 113, Step = 267428, Reward = 1782.9445, Colli = 0, Speed = 29.1497, Risk = 0.2412, Dis = 6992.6931, Time = 300.0, Acc = 2.9984, Dec = 0.0, Left = 0.0842, Right = 0.0759
+Ep = 114, Step = 269808, Reward = 1601.4787, Colli = 0, Speed = 29.3801, Risk = 0.4001, Dis = 6992.6205, Time = 298.1, Acc = 2.9987, Dec = -0.3313, Left = 0.0748, Right = 0.0966
+Ep = 115, Step = 272186, Reward = 1770.9866, Colli = 0, Speed = 29.4059, Risk = 0.233, Dis = 6992.7823, Time = 297.9, Acc = 2.9987, Dec = -0.1588, Left = 0.0866, Right = 0.1392
+Ep = 116, Step = 274527, Reward = 1754.4103, Colli = 0, Speed = 29.8699, Risk = 0.4024, Dis = 6992.833, Time = 294.2, Acc = 2.9979, Dec = 0.0, Left = 0.0837, Right = 0.0649
+Ep = 117, Step = 276886, Reward = 1648.0614, Colli = 0, Speed = 29.6517, Risk = 0.605, Dis = 6994.8754, Time = 296.0, Acc = 2.9982, Dec = 0.0, Left = 0.0729, Right = 0.0983
+Ep = 118, Step = 279267, Reward = 1792.1986, Colli = 0, Speed = 29.3749, Risk = 0.1268, Dis = 6994.0609, Time = 298.2, Acc = 2.9987, Dec = -0.4021, Left = 0.0945, Right = 0.0907
+Ep = 119, Step = 281653, Reward = 1725.8376, Colli = 0, Speed = 29.3075, Risk = 0.2274, Dis = 6992.3487, Time = 298.7, Acc = 2.9988, Dec = 0.0, Left = 0.0708, Right = 0.0889
+Ep = 120, Step = 283983, Reward = 1628.2455, Colli = 0, Speed = 30.0117, Risk = 0.4279, Dis = 6993.2482, Time = 293.1, Acc = 2.9987, Dec = -1.9492, Left = 0.0554, Right = 0.1283
+Ep = 121, Step = 286393, Reward = 1712.6593, Colli = 0, Speed = 29.0197, Risk = 0.2389, Dis = 6993.7754, Time = 301.1, Acc = 2.998, Dec = 0.0, Left = 0.0788, Right = 0.0759
+Ep = 122, Step = 288728, Reward = 1666.7488, Colli = 0, Speed = 29.9442, Risk = 0.4281, Dis = 6992.3898, Time = 293.6, Acc = 2.9988, Dec = 0.0, Left = 0.0921, Right = 0.1482
+Ep = 123, Step = 291083, Reward = 1369.4326, Colli = 0, Speed = 29.6896, Risk = 0.3693, Dis = 6992.1282, Time = 295.6, Acc = 2.9987, Dec = 0.0, Left = 0.0425, Right = 0.0849
+Ep = 124, Step = 293483, Reward = 1693.6171, Colli = 0, Speed = 29.1334, Risk = 0.312, Dis = 6992.0257, Time = 300.1, Acc = 2.9987, Dec = -1.8018, Left = 0.0629, Right = 0.105
+Ep = 125, Step = 295797, Reward = 1679.7152, Colli = 0, Speed = 30.2209, Risk = 0.2984, Dis = 6993.2278, Time = 291.5, Acc = 2.9987, Dec = -1.8698, Left = 0.083, Right = 0.0825
+Ep = 126, Step = 298123, Reward = 1589.7513, Colli = 0, Speed = 30.0733, Risk = 0.2748, Dis = 6994.8331, Time = 292.7, Acc = 2.9979, Dec = 0.0, Left = 0.1174, Right = 0.0572
+Ep = 127, Step = 300518, Reward = 1733.6047, Colli = 0, Speed = 29.2036, Risk = 0.2199, Dis = 6994.5147, Time = 299.6, Acc = 2.998, Dec = 0.0, Left = 0.0601, Right = 0.053
+Ep = 128, Step = 302922, Reward = 1647.715, Colli = 0, Speed = 29.0891, Risk = 0.097, Dis = 6992.619, Time = 300.5, Acc = 2.9988, Dec = -1.1137, Left = 0.0595, Right = 0.062
+Ep = 129, Step = 305095, Reward = 520.4772, Colli = 0, Speed = 32.1764, Risk = 0.4057, Dis = 6992.2809, Time = 277.4, Acc = 2.9986, Dec = -1.3998, Left = 0.0212, Right = 0.0653
+Ep = 130, Step = 307429, Reward = 1652.0225, Colli = 0, Speed = 29.9606, Risk = 0.166, Dis = 6993.3165, Time = 293.5, Acc = 2.9987, Dec = -1.9007, Left = 0.0566, Right = 0.0724
+Ep = 131, Step = 309863, Reward = 1440.6496, Colli = 0, Speed = 28.7297, Risk = 0.2084, Dis = 6992.731, Time = 303.5, Acc = 2.9988, Dec = -1.6945, Left = 0.1072, Right = 0.0978
+Ep = 132, Step = 312211, Reward = 1714.1092, Colli = 0, Speed = 29.7832, Risk = 0.2915, Dis = 6993.3473, Time = 294.9, Acc = 2.9985, Dec = 0.0, Left = 0.0528, Right = 0.0882
+Ep = 133, Step = 314665, Reward = 1754.7064, Colli = 0, Speed = 28.4963, Risk = 0.2667, Dis = 6992.8617, Time = 305.5, Acc = 2.9988, Dec = -0.3857, Left = 0.0758, Right = 0.0844
+Ep = 134, Step = 317105, Reward = 1647.496, Colli = 0, Speed = 28.6657, Risk = 0.2876, Dis = 6993.9981, Time = 304.1, Acc = 2.9981, Dec = 0.0, Left = 0.093, Right = 0.134
+Ep = 135, Step = 319533, Reward = 1717.0937, Colli = 0, Speed = 28.7968, Risk = 0.2431, Dis = 6991.9859, Time = 302.9, Acc = 2.9988, Dec = -0.8169, Left = 0.1157, Right = 0.0647
+Ep = 136, Step = 321997, Reward = 1633.1065, Colli = 0, Speed = 28.3747, Risk = 0.2093, Dis = 6991.8481, Time = 306.5, Acc = 2.9988, Dec = -1.8024, Left = 0.0848, Right = 0.0852
+Ep = 137, Step = 324410, Reward = 1731.1284, Colli = 0, Speed = 28.9857, Risk = 0.1365, Dis = 6994.4737, Time = 301.4, Acc = 2.9988, Dec = -1.7298, Left = 0.0551, Right = 0.1678
+Ep = 138, Step = 326695, Reward = 1373.1797, Colli = 0, Speed = 30.612, Risk = 0.3409, Dis = 6994.7512, Time = 288.6, Acc = 2.9981, Dec = 0.0, Left = 0.049, Right = 0.0923
+Ep = 139, Step = 329121, Reward = 1550.5043, Colli = 0, Speed = 28.8237, Risk = 0.2936, Dis = 6992.4622, Time = 302.7, Acc = 2.9985, Dec = 0.0, Left = 0.0676, Right = 0.1311
+Ep = 140, Step = 331541, Reward = 1754.0002, Colli = 0, Speed = 28.9036, Risk = 0.1919, Dis = 6994.3442, Time = 302.1, Acc = 2.9988, Dec = -0.5267, Left = 0.0471, Right = 0.1368
+Ep = 141, Step = 333988, Reward = 1613.2526, Colli = 0, Speed = 28.5797, Risk = 0.2752, Dis = 6993.4519, Time = 304.8, Acc = 2.9988, Dec = -1.2051, Left = 0.0511, Right = 0.047
+Ep = 142, Step = 336323, Reward = 1666.376, Colli = 0, Speed = 29.9533, Risk = 0.1759, Dis = 6994.5075, Time = 293.6, Acc = 2.9987, Dec = -0.2134, Left = 0.0475, Right = 0.0904
+Ep = 143, Step = 338781, Reward = 1656.6534, Colli = 0, Speed = 28.4558, Risk = 0.2244, Dis = 6994.5501, Time = 305.9, Acc = 2.9988, Dec = -1.957, Left = 0.1302, Right = 0.1054
+Ep = 144, Step = 341361, Reward = 1401.5009, Colli = 0, Speed = 27.1046, Risk = 0.2931, Dis = 6993.0619, Time = 318.1, Acc = 2.9988, Dec = -0.1019, Left = 0.0876, Right = 0.0969
+Ep = 145, Step = 343732, Reward = 1624.3219, Colli = 0, Speed = 29.4968, Risk = 0.1673, Dis = 6993.8178, Time = 297.2, Acc = 2.9987, Dec = -0.0441, Left = 0.0388, Right = 0.124
+Ep = 146, Step = 346129, Reward = 1779.2319, Colli = 0, Speed = 29.1776, Risk = 0.1059, Dis = 6994.1874, Time = 299.8, Acc = 2.9982, Dec = 0.0, Left = 0.0517, Right = 0.1106
+Ep = 147, Step = 348583, Reward = 1788.8926, Colli = 0, Speed = 28.5007, Risk = 0.3156, Dis = 6994.4382, Time = 305.5, Acc = 2.9988, Dec = -1.1157, Left = 0.0998, Right = 0.0913
+Ep = 148, Step = 350983, Reward = 1839.2656, Colli = 0, Speed = 29.1366, Risk = 0.1441, Dis = 6993.0583, Time = 300.1, Acc = 2.9987, Dec = -1.0488, Left = 0.05, Right = 0.0588
+Ep = 149, Step = 353438, Reward = 1751.6258, Colli = 0, Speed = 28.49, Risk = 0.3771, Dis = 6994.4014, Time = 305.6, Acc = 2.9988, Dec = -0.4056, Left = 0.0436, Right = 0.0859
+Ep = 150, Step = 354146, Reward = 263.5201, Colli = 0, Speed = 28.1387, Risk = 0.3595, Dis = 1991.746, Time = 130.9, Acc = 2.9958, Dec = -1.1044, Left = 0.1003, Right = 0.0833
+Ep = 151, Step = 356533, Reward = 1853.8585, Colli = 0, Speed = 29.2926, Risk = 0.1179, Dis = 6992.5644, Time = 298.8, Acc = 2.9987, Dec = -1.1129, Left = 0.0792, Right = 0.0515
+Ep = 152, Step = 358926, Reward = 1747.8864, Colli = 0, Speed = 29.2275, Risk = 0.16, Dis = 6993.9212, Time = 299.4, Acc = 2.9978, Dec = 0.0, Left = 0.0765, Right = 0.0623
+Ep = 153, Step = 361288, Reward = 1773.6031, Colli = 0, Speed = 29.6047, Risk = 0.2825, Dis = 6992.308, Time = 296.3, Acc = 2.9987, Dec = -1.9434, Left = 0.091, Right = 0.0817
+Ep = 154, Step = 361694, Reward = 89.8844, Colli = 0, Speed = 24.4548, Risk = 0.3994, Dis = 992.1778, Time = 100.7, Acc = 2.9926, Dec = -1.0945, Left = 0.0936, Right = 0.133
+Ep = 155, Step = 364114, Reward = 1799.3701, Colli = 0, Speed = 28.9048, Risk = 0.2806, Dis = 6994.6049, Time = 302.1, Acc = 2.9982, Dec = 0.0, Left = 0.0595, Right = 0.0955
+Ep = 156, Step = 366507, Reward = 1833.2877, Colli = 0, Speed = 29.2247, Risk = 0.1472, Dis = 6993.8702, Time = 299.4, Acc = 2.9987, Dec = -0.8198, Left = 0.0631, Right = 0.0865
+Ep = 157, Step = 368890, Reward = 1804.2541, Colli = 0, Speed = 29.3455, Risk = 0.1701, Dis = 6992.8906, Time = 298.4, Acc = 2.9987, Dec = -0.167, Left = 0.0948, Right = 0.0659
+Ep = 158, Step = 371268, Reward = 1805.9062, Colli = 0, Speed = 29.4093, Risk = 0.177, Dis = 6993.6316, Time = 297.9, Acc = 2.9975, Dec = 0.0, Left = 0.0559, Right = 0.1346
+Ep = 159, Step = 373630, Reward = 1860.3542, Colli = 0, Speed = 29.6139, Risk = 0.1766, Dis = 6994.76, Time = 296.3, Acc = 2.9978, Dec = 0.0, Left = 0.1025, Right = 0.1435
+Ep = 160, Step = 376022, Reward = 1772.2339, Colli = 0, Speed = 29.2413, Risk = 0.201, Dis = 6994.6346, Time = 299.3, Acc = 2.9976, Dec = 0.0, Left = 0.0627, Right = 0.1267
+Ep = 161, Step = 378384, Reward = 1717.6245, Colli = 0, Speed = 29.6117, Risk = 0.3461, Dis = 6993.9329, Time = 296.3, Acc = 2.9987, Dec = -1.0759, Left = 0.1097, Right = 0.08
+Ep = 162, Step = 380816, Reward = 1850.7632, Colli = 0, Speed = 28.7639, Risk = 0.2205, Dis = 6994.9065, Time = 303.3, Acc = 2.9988, Dec = -1.0295, Left = 0.0465, Right = 0.0695
+Ep = 163, Step = 383228, Reward = 1795.0918, Colli = 0, Speed = 28.9932, Risk = 0.2141, Dis = 6993.4098, Time = 301.3, Acc = 2.9976, Dec = 0.0, Left = 0.0999, Right = 0.0605
+Ep = 164, Step = 385568, Reward = 1793.8234, Colli = 0, Speed = 29.8907, Risk = 0.3884, Dis = 6994.7041, Time = 294.1, Acc = 2.9987, Dec = -1.7132, Left = 0.0876, Right = 0.1368
+Collision detected
+Ep = 165, Step = 385726, Reward = -135.8106, Colli = 1, Speed = 16.7538, Risk = 0.0, Dis = 264.2766, Time = 75.9, Acc = 2.9811, Dec = 0.0, Left = 0.3418, Right = 0.0633
+Ep = 166, Step = 388128, Reward = 1709.152, Colli = 0, Speed = 29.1171, Risk = 0.2057, Dis = 6993.5564, Time = 300.3, Acc = 2.9988, Dec = -0.8559, Left = 0.1486, Right = 0.0837
+Ep = 167, Step = 390497, Reward = 1796.9036, Colli = 0, Speed = 29.5243, Risk = 0.175, Dis = 6994.3082, Time = 297.0, Acc = 2.9975, Dec = 0.0, Left = 0.1338, Right = 0.0743
+Ep = 168, Step = 392868, Reward = 1711.5308, Colli = 0, Speed = 29.5019, Risk = 0.1548, Dis = 6994.743, Time = 297.2, Acc = 2.9987, Dec = -1.506, Left = 0.1594, Right = 0.0772
+Ep = 169, Step = 395246, Reward = 1681.8679, Colli = 0, Speed = 29.4143, Risk = 0.4044, Dis = 6994.3329, Time = 297.9, Acc = 2.9977, Dec = 0.0, Left = 0.0782, Right = 0.0744
+Ep = 170, Step = 397549, Reward = 1617.9982, Colli = 0, Speed = 30.3641, Risk = 0.2679, Dis = 6992.8159, Time = 290.4, Acc = 2.9978, Dec = 0.0, Left = 0.0673, Right = 0.1038
+Ep = 171, Step = 399938, Reward = 1586.6146, Colli = 0, Speed = 29.2771, Risk = 0.1031, Dis = 6994.2273, Time = 299.0, Acc = 2.9987, Dec = -0.1095, Left = 0.1653, Right = 0.0858
+Ep = 172, Step = 402307, Reward = 1849.7951, Colli = 0, Speed = 29.5197, Risk = 0.3061, Dis = 6992.8316, Time = 297.0, Acc = 2.9977, Dec = 0.0, Left = 0.0494, Right = 0.1093
+Ep = 173, Step = 404705, Reward = 1779.3623, Colli = 0, Speed = 29.1669, Risk = 0.1826, Dis = 6994.6157, Time = 299.9, Acc = 2.998, Dec = 0.0, Left = 0.1485, Right = 0.0721
+Ep = 174, Step = 407063, Reward = 1775.8453, Colli = 0, Speed = 29.6571, Risk = 0.2727, Dis = 6993.2031, Time = 295.9, Acc = 2.9987, Dec = -1.3456, Left = 0.134, Right = 0.0844
+Ep = 175, Step = 409477, Reward = 1613.6318, Colli = 0, Speed = 28.973, Risk = 0.2036, Dis = 6994.5295, Time = 301.5, Acc = 2.9985, Dec = 0.0, Left = 0.0932, Right = 0.1048
+Ep = 176, Step = 411812, Reward = 1816.8412, Colli = 0, Speed = 29.9548, Risk = 0.1754, Dis = 6994.5092, Time = 293.6, Acc = 2.9976, Dec = 0.0, Left = 0.0548, Right = 0.0891
+Ep = 177, Step = 414166, Reward = 1739.0819, Colli = 0, Speed = 29.7124, Risk = 0.3231, Dis = 6994.106, Time = 295.5, Acc = 2.9975, Dec = 0.0, Left = 0.0824, Right = 0.048
+Ep = 178, Step = 414601, Reward = -22.8409, Colli = 0, Speed = 22.8274, Risk = 0.28, Dis = 992.0353, Time = 103.6, Acc = 2.9931, Dec = -1.7633, Left = 0.3793, Right = 0.1195
+Ep = 179, Step = 416940, Reward = 1802.7678, Colli = 0, Speed = 29.8938, Risk = 0.3605, Dis = 6992.6138, Time = 294.0, Acc = 2.9987, Dec = -0.4193, Left = 0.1287, Right = 0.1107
+Ep = 180, Step = 419267, Reward = 1811.7784, Colli = 0, Speed = 30.0488, Risk = 0.3292, Dis = 6992.2306, Time = 292.8, Acc = 2.9987, Dec = -0.9327, Left = 0.0898, Right = 0.0774
+Ep = 181, Step = 421784, Reward = 1272.4717, Colli = 0, Speed = 27.7912, Risk = 0.4871, Dis = 6994.8862, Time = 311.8, Acc = 2.9976, Dec = 0.0, Left = 0.211, Right = 0.112
+Ep = 182, Step = 422170, Reward = -2.8029, Colli = 0, Speed = 25.7016, Risk = 0.367, Dis = 992.086, Time = 98.7, Acc = 2.9866, Dec = 0.0, Left = 0.1865, Right = 0.0829
+Ep = 183, Step = 424541, Reward = 1715.7586, Colli = 0, Speed = 29.498, Risk = 0.2665, Dis = 6994.3876, Time = 297.2, Acc = 2.9987, Dec = -1.5053, Left = 0.0772, Right = 0.078
+Ep = 184, Step = 426894, Reward = 1762.142, Colli = 0, Speed = 29.7147, Risk = 0.3475, Dis = 6992.2227, Time = 295.4, Acc = 2.998, Dec = 0.0, Left = 0.1211, Right = 0.1135
+Ep = 185, Step = 427590, Reward = 267.126, Colli = 0, Speed = 28.6129, Risk = 0.6705, Dis = 1991.7719, Time = 129.7, Acc = 2.9932, Dec = 0.0, Left = 0.0848, Right = 0.125
+Ep = 186, Step = 429948, Reward = 1857.9477, Colli = 0, Speed = 29.6539, Risk = 0.2354, Dis = 6992.5761, Time = 295.9, Acc = 2.9987, Dec = -1.8869, Left = 0.1132, Right = 0.0958
+Ep = 187, Step = 432287, Reward = 1634.7205, Colli = 0, Speed = 29.8955, Risk = 0.3541, Dis = 6992.7631, Time = 294.0, Acc = 2.9985, Dec = 0.0, Left = 0.0928, Right = 0.0975
+Ep = 188, Step = 434674, Reward = 1843.6366, Colli = 0, Speed = 29.3029, Risk = 0.09, Dis = 6994.9884, Time = 298.8, Acc = 2.9976, Dec = 0.0, Left = 0.1529, Right = 0.114
+Ep = 189, Step = 437104, Reward = 1694.2327, Colli = 0, Speed = 28.7848, Risk = 0.3286, Dis = 6994.9324, Time = 303.1, Acc = 2.9988, Dec = -0.1421, Left = 0.1547, Right = 0.17
+Ep = 190, Step = 439472, Reward = 1805.8546, Colli = 0, Speed = 29.5324, Risk = 0.186, Dis = 6993.4924, Time = 296.9, Acc = 2.9987, Dec = -0.1892, Left = 0.1208, Right = 0.0891
+Ep = 191, Step = 441816, Reward = 1796.9356, Colli = 0, Speed = 29.843, Risk = 0.1321, Dis = 6994.885, Time = 294.5, Acc = 2.9985, Dec = 0.0, Left = 0.0593, Right = 0.2069
+Ep = 192, Step = 444227, Reward = 1793.1299, Colli = 0, Speed = 29.0099, Risk = 0.2598, Dis = 6994.0064, Time = 301.2, Acc = 2.9988, Dec = -0.0511, Left = 0.1522, Right = 0.1282
+Ep = 193, Step = 446649, Reward = 1823.7507, Colli = 0, Speed = 28.8713, Risk = 0.1148, Dis = 6992.1742, Time = 302.3, Acc = 2.9988, Dec = -1.9935, Left = 0.1152, Right = 0.1078
+Ep = 194, Step = 449114, Reward = 1511.1432, Colli = 0, Speed = 28.3758, Risk = 0.2105, Dis = 6994.3478, Time = 306.6, Acc = 2.9988, Dec = -0.8018, Left = 0.1785, Right = 0.0649
+Ep = 195, Step = 451490, Reward = 1859.9149, Colli = 0, Speed = 29.431, Risk = 0.1544, Dis = 6992.774, Time = 297.7, Acc = 2.9987, Dec = -1.1796, Left = 0.1305, Right = 0.0627
+Ep = 196, Step = 453909, Reward = 1752.9537, Colli = 0, Speed = 28.906, Risk = 0.286, Dis = 6992.6811, Time = 302.0, Acc = 2.9988, Dec = -1.162, Left = 0.0827, Right = 0.1439
+Ep = 197, Step = 456351, Reward = 1828.7524, Colli = 0, Speed = 28.6402, Risk = 0.2767, Dis = 6993.6171, Time = 304.3, Acc = 2.9988, Dec = -1.0339, Left = 0.1114, Right = 0.1036
+Ep = 198, Step = 458746, Reward = 1756.3107, Colli = 0, Speed = 29.1966, Risk = 0.2179, Dis = 6992.2342, Time = 299.6, Acc = 2.9986, Dec = 0.0, Left = 0.1211, Right = 0.124
+Ep = 199, Step = 461104, Reward = 1786.0949, Colli = 0, Speed = 29.6622, Risk = 0.2318, Dis = 6994.7465, Time = 295.9, Acc = 2.998, Dec = 0.0, Left = 0.0997, Right = 0.1518
+Ep = 200, Step = 463442, Reward = 1738.866, Colli = 0, Speed = 29.9059, Risk = 0.4614, Dis = 6992.3458, Time = 293.9, Acc = 2.9987, Dec = -1.9431, Left = 0.0843, Right = 0.29
+Ep = 201, Step = 465837, Reward = 1831.1455, Colli = 0, Speed = 29.2065, Risk = 0.163, Dis = 6994.8972, Time = 299.6, Acc = 2.9987, Dec = -0.2673, Left = 0.1106, Right = 0.1286
+Ep = 202, Step = 468200, Reward = 1833.8097, Colli = 0, Speed = 29.5926, Risk = 0.3428, Dis = 6992.6494, Time = 296.4, Acc = 2.9987, Dec = -1.3532, Left = 0.0855, Right = 0.0741
+Ep = 203, Step = 470595, Reward = 1862.6996, Colli = 0, Speed = 29.1938, Risk = 0.0841, Dis = 6992.0394, Time = 299.6, Acc = 2.9987, Dec = -0.6721, Left = 0.0985, Right = 0.1094
+Ep = 204, Step = 472971, Reward = 1813.5227, Colli = 0, Speed = 29.4296, Risk = 0.1848, Dis = 6992.2404, Time = 297.7, Acc = 2.9981, Dec = 0.0, Left = 0.0804, Right = 0.0825
+Ep = 205, Step = 475325, Reward = 1747.3502, Colli = 0, Speed = 29.7129, Risk = 0.4234, Dis = 6994.2757, Time = 295.5, Acc = 2.9986, Dec = 0.0, Left = 0.0565, Right = 0.1364
+Ep = 206, Step = 477865, Reward = 1544.5865, Colli = 0, Speed = 27.5319, Risk = 0.2875, Dis = 6993.1456, Time = 314.1, Acc = 2.9981, Dec = 0.0, Left = 0.124, Right = 0.1114
+Ep = 207, Step = 480352, Reward = 1596.2446, Colli = 0, Speed = 28.1165, Risk = 0.1689, Dis = 6992.2305, Time = 308.8, Acc = 2.9988, Dec = -1.5876, Left = 0.109, Right = 0.0993
+Ep = 208, Step = 482775, Reward = 1844.5876, Colli = 0, Speed = 28.866, Risk = 0.2309, Dis = 6994.6204, Time = 302.4, Acc = 2.9988, Dec = -1.2353, Left = 0.0735, Right = 0.1032
+Ep = 209, Step = 485141, Reward = 1804.9168, Colli = 0, Speed = 29.5638, Risk = 0.2391, Dis = 6994.4503, Time = 296.7, Acc = 2.9987, Dec = -1.7586, Left = 0.1124, Right = 0.1061
+Ep = 210, Step = 487498, Reward = 1736.1478, Colli = 0, Speed = 29.6729, Risk = 0.2093, Dis = 6994.3968, Time = 295.8, Acc = 2.9987, Dec = -1.0433, Left = 0.0535, Right = 0.2096
+Ep = 211, Step = 489862, Reward = 1761.6312, Colli = 0, Speed = 29.5771, Risk = 0.2501, Dis = 6992.2511, Time = 296.5, Acc = 2.9987, Dec = -0.2004, Left = 0.066, Right = 0.1459
+Ep = 212, Step = 492205, Reward = 1720.5411, Colli = 0, Speed = 29.8501, Risk = 0.3255, Dis = 6994.1414, Time = 294.4, Acc = 2.9987, Dec = -0.8693, Left = 0.134, Right = 0.0913
+Ep = 213, Step = 494608, Reward = 1727.5035, Colli = 0, Speed = 29.0964, Risk = 0.2273, Dis = 6992.0984, Time = 300.4, Acc = 2.9988, Dec = -1.6123, Left = 0.1328, Right = 0.0949
+Ep = 214, Step = 496971, Reward = 1748.4357, Colli = 0, Speed = 29.5924, Risk = 0.3834, Dis = 6993.1228, Time = 296.4, Acc = 2.9987, Dec = -1.5075, Left = 0.0884, Right = 0.1464
+Ep = 215, Step = 499330, Reward = 1768.1003, Colli = 0, Speed = 29.642, Risk = 0.2787, Dis = 6992.5647, Time = 296.0, Acc = 2.9987, Dec = -0.6112, Left = 0.0793, Right = 0.0725
+Ep = 216, Step = 501722, Reward = 1786.3596, Colli = 0, Speed = 29.2399, Risk = 0.0644, Dis = 6993.9598, Time = 299.3, Acc = 2.9977, Dec = 0.0, Left = 0.0539, Right = 0.0485
+Ep = 217, Step = 504060, Reward = 1770.8801, Colli = 0, Speed = 29.9144, Risk = 0.1751, Dis = 6994.4155, Time = 293.9, Acc = 2.9987, Dec = -1.5604, Left = 0.1202, Right = 0.0406
+Ep = 218, Step = 506554, Reward = 1417.7212, Colli = 0, Speed = 28.0365, Risk = 0.2446, Dis = 6992.4139, Time = 309.5, Acc = 2.9983, Dec = 0.0, Left = 0.0654, Right = 0.0533
+Traceback (most recent call last):
+  File "train.py", line 472, in <module>
+    train()
+  File "train.py", line 380, in train
+    AV_agent.learn_model()
+  File "E:\xuhaocheng\GABA\dqn_sumo_gym.py", line 149, in learn_model
+    self.optimizer.step()
+  File "D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\torch\optim\optimizer.py", line 385, in wrapper
+    out = func(*args, **kwargs)
+  File "D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\torch\optim\optimizer.py", line 76, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\torch\optim\adamw.py", line 187, in step
+    adamw(
+  File "D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\torch\optim\adamw.py", line 339, in adamw
+    func(
+  File "D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\torch\optim\adamw.py", line 468, in _single_tensor_adamw
+    denom = (max_exp_avg_sqs[i].sqrt() / bias_correction2_sqrt).add_(eps)
+RuntimeError: [enforce fail at alloc_cpu.cpp:114] data. DefaultCPUAllocator: not enough memory: you tried to allocate 524288 bytes.
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+
+(xhc) E:\xuhaocheng\GABA>rs
+
+
+
+
+(base) C:\Users\A>D:
+
+(base) D:\>E:
+
+(base) E:\>cd xuhaocheng
+
+(base) E:\xuhaocheng>conda activate xhc
+
+(xhc) E:\xuhaocheng>cd GABA
+
+(xhc) E:\xuhaocheng\GABA>python train.py
+============================================================================================
+============================================================================================
+============================================================================================
+============================================================================================
+============================================================================================
+training environment name : sumo-v0
+
+D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\gym\utils\passive_env_checker.py:45: UserWarning: WARN: A Box observation space maximum and minimum values are equal.
+  logger.warn("A Box observation space maximum and minimum values are equal.")
+current logging run number for sumo-v0 :  33
+logging at : PPO_logs/sumo-v0//PPO_sumo-v0_log_33.csv
+save checkpoint path : PPO_preTrained/sumo-v0/PPO_sumo-v0_0_0.pth
+--------------------------------------------------------------------------------------------
+max training timesteps :  300000
+max timesteps per episode :  1000
+model saving frequency : 100000 timesteps
+log frequency : 1 timesteps
+printing average reward over episodes in last : 10 timesteps
+--------------------------------------------------------------------------------------------
+state space dimension :  29
+action space dimension :  66
+--------------------------------------------------------------------------------------------
+Initializing a discrete action space policy
+--------------------------------------------------------------------------------------------
+PPO update frequency : 4000 timesteps
+PPO K epochs :  80
+PPO epsilon clip :  0.2
+discount factor (gamma) :  0.99
+--------------------------------------------------------------------------------------------
+optimizer learning rate actor :  0.0003
+optimizer learning rate critic :  0.001
+============================================================================================
+Started training at (GMT) :  2024-10-27 13:39:30
+============================================================================================
+D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\gym\utils\passive_env_checker.py:199: UserWarning: WARN: The result returned by `env.reset()` should be `(obs, info)` by default, , where `obs` is a observation and `info` is a dictionary containing additional information.
+  logger.warn(
+D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\gym\utils\passive_env_checker.py:219: DeprecationWarning: WARN: Core environment is written in old step API which returns one bool instead of two. It is recommended to rewrite the environment with new step API.
+  logger.deprecation(
+D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\gym\utils\passive_env_checker.py:225: DeprecationWarning: `np.bool8` is a deprecated alias for `np.bool_`.  (Deprecated NumPy 1.24)
+  if not isinstance(done, (bool, np.bool8)):
+D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\gym\utils\passive_env_checker.py:165: UserWarning: WARN: The obs returned by the `step()` method is not within the observation space.
+  logger.warn(f"{pre} is not within the observation space.")
+E:\xuhaocheng\GABA\PPO.py:238: UserWarning: std(): degrees of freedom is <= 0. Correction should be strictly less than the reduction factor (input numel divided by output numel). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\aten\src\ATen\native\ReduceOps.cpp:1760.)
+  rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-7)
+D:\software\anaconda\anaconda3\envs\xhc\lib\site-packages\torch\nn\modules\loss.py:535: UserWarning: Using a target size (torch.Size([1])) that is different to the input size (torch.Size([])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return F.mse_loss(input, target, reduction=self.reduction)
+Ep=0,Step=3000,R=-8665.2454,C_F=0,C_R = 0.0,Adv_c=2999,epsilon=1.0,SPD=1.8281,Risk=0.4574,Dis=548.1362,T=360.1,Acc=2.999,Dec=0.0,Left=0.098,Right=0.0903
+Ep=1,Step=6000,R=-8599.3977,C_F=0,C_R = 0.0,Adv_c=5999,epsilon=1.0,SPD=2.055,Risk=0.3844,Dis=616.7071,T=360.1,Acc=2.999,Dec=0.0,Left=0.0897,Right=0.0933
+Ep=2,Step=9000,R=-8684.5723,C_F=0,C_R = 0.0,Adv_c=8999,epsilon=1.0,SPD=1.7306,Risk=0.4478,Dis=519.215,T=360.1,Acc=2.999,Dec=0.0,Left=0.09,Right=0.0873
+Ep=3,Step=12000,R=-8753.866,C_F=0,C_R = 0.0,Adv_c=11999,epsilon=1.0,SPD=1.5592,Risk=0.414,Dis=467.8493,T=360.1,Acc=2.999,Dec=0.0,Left=0.0813,Right=0.0927
+Collision detected
+BV--> Episode : 4                Timestep : 14862                Average Reward : 188.0212
+Ep=4,Step=14862,R=-8241.3145,C_F=1,C_R = 0.2,Adv_c=14861,epsilon=1.0,SPD=1.7605,Risk=0.3145,Dis=503.803,T=346.3,Acc=2.999,Dec=0.0,Left=0.1038,Right=0.0957
+Collision detected
+BV--> Episode : 5                Timestep : 17604                Average Reward : 126.8965
+Ep=6,Step=20604,R=-7177.5249,C_F=0,C_R = 0.2857,Adv_c=20453,epsilon=0.9522,SPD=5.8626,Risk=0.3669,Dis=1757.7707,T=360.1,Acc=2.999,Dec=0.0,Left=0.0917,Right=0.1037
+Ep=7,Step=22792,R=-4393.746,C_F=0,C_R = 0.25,Adv_c=22594,epsilon=0.9703,SPD=9.119,Risk=0.5798,Dis=1993.4094,T=278.9,Acc=2.9986,Dec=-1.2118,Left=0.0937,Right=0.1161
+Ep=8,Step=25792,R=-3810.2852,C_F=0,C_R = 0.2222,Adv_c=25549,epsilon=0.9817,SPD=14.7247,Risk=0.5175,Dis=4415.7935,T=360.1,Acc=2.999,Dec=0.0,Left=0.0913,Right=0.0943
+Ep=9,Step=28539,R=-1281.9189,C_F=0,C_R = 0.2,Adv_c=28259,epsilon=0.9888,SPD=25.4601,Risk=0.6004,Dis=6993.932,T=334.8,Acc=2.9989,Dec=0.0,Left=0.0852,Right=0.095
+Ep=10,Step=31005,R=-1311.1386,C_F=0,C_R = 0.1818,Adv_c=30703,epsilon=0.9931,SPD=28.3541,Risk=0.4845,Dis=6992.4574,T=306.7,Acc=2.9988,Dec=-0.9131,Left=0.0945,Right=0.0738
+Ep=11,Step=33635,R=-280.7843,C_F=0,C_R = 0.1667,Adv_c=33327,epsilon=0.9958,SPD=26.584,Risk=0.4885,Dis=6991.6917,T=323.1,Acc=2.9989,Dec=-1.1187,Left=0.0856,Right=0.0669
+Ep=12,Step=34815,R=-1184.8961,C_F=0,C_R = 0.1538,Adv_c=34504,epsilon=0.9974,SPD=16.888,Risk=0.3508,Dis=1991.7967,T=178.1,Acc=2.9975,Dec=-0.5859,Left=0.1034,Right=0.0797
+Ep=13,Step=37605,R=-823.1631,C_F=0,C_R = 0.1429,Adv_c=37293,epsilon=0.9984,SPD=25.0664,Risk=0.4012,Dis=6992.7413,T=339.1,Acc=2.9989,Dec=-1.0116,Left=0.0935,Right=0.0867
+Ep=14,Step=40180,R=451.5834,C_F=0,C_R = 0.1333,Adv_c=39868,epsilon=0.999,SPD=27.1558,Risk=0.5169,Dis=6992.2044,T=317.6,Acc=2.9978,Dec=0.0,Left=0.1173,Right=0.0944
+Ep=15,Step=42912,R=472.0337,C_F=0,C_R = 0.125,Adv_c=42599,epsilon=0.9994,SPD=25.595,Risk=0.3102,Dis=6992.0484,T=333.3,Acc=2.9984,Dec=0.0,Left=0.0981,Right=0.0648
+Ep=16,Step=45639,R=535.9757,C_F=0,C_R = 0.1176,Adv_c=45326,epsilon=0.9996,SPD=25.6453,Risk=0.4762,Dis=6992.7678,T=332.8,Acc=2.9989,Dec=-1.6024,Left=0.0843,Right=0.114
+Ep=17,Step=48409,R=530.0085,C_F=0,C_R = 0.1111,Adv_c=48095,epsilon=0.9998,SPD=25.2479,Risk=0.2669,Dis=6992.8562,T=337.1,Acc=2.9989,Dec=-1.5149,Left=0.0895,Right=0.1007
+Ep=18,Step=50965,R=802.8849,C_F=0,C_R = 0.1053,Adv_c=50650,epsilon=0.9999,SPD=27.3584,Risk=0.4323,Dis=6992.5953,T=315.7,Acc=2.9986,Dec=0.0,Left=0.1154,Right=0.097
+Ep=19,Step=53494,R=1001.3904,C_F=0,C_R = 0.1,Adv_c=53178,epsilon=0.9999,SPD=27.6557,Risk=0.443,Dis=6994.1328,T=313.0,Acc=2.9987,Dec=0.0,Left=0.1068,Right=0.1257
+Ep=20,Step=56087,R=378.786,C_F=0,C_R = 0.0952,Adv_c=55771,epsilon=0.9999,SPD=26.9751,Risk=0.5735,Dis=6994.1461,T=319.4,Acc=2.9988,Dec=-0.4447,Left=0.0983,Right=0.1049
+Ep=21,Step=58640,R=1076.1717,C_F=0,C_R = 0.0909,Adv_c=58324,epsilon=1.0,SPD=27.3895,Risk=0.3614,Dis=6992.1314,T=315.4,Acc=2.9989,Dec=0.0,Left=0.1242,Right=0.1316
+Ep=22,Step=61143,R=967.9139,C_F=0,C_R = 0.087,Adv_c=60827,epsilon=1.0,SPD=27.9412,Risk=0.5402,Dis=6993.9353,T=310.4,Acc=2.9988,Dec=-0.7856,Left=0.0955,Right=0.1474
+Ep=23,Step=63714,R=1129.6078,C_F=0,C_R = 0.0833,Adv_c=63398,epsilon=1.0,SPD=27.2061,Risk=0.3531,Dis=6994.8181,T=317.2,Acc=2.9988,Dec=-0.9225,Left=0.1291,Right=0.1373
+Ep=24,Step=66197,R=664.1076,C_F=0,C_R = 0.08,Adv_c=65881,epsilon=1.0,SPD=28.1649,Risk=0.5253,Dis=6993.3918,T=308.4,Acc=2.9989,Dec=0.0,Left=0.0967,Right=0.1136
+Ep=25,Step=68566,R=335.8954,C_F=0,C_R = 0.0769,Adv_c=68250,epsilon=1.0,SPD=29.5198,Risk=0.5082,Dis=6993.4103,T=297.0,Acc=2.9987,Dec=-1.7216,Left=0.1494,Right=0.1199
+Ep=26,Step=71028,R=1162.9555,C_F=0,C_R = 0.0741,Adv_c=70712,epsilon=1.0,SPD=28.4011,Risk=0.4211,Dis=6992.6125,T=306.3,Acc=2.9988,Dec=-1.9741,Left=0.0816,Right=0.1454
+Ep=27,Step=73538,R=926.3643,C_F=0,C_R = 0.0714,Adv_c=73222,epsilon=1.0,SPD=27.8652,Risk=0.4049,Dis=6993.6086,T=311.1,Acc=2.9984,Dec=0.0,Left=0.1016,Right=0.0737
+Ep=28,Step=75943,R=746.6049,C_F=0,C_R = 0.069,Adv_c=75627,epsilon=1.0,SPD=29.0832,Risk=0.4564,Dis=6994.8991,T=300.6,Acc=2.998,Dec=0.0,Left=0.0923,Right=0.1002
+Ep=29,Step=78487,R=989.888,C_F=0,C_R = 0.0667,Adv_c=78171,epsilon=1.0,SPD=27.4887,Risk=0.3234,Dis=6993.3525,T=314.5,Acc=2.9988,Dec=-0.4004,Left=0.1046,Right=0.0763
+Ep=30,Step=81025,R=1294.3403,C_F=0,C_R = 0.0645,Adv_c=80709,epsilon=1.0,SPD=27.5514,Risk=0.3586,Dis=6992.3929,T=313.9,Acc=2.9988,Dec=-0.476,Left=0.104,Right=0.0713
+Ep=31,Step=83651,R=696.2488,C_F=0,C_R = 0.0625,Adv_c=83335,epsilon=1.0,SPD=26.6309,Risk=0.3642,Dis=6993.3356,T=322.7,Acc=2.9981,Dec=0.0,Left=0.091,Right=0.0674
+Ep=32,Step=86363,R=1017.1843,C_F=0,C_R = 0.0606,Adv_c=86047,epsilon=1.0,SPD=25.7891,Risk=0.6243,Dis=6993.4282,T=331.3,Acc=2.9989,Dec=-0.3855,Left=0.1066,Right=0.0664
+Ep=33,Step=89057,R=990.5772,C_F=0,C_R = 0.0588,Adv_c=88741,epsilon=1.0,SPD=25.9637,Risk=0.4977,Dis=6994.0761,T=329.5,Acc=2.9989,Dec=-1.0823,Left=0.0861,Right=0.078
+Ep=34,Step=91609,R=866.0666,C_F=0,C_R = 0.0571,Adv_c=91293,epsilon=1.0,SPD=27.3986,Risk=0.4042,Dis=6991.6384,T=315.3,Acc=2.9988,Dec=-1.6882,Left=0.087,Right=0.078
+Ep=35,Step=94179,R=1337.4447,C_F=0,C_R = 0.0556,Adv_c=93863,epsilon=1.0,SPD=27.2153,Risk=0.4491,Dis=6994.3337,T=317.1,Acc=2.9979,Dec=0.0,Left=0.1054,Right=0.0681
+Ep=36,Step=96777,R=981.6943,C_F=0,C_R = 0.0541,Adv_c=96461,epsilon=1.0,SPD=26.9198,Risk=0.4792,Dis=6993.8286,T=319.9,Acc=2.9988,Dec=-1.6013,Left=0.1143,Right=0.0635
+Ep=37,Step=99285,R=1294.1572,C_F=0,C_R = 0.0526,Adv_c=98969,epsilon=1.0,SPD=27.8786,Risk=0.3215,Dis=6992.1484,T=310.9,Acc=2.9988,Dec=-0.2564,Left=0.0977,Right=0.0889
+Ep=38,Step=101794,R=1093.7019,C_F=0,C_R = 0.0513,Adv_c=101478,epsilon=1.0,SPD=27.8783,Risk=0.4493,Dis=6994.9704,T=311.0,Acc=2.9988,Dec=-1.949,Left=0.0813,Right=0.1096
+Collision detected
+BV--> Episode : 39               Timestep : 102136               Average Reward : 202.3556
+Ep=39,Step=102136,R=-302.457,C_F=1,C_R = 0.075,Adv_c=101820,epsilon=1.0,SPD=17.1771,Risk=0.0645,Dis=586.1794,T=94.3,Acc=2.9913,Dec=0.0,Left=0.0556,Right=0.1579
+Ep=40,Step=104588,R=1054.2245,C_F=0,C_R = 0.0732,Adv_c=104272,epsilon=1.0,SPD=28.5176,Risk=0.417,Dis=6992.8821,T=305.3,Acc=2.9988,Dec=-1.7898,Left=0.0889,Right=0.0771
+Ep=41,Step=107070,R=1483.3082,C_F=0,C_R = 0.0714,Adv_c=106754,epsilon=1.0,SPD=28.1752,Risk=0.2388,Dis=6993.4353,T=308.3,Acc=2.9988,Dec=-0.1166,Left=0.0733,Right=0.0919
+Ep=42,Step=109632,R=1366.7103,C_F=0,C_R = 0.0698,Adv_c=109316,epsilon=1.0,SPD=27.2986,Risk=0.3094,Dis=6993.8369,T=316.3,Acc=2.9978,Dec=0.0,Left=0.1023,Right=0.0878
+Ep=43,Step=112238,R=1245.7122,C_F=0,C_R = 0.0682,Adv_c=111922,epsilon=1.0,SPD=26.8364,Risk=0.4837,Dis=6992.9848,T=320.7,Acc=2.998,Dec=0.0,Left=0.0998,Right=0.0902
+Ep=44,Step=114720,R=1373.3709,C_F=0,C_R = 0.0667,Adv_c=114404,epsilon=1.0,SPD=28.1743,Risk=0.2265,Dis=6992.7495,T=308.3,Acc=2.9978,Dec=0.0,Left=0.1209,Right=0.0741
+Ep=45,Step=117231,R=1423.8683,C_F=0,C_R = 0.0652,Adv_c=116915,epsilon=1.0,SPD=27.8545,Risk=0.4216,Dis=6993.8044,T=311.2,Acc=2.9988,Dec=-0.6492,Left=0.0976,Right=0.0908
+Ep=46,Step=119777,R=1417.3827,C_F=0,C_R = 0.0638,Adv_c=119461,epsilon=1.0,SPD=27.4676,Risk=0.3577,Dis=6993.038,T=314.7,Acc=2.998,Dec=0.0,Left=0.1002,Right=0.1214
+Ep=47,Step=122259,R=1163.0358,C_F=0,C_R = 0.0625,Adv_c=121943,epsilon=1.0,SPD=28.1735,Risk=0.2944,Dis=6993.0176,T=308.3,Acc=2.9988,Dec=-1.308,Left=0.0806,Right=0.081
+Ep=48,Step=124775,R=1392.6475,C_F=0,C_R = 0.0612,Adv_c=124459,epsilon=1.0,SPD=27.7956,Risk=0.3727,Dis=6992.8407,T=311.7,Acc=2.9988,Dec=-1.4381,Left=0.087,Right=0.1081
+Ep=49,Step=127345,R=1399.4411,C_F=0,C_R = 0.06,Adv_c=127029,epsilon=1.0,SPD=27.2116,Risk=0.2945,Dis=6993.5332,T=317.1,Acc=2.9977,Dec=0.0,Left=0.1082,Right=0.1062
+Ep=50,Step=129758,R=1070.3134,C_F=0,C_R = 0.0588,Adv_c=129442,epsilon=1.0,SPD=28.9772,Risk=0.32,Dis=6992.5438,T=301.4,Acc=2.9988,Dec=-0.065,Left=0.0796,Right=0.0597
+Ep=51,Step=132240,R=1229.8992,C_F=0,C_R = 0.0577,Adv_c=131924,epsilon=1.0,SPD=28.1737,Risk=0.4521,Dis=6992.5298,T=308.3,Acc=2.9988,Dec=-1.5293,Left=0.1072,Right=0.0911
+Ep=52,Step=134699,R=1453.4278,C_F=0,C_R = 0.0566,Adv_c=134383,epsilon=1.0,SPD=28.435,Risk=0.2244,Dis=6991.8915,T=306.0,Acc=2.9982,Dec=0.0,Left=0.0968,Right=0.0935
+Ep=53,Step=137098,R=1457.3589,C_F=0,C_R = 0.0556,Adv_c=136782,epsilon=1.0,SPD=29.1528,Risk=0.242,Dis=6993.8279,T=300.0,Acc=2.9983,Dec=0.0,Left=0.1267,Right=0.1305
+Ep=54,Step=139488,R=1236.7012,C_F=0,C_R = 0.0545,Adv_c=139172,epsilon=1.0,SPD=29.2615,Risk=0.2072,Dis=6993.5454,T=299.1,Acc=2.9987,Dec=-0.3762,Left=0.0757,Right=0.1205
+Ep=55,Step=141957,R=1407.7515,C_F=0,C_R = 0.0536,Adv_c=141641,epsilon=1.0,SPD=28.3226,Risk=0.2966,Dis=6992.9118,T=307.0,Acc=2.9976,Dec=0.0,Left=0.0899,Right=0.1
+Ep=56,Step=144364,R=1179.8405,C_F=0,C_R = 0.0526,Adv_c=144048,epsilon=1.0,SPD=29.0507,Risk=0.3959,Dis=6992.4823,T=300.8,Acc=2.9988,Dec=-0.9965,Left=0.1159,Right=0.0611
+Ep=57,Step=146948,R=1202.6529,C_F=0,C_R = 0.0517,Adv_c=146632,epsilon=1.0,SPD=27.0637,Risk=0.4711,Dis=6993.3022,T=318.5,Acc=2.9988,Dec=-1.4878,Left=0.0902,Right=0.0859
+Ep=58,Step=149363,R=1441.4241,C_F=0,C_R = 0.0508,Adv_c=149047,epsilon=1.0,SPD=28.9576,Risk=0.2558,Dis=6993.6374,T=301.6,Acc=2.9988,Dec=-1.5371,Left=0.1325,Right=0.0936
+Ep=59,Step=151891,R=1550.0614,C_F=0,C_R = 0.05,Adv_c=151575,epsilon=1.0,SPD=27.6694,Risk=0.2436,Dis=6994.5578,T=312.9,Acc=2.9988,Dec=-1.7206,Left=0.11,Right=0.0775
+Ep=60,Step=154183,R=730.703,C_F=0,C_R = 0.0492,Adv_c=153867,epsilon=1.0,SPD=30.518,Risk=0.3956,Dis=6994.7278,T=289.3,Acc=2.9987,Dec=-0.1982,Left=0.0764,Right=0.1165
+Ep=61,Step=156678,R=1446.5175,C_F=0,C_R = 0.0484,Adv_c=156362,epsilon=1.0,SPD=28.0342,Risk=0.2707,Dis=6994.5703,T=309.6,Acc=2.9978,Dec=0.0,Left=0.0906,Right=0.0858
+Ep=62,Step=159294,R=1245.4758,C_F=0,C_R = 0.0476,Adv_c=158978,epsilon=1.0,SPD=26.7357,Risk=0.482,Dis=6994.1274,T=321.7,Acc=2.9989,Dec=-1.9376,Left=0.1414,Right=0.0948
+Ep=63,Step=161734,R=1666.5802,C_F=0,C_R = 0.0469,Adv_c=161418,epsilon=1.0,SPD=28.6592,Risk=0.1143,Dis=6992.4796,T=304.1,Acc=2.9988,Dec=-1.2273,Left=0.0627,Right=0.066
+Ep=64,Step=164199,R=1019.9974,C_F=0,C_R = 0.0462,Adv_c=163883,epsilon=1.0,SPD=28.3665,Risk=0.3657,Dis=6992.0076,T=306.6,Acc=2.9982,Dec=0.0,Left=0.1249,Right=0.1018
+Ep=65,Step=166668,R=1526.5538,C_F=0,C_R = 0.0455,Adv_c=166352,epsilon=1.0,SPD=28.3306,Risk=0.2318,Dis=6994.7869,T=307.0,Acc=2.9979,Dec=0.0,Left=0.0992,Right=0.0409
+Ep=66,Step=169099,R=1602.1944,C_F=0,C_R = 0.0448,Adv_c=168783,epsilon=1.0,SPD=28.7715,Risk=0.15,Dis=6994.6046,T=303.2,Acc=2.9988,Dec=-1.9141,Left=0.1152,Right=0.0457
+Ep=67,Step=171655,R=1224.299,C_F=0,C_R = 0.0441,Adv_c=171339,epsilon=1.0,SPD=27.3547,Risk=0.448,Dis=6992.0709,T=315.7,Acc=2.9988,Dec=-1.9226,Left=0.2351,Right=0.1103
+Ep=68,Step=174178,R=1573.0952,C_F=0,C_R = 0.0435,Adv_c=173862,epsilon=1.0,SPD=27.7243,Risk=0.1618,Dis=6994.6536,T=312.4,Acc=2.9988,Dec=-0.3588,Left=0.1696,Right=0.0725
+Ep=69,Step=176724,R=1463.8601,C_F=0,C_R = 0.0429,Adv_c=176408,epsilon=1.0,SPD=27.4687,Risk=0.358,Dis=6993.1653,T=314.7,Acc=2.9988,Dec=-1.8671,Left=0.1485,Right=0.1151
+Ep=70,Step=179186,R=1500.3078,C_F=0,C_R = 0.0423,Adv_c=178870,epsilon=1.0,SPD=28.4081,Risk=0.1144,Dis=6993.7682,T=306.3,Acc=2.9981,Dec=0.0,Left=0.1446,Right=0.0642
+Ep=71,Step=180013,R=66.5951,C_F=0,C_R = 0.0417,Adv_c=179697,epsilon=1.0,SPD=24.0985,Risk=0.4479,Dis=1992.1507,T=142.8,Acc=2.9964,Dec=-1.6732,Left=0.1923,Right=0.2696
+Ep=72,Step=182468,R=1679.7638,C_F=0,C_R = 0.0411,Adv_c=182152,epsilon=1.0,SPD=28.4819,Risk=0.167,Dis=6991.9978,T=305.6,Acc=2.9988,Dec=-0.3572,Left=0.1356,Right=0.0754
+Ep=73,Step=184914,R=1733.4909,C_F=0,C_R = 0.0405,Adv_c=184598,epsilon=1.0,SPD=28.5961,Risk=0.2442,Dis=6994.2495,T=304.7,Acc=2.9976,Dec=0.0,Left=0.11,Right=0.083
+Ep=74,Step=187342,R=1539.452,C_F=0,C_R = 0.04,Adv_c=187026,epsilon=1.0,SPD=28.8067,Risk=0.2392,Dis=6994.3929,T=302.9,Acc=2.9979,Dec=0.0,Left=0.1297,Right=0.0976
+Ep=75,Step=189793,R=1566.6482,C_F=0,C_R = 0.0395,Adv_c=189477,epsilon=1.0,SPD=28.5329,Risk=0.1754,Dis=6993.4946,T=305.2,Acc=2.9988,Dec=-0.6311,Left=0.1151,Right=0.0539
+Ep=76,Step=192328,R=1350.7213,C_F=0,C_R = 0.039,Adv_c=192012,epsilon=1.0,SPD=27.5876,Risk=0.5123,Dis=6993.476,T=313.6,Acc=2.9981,Dec=0.0,Left=0.168,Right=0.1381
+Ep=77,Step=194774,R=1510.8181,C_F=0,C_R = 0.0385,Adv_c=194458,epsilon=1.0,SPD=28.5867,Risk=0.1705,Dis=6992.4873,T=304.7,Acc=2.9988,Dec=-1.8731,Left=0.1603,Right=0.074
+Ep=78,Step=195210,R=-38.577,C_F=0,C_R = 0.038,Adv_c=194894,epsilon=1.0,SPD=22.7617,Risk=0.4361,Dis=991.953,T=103.7,Acc=2.9931,Dec=-0.6732,Left=0.2936,Right=0.1651
+Ep=79,Step=195949,R=305.033,C_F=0,C_R = 0.0375,Adv_c=195633,epsilon=1.0,SPD=26.957,Risk=0.3216,Dis=1991.8876,T=134.0,Acc=2.9935,Dec=0.0,Left=0.1989,Right=0.157
+Ep=80,Step=198476,R=1298.239,C_F=0,C_R = 0.037,Adv_c=198160,epsilon=1.0,SPD=27.6709,Risk=0.4225,Dis=6992.3612,T=312.8,Acc=2.9988,Dec=-0.7637,Left=0.1488,Right=0.0843
+Ep=81,Step=200965,R=1510.5304,C_F=0,C_R = 0.0366,Adv_c=200649,epsilon=1.0,SPD=28.0927,Risk=0.2117,Dis=6992.3375,T=309.0,Acc=2.9988,Dec=-1.3229,Left=0.0912,Right=0.1278
+Ep=82,Step=203385,R=1685.7379,C_F=0,C_R = 0.0361,Adv_c=203069,epsilon=1.0,SPD=28.8992,Risk=0.2356,Dis=6993.3816,T=302.1,Acc=2.9986,Dec=0.0,Left=0.1025,Right=0.0591
+Ep=83,Step=205763,R=1599.8979,C_F=0,C_R = 0.0357,Adv_c=205447,epsilon=1.0,SPD=29.4148,Risk=0.1471,Dis=6994.9881,T=297.9,Acc=2.9987,Dec=-0.594,Left=0.1606,Right=0.0824
+Ep=84,Step=208207,R=1620.0862,C_F=0,C_R = 0.0353,Adv_c=207891,epsilon=1.0,SPD=28.6149,Risk=0.2426,Dis=6993.5803,T=304.5,Acc=2.9988,Dec=-1.8871,Left=0.1583,Right=0.0757
+Ep=85,Step=210653,R=1635.7127,C_F=0,C_R = 0.0349,Adv_c=210337,epsilon=1.0,SPD=28.5864,Risk=0.3192,Dis=6992.4321,T=304.7,Acc=2.9988,Dec=-1.9361,Left=0.1394,Right=0.0899
+Ep=86,Step=211475,R=-158.7975,C_F=0,C_R = 0.0345,Adv_c=211159,epsilon=1.0,SPD=24.2337,Risk=0.681,Dis=1991.8052,T=142.3,Acc=2.9964,Dec=-0.3436,Left=0.2506,Right=0.1217
+Ep=87,Step=213900,R=1486.4819,C_F=0,C_R = 0.0341,Adv_c=213584,epsilon=1.0,SPD=28.8434,Risk=0.3911,Dis=6994.1718,T=302.6,Acc=2.9988,Dec=-1.2809,Left=0.2384,Right=0.1151
+Ep=88,Step=216349,R=1295.0244,C_F=0,C_R = 0.0337,Adv_c=216033,epsilon=1.0,SPD=28.5601,Risk=0.3121,Dis=6994.3935,T=305.0,Acc=2.9981,Dec=0.0,Left=0.1601,Right=0.0866
+Ep=89,Step=218692,R=1435.7971,C_F=0,C_R = 0.0333,Adv_c=218376,epsilon=1.0,SPD=29.8527,Risk=0.3763,Dis=6994.4937,T=294.4,Acc=2.9987,Dec=-1.8742,Left=0.1524,Right=0.1161
+Ep=90,Step=221056,R=1506.3784,C_F=0,C_R = 0.033,Adv_c=220740,epsilon=1.0,SPD=29.5818,Risk=0.2779,Dis=6993.2943,T=296.5,Acc=2.9987,Dec=-0.9021,Left=0.2597,Right=0.0613
+Ep=91,Step=223409,R=1477.6584,C_F=0,C_R = 0.0326,Adv_c=223093,epsilon=1.0,SPD=29.7169,Risk=0.3923,Dis=6992.8841,T=295.4,Acc=2.9987,Dec=-1.9669,Left=0.1075,Right=0.0982
+Ep=92,Step=225786,R=1599.3987,C_F=0,C_R = 0.0323,Adv_c=225470,epsilon=1.0,SPD=29.4141,Risk=0.3378,Dis=6992.1264,T=297.8,Acc=2.9988,Dec=0.0,Left=0.1527,Right=0.0639
+Ep=93,Step=228315,R=1417.797,C_F=0,C_R = 0.0319,Adv_c=227999,epsilon=1.0,SPD=27.6505,Risk=0.3396,Dis=6993.0009,T=313.0,Acc=2.9988,Dec=-0.0026,Left=0.1641,Right=0.0842
+Ep=94,Step=230714,R=1559.5393,C_F=0,C_R = 0.0316,Adv_c=230398,epsilon=1.0,SPD=29.1531,Risk=0.2986,Dis=6994.2382,T=300.0,Acc=2.9986,Dec=0.0,Left=0.1813,Right=0.1005
+Ep=95,Step=233048,R=1663.6306,C_F=0,C_R = 0.0312,Adv_c=232732,epsilon=1.0,SPD=29.9635,Risk=0.3861,Dis=6993.1866,T=293.5,Acc=2.9987,Dec=-0.009,Left=0.1097,Right=0.1084
+Ep=96,Step=235384,R=1524.0635,C_F=0,C_R = 0.0309,Adv_c=235068,epsilon=1.0,SPD=29.9363,Risk=0.2965,Dis=6993.1254,T=293.7,Acc=2.9987,Dec=-1.5435,Left=0.1233,Right=0.0745
+Ep=97,Step=237775,R=1725.3454,C_F=0,C_R = 0.0306,Adv_c=237459,epsilon=1.0,SPD=29.2476,Risk=0.1092,Dis=6993.5682,T=299.2,Acc=2.9987,Dec=-1.6993,Left=0.0803,Right=0.036
+Ep=98,Step=240159,R=1617.8164,C_F=0,C_R = 0.0303,Adv_c=239843,epsilon=1.0,SPD=29.3299,Risk=0.2642,Dis=6992.0896,T=298.5,Acc=2.9987,Dec=-1.4188,Left=0.1015,Right=0.0784
+Ep=99,Step=242650,R=1476.5835,C_F=0,C_R = 0.03,Adv_c=242334,epsilon=1.0,SPD=28.0747,Risk=0.3611,Dis=6993.4927,T=309.2,Acc=2.9988,Dec=0.0,Left=0.1313,Right=0.1337
+Ep=100,Step=245035,R=1681.2667,C_F=0,C_R = 0.0297,Adv_c=244719,epsilon=1.0,SPD=29.3189,Risk=0.2292,Dis=6992.741,T=298.6,Acc=2.9987,Dec=-0.2946,Left=0.1388,Right=0.0943
+Ep=101,Step=247386,R=1603.6771,C_F=0,C_R = 0.0294,Adv_c=247070,epsilon=1.0,SPD=29.748,Risk=0.2919,Dis=6994.1722,T=295.2,Acc=2.9977,Dec=0.0,Left=0.1187,Right=0.0417
+Ep=102,Step=249887,R=1314.9187,C_F=0,C_R = 0.0291,Adv_c=249571,epsilon=1.0,SPD=27.9633,Risk=0.4914,Dis=6993.6287,T=310.2,Acc=2.9988,Dec=-1.5232,Left=0.112,Right=0.1116
+Ep=103,Step=252294,R=1797.8533,C_F=0,C_R = 0.0288,Adv_c=251978,epsilon=1.0,SPD=29.0503,Risk=0.1131,Dis=6992.024,T=300.8,Acc=2.9986,Dec=0.0,Left=0.0985,Right=0.0586
+Ep=104,Step=254674,R=1754.6464,C_F=0,C_R = 0.0286,Adv_c=254358,epsilon=1.0,SPD=29.3783,Risk=0.2472,Dis=6991.8489,T=298.1,Acc=2.9987,Dec=-0.6931,Left=0.0983,Right=0.05
+Ep=105,Step=257094,R=1671.7343,C_F=0,C_R = 0.0283,Adv_c=256778,epsilon=1.0,SPD=28.8955,Risk=0.1508,Dis=6992.3495,T=302.1,Acc=2.9988,Dec=0.0,Left=0.0917,Right=0.0661
+Ep=106,Step=259483,R=1755.6597,C_F=0,C_R = 0.028,Adv_c=259167,epsilon=1.0,SPD=29.2712,Risk=0.1547,Dis=6993.0096,T=299.0,Acc=2.998,Dec=0.0,Left=0.1118,Right=0.0444
+Ep=107,Step=261851,R=1673.2019,C_F=0,C_R = 0.0278,Adv_c=261535,epsilon=1.0,SPD=29.5301,Risk=0.1732,Dis=6992.9394,T=296.9,Acc=2.9987,Dec=-1.3182,Left=0.1204,Right=0.0486
+Ep=108,Step=264239,R=1694.6295,C_F=0,C_R = 0.0275,Adv_c=263923,epsilon=1.0,SPD=29.279,Risk=0.1857,Dis=6992.1898,T=298.9,Acc=2.9983,Dec=0.0,Left=0.1386,Right=0.0741
+Ep=109,Step=266671,R=1632.5854,C_F=0,C_R = 0.0273,Adv_c=266355,epsilon=1.0,SPD=28.7572,Risk=0.2296,Dis=6993.7126,T=303.3,Acc=2.9976,Dec=0.0,Left=0.1176,Right=0.0896
+Ep=110,Step=267419,R=326.5795,C_F=0,C_R = 0.027,Adv_c=267103,epsilon=1.0,SPD=26.632,Risk=0.1194,Dis=1992.0153,T=134.9,Acc=2.996,Dec=-0.5593,Left=0.0842,Right=0.0414
+Ep=111,Step=269882,R=1575.7988,C_F=0,C_R = 0.0268,Adv_c=269566,epsilon=1.0,SPD=28.3882,Risk=0.2829,Dis=6992.0715,T=306.4,Acc=2.9988,Dec=-0.0479,Left=0.095,Right=0.0751
+Ep=112,Step=272317,R=1402.8771,C_F=0,C_R = 0.0265,Adv_c=272001,epsilon=1.0,SPD=28.7251,Risk=0.3814,Dis=6994.9651,T=303.6,Acc=2.9979,Dec=0.0,Left=0.1023,Right=0.0797
+Collision detected
+BV--> Episode : 113              Timestep : 272784               Average Reward : 122.7102
+Ep=113,Step=272784,R=-259.926,C_F=1,C_R = 0.0351,Adv_c=272468,epsilon=1.0,SPD=19.7524,Risk=0.3563,Dis=922.6772,T=106.8,Acc=2.9936,Dec=0.0,Left=0.4069,Right=0.1049
+Ep=114,Step=275176,R=1520.213,C_F=0,C_R = 0.0348,Adv_c=274860,epsilon=1.0,SPD=29.2344,Risk=0.3072,Dis=6992.6529,T=299.3,Acc=2.9988,Dec=0.0,Left=0.107,Right=0.0732
+Ep=115,Step=277552,R=1762.1812,C_F=0,C_R = 0.0345,Adv_c=277236,epsilon=1.0,SPD=29.434,Risk=0.2394,Dis=6993.6572,T=297.7,Acc=2.9978,Dec=0.0,Left=0.1406,Right=0.0509
+Ep=116,Step=279851,R=1553.5254,C_F=0,C_R = 0.0342,Adv_c=279535,epsilon=1.0,SPD=30.4236,Risk=0.3777,Dis=6994.7826,T=290.0,Acc=2.9987,Dec=-1.519,Left=0.094,Right=0.0587
+Ep=117,Step=282246,R=1351.2381,C_F=0,C_R = 0.0339,Adv_c=281930,epsilon=1.0,SPD=29.1988,Risk=0.4505,Dis=6992.9607,T=299.6,Acc=2.9987,Dec=-0.4782,Left=0.1152,Right=0.0392
+Ep=118,Step=284621,R=1643.7572,C_F=0,C_R = 0.0336,Adv_c=284305,epsilon=1.0,SPD=29.4424,Risk=0.3291,Dis=6992.3955,T=297.6,Acc=2.9987,Dec=-0.7317,Left=0.1621,Right=0.0771
+Ep=119,Step=285368,R=257.0924,C_F=0,C_R = 0.0333,Adv_c=285052,epsilon=1.0,SPD=26.6658,Risk=0.3052,Dis=1991.794,T=134.8,Acc=2.996,Dec=-0.0298,Left=0.1058,Right=0.1138
+Ep=120,Step=285852,R=-181.0925,C_F=0,C_R = 0.0331,Adv_c=285536,epsilon=1.0,SPD=20.5103,Risk=0.4495,Dis=991.8837,T=108.5,Acc=2.9938,Dec=-0.034,Left=0.2748,Right=0.3512
+Ep=121,Step=286610,R=221.9393,C_F=0,C_R = 0.0328,Adv_c=286294,epsilon=1.0,SPD=26.2823,Risk=0.3881,Dis=1991.7589,T=135.9,Acc=2.9953,Dec=0.0,Left=0.1161,Right=0.1979
+Ep=122,Step=288945,R=1701.2289,C_F=0,C_R = 0.0325,Adv_c=288629,epsilon=1.0,SPD=29.9538,Risk=0.2531,Dis=6994.3339,T=293.6,Acc=2.9987,Dec=-1.2884,Left=0.0767,Right=0.0938
+Ep=123,Step=289386,R=-18.6103,C_F=0,C_R = 0.0323,Adv_c=289070,epsilon=1.0,SPD=22.5087,Risk=0.3385,Dis=992.2154,T=104.2,Acc=2.9932,Dec=-0.7908,Left=0.195,Right=0.1542
+Ep=124,Step=291782,R=1575.1651,C_F=0,C_R = 0.032,Adv_c=291466,epsilon=1.0,SPD=29.1903,Risk=0.1688,Dis=6993.6967,T=299.7,Acc=2.9987,Dec=-1.3779,Left=0.2041,Right=0.0927
+Ep=125,Step=294081,R=1507.2251,C_F=0,C_R = 0.0317,Adv_c=293765,epsilon=1.0,SPD=30.4221,Risk=0.267,Dis=6994.2776,T=290.0,Acc=2.9981,Dec=0.0,Left=0.1292,Right=0.0766
+Ep=126,Step=296376,R=1272.3199,C_F=0,C_R = 0.0315,Adv_c=296060,epsilon=1.0,SPD=30.4767,Risk=0.225,Dis=6994.1902,T=289.6,Acc=2.9988,Dec=0.0,Left=0.1499,Right=0.0767
+Ep=127,Step=298702,R=1658.5812,C_F=0,C_R = 0.0312,Adv_c=298386,epsilon=1.0,SPD=30.0632,Risk=0.1544,Dis=6992.7389,T=292.7,Acc=2.9983,Dec=0.0,Left=0.1101,Right=0.0911
+Ep=128,Step=301016,R=1260.6666,C_F=0,C_R = 0.031,Adv_c=300700,epsilon=1.0,SPD=30.2166,Risk=0.2673,Dis=6991.8356,T=291.5,Acc=2.9987,Dec=-0.0359,Left=0.0756,Right=0.0717
+Traceback (most recent call last):
+  File "train.py", line 474, in <module>
+    train()
+  File "train.py", line 461, in train
+    env.closeEnvConnection()
+  File "e:\xuhaocheng\gaba\sumo-rl-environment\gym_sumo\envs\sumo_env.py", line 415, in closeEnvConnection
+    traci.close()
+  File "D:\software\sumo\tools\traci\main.py", line 262, in close
+    connection.check().close(wait)
+  File "D:\software\sumo\tools\traci\connection.py", line 45, in check
+    raise FatalTraCIError("Not connected.")
+traci.exceptions.FatalTraCIError: Not connected.
