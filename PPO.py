@@ -230,7 +230,9 @@ class PPO:
             return action.detach().cpu().numpy().flatten()
         else:
             with torch.no_grad():
-                state = torch.FloatTensor(state).to(device)
+                # state = torch.FloatTensor(state).to(device)
+                # state = state.to(device)
+                state = torch.Tensor(state).to(device)
                 action, action_logprob, state_val = self.policy_old.act(state)
                 #action1, action2, action_logprob1, action_logprob_2, state_val = self.policy_old.act(state)
                 # action = [action1, action2]
@@ -282,7 +284,7 @@ class PPO:
             surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * advantages.unsqueeze(1)
 
             # final loss of clipped objective PPO
-            loss = torch.mm(-torch.min(surr1, surr2),torch.tensor([[0.5],[0.5]])).squeeze()+ 0.5 * self.MseLoss(state_values, rewards) - 0.01 * dist_entropy.squeeze()
+            loss = torch.mm(-torch.min(surr1, surr2),torch.tensor([[0.5],[0.5]]).to(device)).squeeze()+ 0.5 * self.MseLoss(state_values, rewards) - 0.01 * dist_entropy.squeeze()
             
             # take gradient step
             self.optimizer.zero_grad()
