@@ -156,11 +156,11 @@ def train(seed = 0):
     collision_rate = 0
     # training loop
     epsilon = 0
-
+    current_ep_reward = 0
     while time_step <= max_training_timesteps:
 
         state, surrounding_vehicles, excepted_risk = env.reset()
-        current_ep_reward = 0
+
         r_r = 0
         state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
 
@@ -198,13 +198,7 @@ def train(seed = 0):
             total_risk = other_information["total_risk"]
             collision_flag = other_information["collision_flag"]
             Adversarial_flag = other_information["Adversarial_flag"]
-            # other_information
-            # saving reward and is_terminals
 
-            # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
-
-            # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3)))) sigmoid function, but not work
-            epsilon = 1 - math.exp(0.01* (1 - 1 / (collision_rate + 1e-3)))
 
             av_speed.append(observation[1])
             if observation[2] > 0:
@@ -249,7 +243,7 @@ def train(seed = 0):
                 log_f.flush()
                 if (collision_counts + 1) % save_model_freq == 0:
                     ppo_agent.save(checkpoint_path)
-
+                current_ep_reward = 0
 
             r_r += reward
             reward = torch.tensor([reward], device=device)
@@ -283,6 +277,11 @@ def train(seed = 0):
         collision_rate = collision_counts / (i_episode + 1)
         # epsilon = 1 / (1+np.exp(-1*(2 - collision_rate - (total_risk + 1e-3)/2)))
         # epsilon = 1 / (1 + np.exp((np.array(collision_rate) * np.array(total_risk))))
+        # other_information
+        # saving reward and is_terminal
+        # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3) / (total_risk + 1e-3))))
+        # epsilon = 1 / (1 + math.exp(-1 * (1 / (collision_rate + 1e-3)))) sigmoid function, but not work
+        epsilon = 1 - math.exp(0.05 * (1 - 1 / (collision_rate + 1e-3)))
 
         if (i_episode + 1) % 2 == 0:
             torch.save(AV_agent.policy_net.state_dict(), av_checkpoint_path)
@@ -332,7 +331,7 @@ def train(seed = 0):
 
 
 def main():
-	ra = [i for i in range(3)]
+	ra = [i for i in range(5)]
 	proces = []
 	for i in ra:
 	    proc = Process(target=train, args=(str(i+1),))
