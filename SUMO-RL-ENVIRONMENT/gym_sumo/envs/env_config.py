@@ -37,3 +37,4 @@ SSM_A_THRESHOLD = 4.8
 
 SSM_UNCERTAINTY = 20.8
 
+activation_steepness = 0.5
