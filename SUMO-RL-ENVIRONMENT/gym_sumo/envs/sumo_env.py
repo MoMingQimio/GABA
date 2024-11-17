@@ -412,8 +412,8 @@ class SumoEnv(gym.Env):
             v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
             if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
                 # traci.vehicle.setLaneChangeMode(self.ego,0)
-                traci.vehicle.setSpeedMode(self.ego, 32)
-                traci.vehicle.setLaneChangeMode(self.ego, 1109)
+                # traci.vehicle.setSpeedMode(self.ego, 32)
+                # traci.vehicle.setLaneChangeMode(self.ego, 1109)
                 return True
             traci.simulationStep()
 

@@ -135,6 +135,8 @@ def train(seed = str(0), print_flag = False):
     adversarial_counts = 0
     epsilon = 0
     BV_ep_reward = 0
+    collision_rate = 0
+    collision_intervals = 0
     while time_step <= max_training_timesteps:
 
         observation, surrounding_vehicles, excepted_risk = env.reset()
@@ -142,15 +144,16 @@ def train(seed = str(0), print_flag = False):
         TV_ep_reward = 0
         observation = torch.tensor(observation, dtype=torch.float32, device=device).unsqueeze(0)
         state = observation
-        av_speed = [0]
-        av_acceleration = [0]
-        av_deceleration = [0]
-        av_left_change = [0]
-        av_right_change = [0]
-        av_total_risk = [0]
+        av_speed = []
+        av_acceleration = []
+        av_deceleration = []
+        av_left_change = []
+        av_right_change = []
+        av_total_risk = []
         av_distance = 0
         av_running_time = 0
         collision_flag = False
+
 
         for t in count():
 
@@ -192,7 +195,7 @@ def train(seed = str(0), print_flag = False):
             av_total_risk.append(total_risk)
 
             time_step += 1
-            if epsilon > 0.2:
+            if epsilon > 0.5:
                 if Adversarial_flag:
                     adversarial_counts += 1
                     # BV_reward = BV_reward + excepted_risk[BV_candidate_index]
@@ -251,9 +254,7 @@ def train(seed = str(0), print_flag = False):
 
 
 
-        collision_rate = collision_counts / (i_episode + 1)
-        
-        epsilon = 1 - math.exp(0.05 * (1 - 1 / (collision_rate + 1e-3)))
+
 
         if (i_episode + 1) % 2 == 0:
             torch.save(TV_agent.policy_net.state_dict(), av_checkpoint_path)
@@ -262,6 +263,13 @@ def train(seed = str(0), print_flag = False):
         if_collision = 0
         if collision_flag:
             if_collision = 1
+            collision_counts +=1
+        if collision_counts > 5 or collision_intervals > 30:
+            collision_rate = collision_counts / (collision_intervals)
+            epsilon = 1 - math.exp(0.05 * (1 - 1 / (collision_rate + 1e-3)))
+            collision_intervals = 0
+            collision_counts = 0
+
         av_speed_avg = np.mean(av_speed)
         av_acc_avg = np.mean(av_acceleration)
         av_dece_avg = np.mean(av_deceleration)
@@ -284,6 +292,7 @@ def train(seed = str(0), print_flag = False):
         #         round(av_dece_avg, 4), round(av_left_avg, 4), round(av_right_avg, 4)))
 
         i_episode += 1
+        collision_intervals +=1
 
 
     log_f.close()
