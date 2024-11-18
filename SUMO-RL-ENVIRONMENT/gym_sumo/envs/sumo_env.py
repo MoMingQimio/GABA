@@ -1,7 +1,7 @@
 import os
 import gym
 from gym import spaces
-#import pygame
+
 import numpy as np 
 import sys
 import math
@@ -83,7 +83,14 @@ class SumoEnv(gym.Env):
         self.running_time = 0
         self.k = c.activation_steepness
 
-        print(self.render_mode)
+        self.excepted_risk = [0,0,0,0,0,0]
+        self.surrounding_vehicles = ["","","","","",""]
+        self.total_risk = 0
+
+
+        # print(self.render_mode)
+
+
 
 
 
@@ -132,9 +139,10 @@ class SumoEnv(gym.Env):
         obs =np.insert(obs, 0, index)
 
         #info = self._getInfo()
-        info = ["","","","","",""]
+        # info = ["","","","","",""]
         #traci.vehicle.setSpeed(self.ego, 20)
-        return obs, info, np.zeros((1,6))
+        # return obs, info, np.zeros((1,6))
+        return obs
 
     def _getCloseLeader(self, leaders):
         if len(leaders) <= 0:
@@ -228,7 +236,7 @@ class SumoEnv(gym.Env):
             states.append(mean_speed[i])
         observations = np.array(states)
         # surrounding vehicle id list
-        surrounding_vehicles =[leader_id, left_leader, right_leader, follower_id, left_follower, right_follower]
+        surrounding_vehicles =[leader_id, follower_id, left_leader,left_follower, right_leader, right_follower]
 
         return observations , surrounding_vehicles
 
@@ -327,10 +335,12 @@ class SumoEnv(gym.Env):
     def step(self, final_actions):
 
         # AV_action, Veh_id, RL_action, epsilon = final_actions
-        AV_action, Veh_id,BV_candidate_index, RL_action= final_actions
-        observation, surrounding_vehicles = self.get_observation(self.ego)
-        excepted_risk, total_risk = self.risk_assessment(observation, surrounding_vehicles)
-        activation = self.Activation_Function(excepted_risk[BV_candidate_index],total_risk)
+        # AV_action, Veh_id,BV_candidate_index, RL_action= final_actions
+        AV_action,BV_candidate_index, RL_action= final_actions
+        Veh_id = self.surrounding_vehicles[BV_candidate_index]
+        # observation, surrounding_vehicles = self.get_observation(self.ego)
+        # excepted_risk, total_risk = self.risk_assessment(observation, surrounding_vehicles)
+        activation = self.Activation_Function(self.excepted_risk[BV_candidate_index],self.total_risk)
         #print(activation)
         
         self._applyAction(self.ego,AV_action)
@@ -359,6 +369,8 @@ class SumoEnv(gym.Env):
         reward = self._reward(AV_action)
         observation, surrounding_vehicles = self.get_observation(self.ego)
         excepted_risk, total_risk = self.risk_assessment(observation,surrounding_vehicles)
+        self.excepted_risk = excepted_risk
+        self.total_risk = total_risk
         BV_reward = self._BVreward(RL_action, RB_action, total_risk)
         done = self.is_collided or (self._isEgoRunning()==False)
 
@@ -368,8 +380,8 @@ class SumoEnv(gym.Env):
             done = True
         #写一个字典储存其他信息
         other_information = {"BV_reward" : BV_reward,
-                             "surrounding_vehicles" : surrounding_vehicles,
-                             "excepted_risk" :  excepted_risk,
+                             # "surrounding_vehicles" : surrounding_vehicles,
+                             # "excepted_risk" :  excepted_risk,
                              "total_risk" : total_risk,
                              "collision_flag" : collision_flag,
                              "Adversarial_flag" :Adversarial_flag}
@@ -445,22 +457,31 @@ class SumoEnv(gym.Env):
         prob_norm = self.calc_risk_prob(SSM)
         #print(prob_norm)
         #写一个tuple，将概率和风险等级连接在一起
-        lane_risk_prob = [] #中、左、右的风险概率
-        for i in range(3):
-            P_S = prob_norm[0][2*i]*prob_norm[0][2*i+1]
-            P_D = 1- (1-prob_norm[2][2*i])*(1-prob_norm[2][2*i+1])
-            P_A = 1- P_D -P_S
-            prob = [P_S,P_A,P_D]
-            lane_risk_prob.append(prob)
-        lane_risk_prob_ = np.array(lane_risk_prob).reshape(3,3)
-        #求出目标车辆的风险概率
-        p_s = lane_risk_prob_[0,0]*lane_risk_prob_[1,0]*lane_risk_prob_[2,0]
-        p_d = 1- (1-lane_risk_prob_[0,2])*(1-lane_risk_prob_[1,2])*(1-lane_risk_prob_[2,2])
-        p_a = 1 - p_s - p_d
-        total_prob = np.array([p_s,p_a,p_d])
+        # lane_risk_prob = [] #中、左、右的风险概率
+        # for i in range(3):
+        #     P_S = prob_norm[0][2*i]*prob_norm[0][2*i+1]
+        #     P_D = 1- (1-prob_norm[2][2*i])*(1-prob_norm[2][2*i+1])
+        #     P_A = 1- P_D -P_S
+        #     prob = [P_S,P_A,P_D]
+        #     lane_risk_prob.append(prob)
+        # lane_risk_prob_ = np.array(lane_risk_prob).reshape(3,3)
+        # #求出目标车辆的风险概率
+        # p_s = lane_risk_prob_[0,0]*lane_risk_prob_[1,0]*lane_risk_prob_[2,0]
+        # p_d = 1- (1-lane_risk_prob_[0,2])*(1-lane_risk_prob_[1,2])*(1-lane_risk_prob_[2,2])
+        # p_a = 1 - p_s - p_d
+        # total_prob = np.array([p_s,p_a,p_d])
 
 
 
+        p_s = 1
+        p_d = 1
+        for i in range(6):
+            p_d = p_d * (1-prob_norm[2,i])
+            p_s = p_s * prob_norm[0,i]
+        PD = 1 - p_d
+        PS = p_s
+        PA = 1 - PD -PS
+        total_prob = np.array([PS, PA, PD])
         #print(lane_risk_prob)
         #risk_level = np.argmax(prob_norm, axis=0)
         excepted_risk = np.dot(np.array([0, 1, 2]),prob_norm) #求出每个背景车辆的期望风险

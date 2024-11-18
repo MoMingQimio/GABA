@@ -9,7 +9,7 @@
     <time>
         <begin value="0"/>
         <end value="500"/>
-        <step-length value= "0.01" />
+        <step-length value= "1" />
     </time>
     <time-to-teleport value="-1"/>
 </configuration>

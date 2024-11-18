@@ -134,14 +134,16 @@ def train(seed = str(0), print_flag = False):
     collision_counts = 0
     adversarial_counts = 0
     epsilon = 0
-    BV_ep_reward = 0
     collision_rate = 0
     collision_intervals = 0
+    total_collision_counts = 0
     while time_step <= max_training_timesteps:
 
-        observation, surrounding_vehicles, excepted_risk = env.reset()
+        # observation, surrounding_vehicles, excepted_risk = env.reset()
+        observation = env.reset()
         # print(observation)
         TV_ep_reward = 0
+        BV_ep_reward = 0
         observation = torch.tensor(observation, dtype=torch.float32, device=device).unsqueeze(0)
         state = observation
         av_speed = []
@@ -164,10 +166,11 @@ def train(seed = str(0), print_flag = False):
             
             BV_candidate_index = BV_action[0]
             BV_maneuver_index = BV_action[1]
-            Veh_id = surrounding_vehicles[BV_candidate_index]
+            # Veh_id = surrounding_vehicles[BV_candidate_index]
 
             # final_actions = (TV_action.item(), Veh_id, BV_maneuver_index, epsilon)
-            final_actions = (TV_action.item(), Veh_id,BV_candidate_index, BV_maneuver_index)
+            # final_actions = (TV_action.item(), Veh_id,BV_candidate_index, BV_maneuver_index)
+            final_actions = (TV_action.item(), BV_candidate_index, BV_maneuver_index)
             observation, TV_reward, done, other_information = env.step(final_actions)
             av_speed.append(observation[1])
             if observation[2] > 0:
@@ -177,7 +180,7 @@ def train(seed = str(0), print_flag = False):
                 av_deceleration.append(observation[2])
             observation = torch.tensor(observation, dtype=torch.float32, device=device).unsqueeze(0)
             BV_reward = other_information["BV_reward"]
-            surrounding_vehicles = other_information["surrounding_vehicles"]
+            # surrounding_vehicles = other_information["surrounding_vehicles"]
             # excepted_risk = other_information["excepted_risk"]
             total_risk = other_information["total_risk"]
             collision_flag = other_information["collision_flag"]
@@ -211,18 +214,18 @@ def train(seed = str(0), print_flag = False):
                     if (adversarial_counts+1) % update_timestep == 0:
                         BV_agent.update()
 
-                if collision_flag:
-                    #print("Collision detected")
-                    collision_counts += 1
-                    BV_ep_reward = round(BV_ep_reward, 4)
-                    log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,
-                                                          BV_ep_reward))
-                    # print("BV--> Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
-                    #                                                                               log_avg_reward))
-                    log_f.flush()
-                    if (collision_counts + 1) % save_model_freq == 0:
-                        BV_agent.save(checkpoint_path)
-                    BV_ep_reward = 0
+                # if collision_flag:
+                #     #print("Collision detected")
+                #     collision_counts += 1
+                #     BV_ep_reward = round(BV_ep_reward, 4)
+                #     log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, collision_counts, adversarial_counts,
+                #                                           BV_ep_reward))
+                #     # print("BV--> Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
+                #     #                                                                               log_avg_reward))
+                #     log_f.flush()
+                #     if (collision_counts + 1) % save_model_freq == 0:
+                #         BV_agent.save(checkpoint_path)
+                #     BV_ep_reward = 0
 
 
 
@@ -252,8 +255,16 @@ def train(seed = str(0), print_flag = False):
 
             env.move_gui()
 
+        #     #print("Collision detected")
 
-
+        BV_ep_reward = round(BV_ep_reward, 4)
+        log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, total_collision_counts, adversarial_counts,
+                                              BV_ep_reward))
+        # print("BV--> Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
+        #                                                                               log_avg_reward))
+        log_f.flush()
+        if (total_collision_counts + 1) % save_model_freq == 0:
+            BV_agent.save(checkpoint_path)
 
 
         if (i_episode + 1) % 2 == 0:
@@ -264,6 +275,7 @@ def train(seed = str(0), print_flag = False):
         if collision_flag:
             if_collision = 1
             collision_counts +=1
+            total_collision_counts +=1
         if collision_counts > 5 or collision_intervals > 30:
             collision_rate = collision_counts / (collision_intervals)
             epsilon = 1 - math.exp(0.05 * (1 - 1 / (collision_rate + 1e-3)))
