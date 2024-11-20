@@ -67,7 +67,7 @@ class SumoEnv(gym.Env):
     metadata = {"render_modes": ["", "human", "rgb_array"], "render_fps": 4}
     def __init__(self,render_mode=None):
         super(SumoEnv, self).__init__()
-        self.action_list = np.arange(-c.RL_DCE_RANGE, c.RL_ACC_RANGE, c.ACC_INTERVAL)
+        self.action_list = np.arange(-c.RL_DCE_RANGE, c.RL_ACC_RANGE + c.ACC_INTERVAL, c.ACC_INTERVAL)
         self.action_space = spaces.MultiDiscrete([6,len(self.action_list)+3])
         self.observation_space = creat_observation()
 
@@ -372,8 +372,10 @@ class SumoEnv(gym.Env):
         if self.total_risk > 0.5 and self.total_risk < 1.5 and collision_rate<0.1:
             Adversarial_flag = True
             if Veh_id != "":
-                traci.vehicle.setSpeedMode(Veh_id, 32)
-                traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+                # traci.vehicle.setSpeedMode(Veh_id, 32)
+                # traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+                traci.vehicle.setSpeedMode(Veh_id, 0)
+                traci.vehicle.setLaneChangeMode(Veh_id, 0)
                 # The lane change mode when controlling BV is 0b010001010101 = 1109
                 # which means that the laneChangeModel may execute all changes unless in conflict
                 # with TraCI.Requests from TraCI are handled urgently without consideration for safety constraints.
@@ -386,9 +388,9 @@ class SumoEnv(gym.Env):
 
         self.running_distance = traci.vehicle.getDistance(self.ego)
         traci.simulationStep()
-        if Veh_id != "":
-            traci.vehicle.setSpeedMode(Veh_id, 31)
-            traci.vehicle.setLaneChangeMode(Veh_id, 1621)
+        # if Veh_id != "":
+        #     traci.vehicle.setSpeedMode(Veh_id, 31)
+        #     traci.vehicle.setLaneChangeMode(Veh_id, 1621)
         reward = self._reward(AV_action)
         observation, surrounding_vehicles = self.get_observation(self.ego)
         BV_reward = self._BVreward(RL_action, RB_action,BV_candidate_index)
@@ -448,8 +450,9 @@ class SumoEnv(gym.Env):
             v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
             if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
                 traci.vehicle.setLaneChangeMode(self.ego,0)
-                # traci.vehicle.setSpeedMode(self.ego, 32)
-                traci.vehicle.setLaneChangeMode(self.ego, 1109)
+                # # traci.vehicle.setSpeedMode(self.ego, 32)
+                # traci.vehicle.setLaneChangeMode(self.ego, 1109)
+                traci.vehicle.setLaneChangeMode(self.ego, 0)
                 return True
             traci.simulationStep()
 
