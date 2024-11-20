@@ -96,7 +96,7 @@ class ActorCritic(nn.Module):
         if torch.isnan(action_probs).any():
             action_probs = torch.rand_like(action_probs)
         # dist = Categorical(action_probs)
-
+        #print(action_probs)
         action_probs1 = action_probs[:,:self.action_dim[0]]
         action_probs2 = action_probs[:,self.action_dim[0]:]
         dist1 = Categorical(action_probs1)

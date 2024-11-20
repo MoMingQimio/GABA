@@ -1,10 +1,10 @@
 import os
 import gym
 from gym import spaces
-#import pygame
+
 import numpy as np 
 import sys
-
+import math
 
 
 from gym_sumo.envs import env_config as c
@@ -75,14 +75,23 @@ class SumoEnv(gym.Env):
         self.ego = c.EGO_ID
         self.num_of_lanes = c.NUM_OF_LANES
         self.max_speed_limit = c.RL_MAX_SPEED_LIMIT
+        self.min_speed_limit = c.RL_MIN_SPEED_LIMIT
         self.is_collided = False
         assert render_mode is None or render_mode in self.metadata['render_modes']
         self.render_mode = render_mode
         self.rbm = RB()
         self.running_distance = 0
         self.running_time = 0
+        self.k = c.activation_steepness
 
-        print(self.render_mode)
+        self.excepted_risk = [0,0,0,0,0,0]
+        self.surrounding_vehicles = ["","","","","",""]
+        self.total_risk = 0
+
+
+        # print(self.render_mode)
+
+
 
 
 
@@ -131,9 +140,10 @@ class SumoEnv(gym.Env):
         obs =np.insert(obs, 0, index)
 
         #info = self._getInfo()
-        info = ["","","","","",""]
+        # info = ["","","","","",""]
         #traci.vehicle.setSpeed(self.ego, 20)
-        return obs, info, np.zeros((1,6))
+        # return obs, info, np.zeros((1,6))
+        return obs
 
     def _getCloseLeader(self, leaders):
         if len(leaders) <= 0:
@@ -227,7 +237,7 @@ class SumoEnv(gym.Env):
             states.append(mean_speed[i])
         observations = np.array(states)
         # surrounding vehicle id list
-        surrounding_vehicles =[leader_id, left_leader, right_leader, follower_id, left_follower, right_follower]
+        surrounding_vehicles =[leader_id, follower_id, left_leader,left_follower, right_leader, right_follower]
 
         return observations , surrounding_vehicles
 
@@ -292,17 +302,17 @@ class SumoEnv(gym.Env):
         collide_vehicles = traci.simulation.getCollidingVehiclesIDList()
         if self.ego in collide_vehicles:
             self.is_collided = True
-            return -10
+            return -1
         return 0.0
     def _efficiency(self):
         speed = traci.vehicle.getSpeed(self.ego)
-        if speed < 25.0:
-            return (speed-25.0)/(self.max_speed_limit-25.0)
+        if speed < self.min_speed_limit:
+            return (speed-self.min_speed_limit)/(self.max_speed_limit-self.min_speed_limit)
         if speed > self.max_speed_limit:
-            return (self.max_speed_limit-speed)/(self.max_speed_limit-25.0)
+            return (self.max_speed_limit-speed)/(self.max_speed_limit-self.min_speed_limit)
         return speed/self.max_speed_limit
     def _lane_change_reward(self,action):
-        if action == 1 or action == 2:
+        if action ==(len(self.action_list) + 1) or action == (len(self.action_list) + 2):
             return -1.0
         return 0
 
@@ -310,21 +320,56 @@ class SumoEnv(gym.Env):
         c_reward = self._collision_reward()
         if self.is_collided or self._isEgoRunning()==False:
             return c_reward
-        return c_reward + self._efficiency() + self._lane_change_reward(action)
+        return (1000 * c_reward) + self._efficiency() + self._lane_change_reward(action)
 
-    def _BVreward(self, action):
+    def _BVreward(self, rl_action, rb_action,index):
         c_reward = self._collision_reward()
-        return -10 * c_reward
+        a_reward = 0
+        if rl_action == rb_action:
+            a_reward = -1
 
+        return (-20 * c_reward) + 1 * a_reward + 0.5 * self.excepted_risk[index]
+    def Activation_Function(self,risk_bv,risk_total):
+        activation = 1/(1+math.exp(self.k*(risk_bv-risk_total)))
+        return activation
+    
     def step(self, final_actions):
 
-        AV_action, Veh_id, BV_action, epsilon = final_actions
-
+        # AV_action, Veh_id, RL_action, epsilon = final_actions
+        # AV_action, Veh_id,BV_candidate_index, RL_action= final_actions
+        AV_action,BV_candidate_index, RL_action,collision_rate= final_actions
+        Veh_id = self.surrounding_vehicles[BV_candidate_index]
+        # observation, surrounding_vehicles = self.get_observation(self.ego)
+        # excepted_risk, total_risk = self.risk_assessment(observation, surrounding_vehicles)
+        # activation = self.Activation_Function(self.excepted_risk[BV_candidate_index],self.total_risk)
+        # print(self.excepted_risk)
+        # print(self.total_risk)
+        #print(activation)
+        
         self._applyAction(self.ego,AV_action)
-
+        
+        
+        
+        
         RB_action =  self.rbm.get_action(self.get_observation(Veh_id))
         Adversarial_flag = False
-        if epsilon > np.random.rand():
+        # #print(activation)
+        # if activation > 0 and activation < 0.8:
+        #     Adversarial_flag = True
+        #     if Veh_id != "":
+        #         traci.vehicle.setSpeedMode(Veh_id, 32)
+        #         traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+        #         # The lane change mode when controlling BV is 0b010001010101 = 1109
+        #         # which means that the laneChangeModel may execute all changes unless in conflict
+        #         # with TraCI.Requests from TraCI are handled urgently without consideration for safety constraints.
+        #
+        #         #traci.vehicle.setLaneChangeMode(Veh_id, 1621)
+        #     BV_final_action = RL_action
+        # else:
+        #     BV_final_action = RB_action
+        # self._applyAction(Veh_id,BV_final_action)
+
+        if self.total_risk > 0.5 and self.total_risk < 1.5 and collision_rate<0.1:
             Adversarial_flag = True
             if Veh_id != "":
                 traci.vehicle.setSpeedMode(Veh_id, 32)
@@ -334,24 +379,33 @@ class SumoEnv(gym.Env):
                 # with TraCI.Requests from TraCI are handled urgently without consideration for safety constraints.
 
                 #traci.vehicle.setLaneChangeMode(Veh_id, 1621)
-        else:
-            BV_action = RB_action
-        self._applyAction(Veh_id,BV_action)
+            BV_final_action = RL_action
+            self._applyAction(Veh_id, BV_final_action)
+        # else:
+        #     BV_final_action = RB_action
+
         self.running_distance = traci.vehicle.getDistance(self.ego)
         traci.simulationStep()
+        if Veh_id != "":
+            traci.vehicle.setSpeedMode(Veh_id, 31)
+            traci.vehicle.setLaneChangeMode(Veh_id, 1621)
         reward = self._reward(AV_action)
-        BV_reward = self._BVreward(BV_action)
         observation, surrounding_vehicles = self.get_observation(self.ego)
+        BV_reward = self._BVreward(RL_action, RB_action,BV_candidate_index)
         excepted_risk, total_risk = self.risk_assessment(observation,surrounding_vehicles)
+        self.excepted_risk = excepted_risk
+        self.total_risk = total_risk
+
         done = self.is_collided or (self._isEgoRunning()==False)
+
         collision_flag = self.is_collided
 
         if done == False and traci.simulation.getTime() > 360:
             done = True
         #写一个字典储存其他信息
         other_information = {"BV_reward" : BV_reward,
-                             "surrounding_vehicles" : surrounding_vehicles,
-                             "excepted_risk" :  excepted_risk,
+                             # "surrounding_vehicles" : surrounding_vehicles,
+                             # "excepted_risk" :  excepted_risk,
                              "total_risk" : total_risk,
                              "collision_flag" : collision_flag,
                              "Adversarial_flag" :Adversarial_flag}
@@ -393,8 +447,8 @@ class SumoEnv(gym.Env):
             v_ids_e1 = traci.edge.getLastStepVehicleIDs("E1")
             v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
             if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
-                # traci.vehicle.setLaneChangeMode(self.ego,0)
-                traci.vehicle.setSpeedMode(self.ego, 32)
+                traci.vehicle.setLaneChangeMode(self.ego,0)
+                # traci.vehicle.setSpeedMode(self.ego, 32)
                 traci.vehicle.setLaneChangeMode(self.ego, 1109)
                 return True
             traci.simulationStep()
@@ -427,27 +481,36 @@ class SumoEnv(gym.Env):
         prob_norm = self.calc_risk_prob(SSM)
         #print(prob_norm)
         #写一个tuple，将概率和风险等级连接在一起
-        lane_risk_prob = [] #中、左、右的风险概率
-        for i in range(3):
-            P_S = prob_norm[0][2*i]*prob_norm[0][2*i+1]
-            P_D = 1- (1-prob_norm[2][2*i])*(1-prob_norm[2][2*i+1])
-            P_A = 1- P_D -P_S
-            prob = [P_S,P_A,P_D]
-            lane_risk_prob.append(prob)
-        lane_risk_prob_ = np.array(lane_risk_prob).reshape(3,3)
-        #求出目标车辆的风险概率
-        p_s = lane_risk_prob_[0,0]*lane_risk_prob_[1,0]*lane_risk_prob_[2,0]
-        p_d = 1- (1-lane_risk_prob_[0,2])*(1-lane_risk_prob_[1,2])*(1-lane_risk_prob_[2,2])
-        p_a = 1 - p_s - p_d
-        total_prob = np.array([p_s,p_a,p_d])
+        # lane_risk_prob = [] #中、左、右的风险概率
+        # for i in range(3):
+        #     P_S = prob_norm[0][2*i]*prob_norm[0][2*i+1]
+        #     P_D = 1- (1-prob_norm[2][2*i])*(1-prob_norm[2][2*i+1])
+        #     P_A = 1- P_D -P_S
+        #     prob = [P_S,P_A,P_D]
+        #     lane_risk_prob.append(prob)
+        # lane_risk_prob_ = np.array(lane_risk_prob).reshape(3,3)
+        # #求出目标车辆的风险概率
+        # p_s = lane_risk_prob_[0,0]*lane_risk_prob_[1,0]*lane_risk_prob_[2,0]
+        # p_d = 1- (1-lane_risk_prob_[0,2])*(1-lane_risk_prob_[1,2])*(1-lane_risk_prob_[2,2])
+        # p_a = 1 - p_s - p_d
+        # total_prob = np.array([p_s,p_a,p_d])
 
 
 
+        p_s = 1
+        p_d = 1
+        for i in range(6):
+            p_d = p_d * (1-prob_norm[2,i])
+            p_s = p_s * prob_norm[0,i]
+        PD = 1 - p_d
+        PS = p_s
+        PA = 1 - PD -PS
+        total_prob = np.array([PS, PA, PD])
         #print(lane_risk_prob)
         #risk_level = np.argmax(prob_norm, axis=0)
-        excepted_risk = np.dot(np.array([-0.5, 1, 2]),prob_norm) #求出每个背景车辆的期望风险
+        excepted_risk = np.dot(np.array([0, 1, 2]),prob_norm) #求出每个背景车辆的期望风险
 
-        total_risk = np.dot(np.array([-0.5, 1, 2]),total_prob) #求出目标车辆的期望风险
+        total_risk = np.dot(np.array([0, 1, 2]),total_prob) #求出目标车辆的期望风险
 
         return excepted_risk, total_risk
 
