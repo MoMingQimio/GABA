@@ -28,7 +28,7 @@ def train(seed = str(0), print_flag = False):
     ####### initialize environment hyperparameters ######
     env_name = "sumo-v0"
     has_continuous_action_space = False  # continuous action space; else discrete
-    max_training_timesteps = int(3e6)  # break training loop if timeteps > max_training_timesteps
+    max_training_timesteps = int(3e5)  # break training loop if timeteps > max_training_timesteps
     save_model_freq = int(1e5)  # save model frequency (in num timesteps)
     action_std = 0.6  # starting std for action distribution (Multivariate Normal)这个参数在离散动作空间中没用
 
