@@ -134,7 +134,7 @@ def train(seed = str(0), print_flag = False):
     collision_counts = 0
     adversarial_counts = 0
     epsilon = 0
-    collision_rate = 0
+    collision_rate = 0.2
     collision_intervals = 0
     total_collision_counts = 0
     while time_step <= max_training_timesteps:
@@ -170,7 +170,7 @@ def train(seed = str(0), print_flag = False):
 
             # final_actions = (TV_action.item(), Veh_id, BV_maneuver_index, epsilon)
             # final_actions = (TV_action.item(), Veh_id,BV_candidate_index, BV_maneuver_index)
-            final_actions = (TV_action.item(), BV_candidate_index, BV_maneuver_index)
+            final_actions = (TV_action.item(), BV_candidate_index, BV_maneuver_index,collision_rate)
             observation, TV_reward, done, other_information = env.step(final_actions)
             av_speed.append(observation[1])
             if observation[2] > 0:
@@ -198,7 +198,8 @@ def train(seed = str(0), print_flag = False):
             av_total_risk.append(total_risk)
 
             time_step += 1
-            if epsilon > 0.5:
+            # if epsilon > 0.5:
+            if collision_rate < 0.1:
                 if Adversarial_flag:
                     adversarial_counts += 1
                     # BV_reward = BV_reward + excepted_risk[BV_candidate_index]

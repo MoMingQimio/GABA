@@ -75,6 +75,7 @@ class SumoEnv(gym.Env):
         self.ego = c.EGO_ID
         self.num_of_lanes = c.NUM_OF_LANES
         self.max_speed_limit = c.RL_MAX_SPEED_LIMIT
+        self.min_speed_limit = c.RL_MIN_SPEED_LIMIT
         self.is_collided = False
         assert render_mode is None or render_mode in self.metadata['render_modes']
         self.render_mode = render_mode
@@ -301,17 +302,17 @@ class SumoEnv(gym.Env):
         collide_vehicles = traci.simulation.getCollidingVehiclesIDList()
         if self.ego in collide_vehicles:
             self.is_collided = True
-            return -10
+            return -1
         return 0.0
     def _efficiency(self):
         speed = traci.vehicle.getSpeed(self.ego)
-        if speed < 25.0:
-            return (speed-25.0)/(self.max_speed_limit-25.0)
+        if speed < self.min_speed_limit:
+            return (speed-self.min_speed_limit)/(self.max_speed_limit-self.min_speed_limit)
         if speed > self.max_speed_limit:
-            return (self.max_speed_limit-speed)/(self.max_speed_limit-25.0)
+            return (self.max_speed_limit-speed)/(self.max_speed_limit-self.min_speed_limit)
         return speed/self.max_speed_limit
     def _lane_change_reward(self,action):
-        if action == 1 or action == 2:
+        if action ==(len(self.action_list) + 1) or action == (len(self.action_list) + 2):
             return -1.0
         return 0
 
@@ -319,15 +320,15 @@ class SumoEnv(gym.Env):
         c_reward = self._collision_reward()
         if self.is_collided or self._isEgoRunning()==False:
             return c_reward
-        return c_reward + self._efficiency() + self._lane_change_reward(action)
+        return (1000 * c_reward) + self._efficiency() + self._lane_change_reward(action)
 
-    def _BVreward(self, rl_action, rb_action,risk):
+    def _BVreward(self, rl_action, rb_action,index):
         c_reward = self._collision_reward()
         a_reward = 0
         if rl_action == rb_action:
             a_reward = -1
 
-        return (-10 * c_reward) + 1 * a_reward + risk
+        return (-20 * c_reward) + 1 * a_reward + 0.5 * self.excepted_risk[index]
     def Activation_Function(self,risk_bv,risk_total):
         activation = 1/(1+math.exp(self.k*(risk_bv-risk_total)))
         return activation
@@ -336,11 +337,13 @@ class SumoEnv(gym.Env):
 
         # AV_action, Veh_id, RL_action, epsilon = final_actions
         # AV_action, Veh_id,BV_candidate_index, RL_action= final_actions
-        AV_action,BV_candidate_index, RL_action= final_actions
+        AV_action,BV_candidate_index, RL_action,collision_rate= final_actions
         Veh_id = self.surrounding_vehicles[BV_candidate_index]
         # observation, surrounding_vehicles = self.get_observation(self.ego)
         # excepted_risk, total_risk = self.risk_assessment(observation, surrounding_vehicles)
-        activation = self.Activation_Function(self.excepted_risk[BV_candidate_index],self.total_risk)
+        # activation = self.Activation_Function(self.excepted_risk[BV_candidate_index],self.total_risk)
+        # print(self.excepted_risk)
+        # print(self.total_risk)
         #print(activation)
         
         self._applyAction(self.ego,AV_action)
@@ -350,7 +353,23 @@ class SumoEnv(gym.Env):
         
         RB_action =  self.rbm.get_action(self.get_observation(Veh_id))
         Adversarial_flag = False
-        if activation > 0 and activation < 0.8:
+        # #print(activation)
+        # if activation > 0 and activation < 0.8:
+        #     Adversarial_flag = True
+        #     if Veh_id != "":
+        #         traci.vehicle.setSpeedMode(Veh_id, 32)
+        #         traci.vehicle.setLaneChangeMode(Veh_id, 1109)
+        #         # The lane change mode when controlling BV is 0b010001010101 = 1109
+        #         # which means that the laneChangeModel may execute all changes unless in conflict
+        #         # with TraCI.Requests from TraCI are handled urgently without consideration for safety constraints.
+        #
+        #         #traci.vehicle.setLaneChangeMode(Veh_id, 1621)
+        #     BV_final_action = RL_action
+        # else:
+        #     BV_final_action = RB_action
+        # self._applyAction(Veh_id,BV_final_action)
+
+        if self.total_risk > 0.5 and self.total_risk < 1.5 and collision_rate<0.1:
             Adversarial_flag = True
             if Veh_id != "":
                 traci.vehicle.setSpeedMode(Veh_id, 32)
@@ -361,17 +380,22 @@ class SumoEnv(gym.Env):
 
                 #traci.vehicle.setLaneChangeMode(Veh_id, 1621)
             BV_final_action = RL_action
-        else:
-            BV_final_action = RB_action
-        self._applyAction(Veh_id,BV_final_action)
+            self._applyAction(Veh_id, BV_final_action)
+        # else:
+        #     BV_final_action = RB_action
+
         self.running_distance = traci.vehicle.getDistance(self.ego)
         traci.simulationStep()
+        if Veh_id != "":
+            traci.vehicle.setSpeedMode(Veh_id, 31)
+            traci.vehicle.setLaneChangeMode(Veh_id, 1621)
         reward = self._reward(AV_action)
         observation, surrounding_vehicles = self.get_observation(self.ego)
+        BV_reward = self._BVreward(RL_action, RB_action,BV_candidate_index)
         excepted_risk, total_risk = self.risk_assessment(observation,surrounding_vehicles)
         self.excepted_risk = excepted_risk
         self.total_risk = total_risk
-        BV_reward = self._BVreward(RL_action, RB_action, total_risk)
+
         done = self.is_collided or (self._isEgoRunning()==False)
 
         collision_flag = self.is_collided
@@ -423,9 +447,9 @@ class SumoEnv(gym.Env):
             v_ids_e1 = traci.edge.getLastStepVehicleIDs("E1")
             v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
             if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
-                # traci.vehicle.setLaneChangeMode(self.ego,0)
+                traci.vehicle.setLaneChangeMode(self.ego,0)
                 # traci.vehicle.setSpeedMode(self.ego, 32)
-                # traci.vehicle.setLaneChangeMode(self.ego, 1109)
+                traci.vehicle.setLaneChangeMode(self.ego, 1109)
                 return True
             traci.simulationStep()
 

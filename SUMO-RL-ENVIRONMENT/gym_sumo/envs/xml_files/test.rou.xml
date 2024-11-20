@@ -5,5 +5,5 @@
 	<vType accel="3.0" decel="6.0" id="CarB" length="5.0" minGap="2.5" maxSpeed="30.0" sigma="0.5" lcKeepRight="0"/>
 	<route id="route01" edges="E0 E1 E2"/>
 	<flow id="slow_car" type="IDM" from="E0" to="E2" begin="0" end="3600" number="2100" departPos="random" departSpeed="random" departLane="random"/>
-	<vehicle depart="60" id="veh0" route="route01" type="IDM" color="1,0,0" />
+	<vehicle id="veh0" route="route01" type="IDM" color="1,0,0" />
 </routes>
