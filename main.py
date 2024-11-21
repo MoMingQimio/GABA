@@ -27,8 +27,10 @@ def train(seed = str(0), print_flag = False):
 
     ####### initialize environment hyperparameters ######
     env_name = "sumo-v0"
+    # render_mode = "human"
+    render_mode = ""
     has_continuous_action_space = False  # continuous action space; else discrete
-    max_training_timesteps = int(3e5)  # break training loop if timeteps > max_training_timesteps
+    max_training_timesteps = int(3e6)  # break training loop if timeteps > max_training_timesteps
     save_model_freq = int(1e5)  # save model frequency (in num timesteps)
     action_std = 0.6  # starting std for action distribution (Multivariate Normal)这个参数在离散动作空间中没用
 
@@ -43,7 +45,7 @@ def train(seed = str(0), print_flag = False):
 
     random_seed = int(seed)  # set random seed if required (0 = no random seed)
 
-    env = gym.make(env_name, render_mode="")
+    env = gym.make(env_name, render_mode=render_mode)
     # state space dimension
     state_dim = env.observation_space.shape[0]
     # action space dimension
@@ -170,7 +172,7 @@ def train(seed = str(0), print_flag = False):
 
             # final_actions = (TV_action.item(), Veh_id, BV_maneuver_index, epsilon)
             # final_actions = (TV_action.item(), Veh_id,BV_candidate_index, BV_maneuver_index)
-            final_actions = (TV_action.item(), BV_candidate_index, BV_maneuver_index,collision_rate)
+            final_actions = (TV_action.item(), BV_candidate_index, BV_maneuver_index)
             observation, TV_reward, done, other_information = env.step(final_actions)
             av_speed.append(observation[1])
             if observation[2] > 0:
@@ -199,7 +201,7 @@ def train(seed = str(0), print_flag = False):
 
             time_step += 1
             # if epsilon > 0.5:
-            if collision_rate < 0.1:
+            if collision_rate < 0.02:
                 if Adversarial_flag:
                     adversarial_counts += 1
                     # BV_reward = BV_reward + excepted_risk[BV_candidate_index]

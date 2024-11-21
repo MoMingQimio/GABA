@@ -337,7 +337,7 @@ class SumoEnv(gym.Env):
 
         # AV_action, Veh_id, RL_action, epsilon = final_actions
         # AV_action, Veh_id,BV_candidate_index, RL_action= final_actions
-        AV_action,BV_candidate_index, RL_action,collision_rate= final_actions
+        AV_action,BV_candidate_index, RL_action= final_actions
         Veh_id = self.surrounding_vehicles[BV_candidate_index]
         # observation, surrounding_vehicles = self.get_observation(self.ego)
         # excepted_risk, total_risk = self.risk_assessment(observation, surrounding_vehicles)
@@ -369,7 +369,7 @@ class SumoEnv(gym.Env):
         #     BV_final_action = RB_action
         # self._applyAction(Veh_id,BV_final_action)
 
-        if self.total_risk > 0.5 and self.total_risk < 1.5 and collision_rate<0.1:
+        if self.total_risk > 0.5 and self.total_risk < 1.5:
             Adversarial_flag = True
             if Veh_id != "":
                 # traci.vehicle.setSpeedMode(Veh_id, 32)
@@ -387,7 +387,8 @@ class SumoEnv(gym.Env):
         #     BV_final_action = RB_action
 
         self.running_distance = traci.vehicle.getDistance(self.ego)
-        traci.simulationStep()
+        self.running_time = traci.simulation.getTime()
+        traci.simulationStep(self.running_time + 1)
         # if Veh_id != "":
         #     traci.vehicle.setSpeedMode(Veh_id, 31)
         #     traci.vehicle.setLaneChangeMode(Veh_id, 1621)
@@ -450,9 +451,9 @@ class SumoEnv(gym.Env):
             v_ids_e2 = traci.edge.getLastStepVehicleIDs("E2")
             if "av_0" in v_ids_e0 or "av_0" in v_ids_e1 or "av_0" in v_ids_e2:
                 traci.vehicle.setLaneChangeMode(self.ego,0)
-                # # traci.vehicle.setSpeedMode(self.ego, 32)
-                # traci.vehicle.setLaneChangeMode(self.ego, 1109)
-                traci.vehicle.setLaneChangeMode(self.ego, 0)
+                #traci.vehicle.setSpeedMode(self.ego, 32)
+                traci.vehicle.setLaneChangeMode(self.ego, 1109)
+                #traci.vehicle.setLaneChangeMode(self.ego, 0)
                 return True
             traci.simulationStep()
 
@@ -584,20 +585,38 @@ class SumoEnv(gym.Env):
 
         if action_index == len(self.action_list):
             target_lane_index = max(current_lane_index - 1, 0)
-            traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
+            traci.vehicle.changeLane(veh_id, target_lane_index, 1)
 
         elif action_index == len(self.action_list)+1:
             target_lane_index = min(current_lane_index + 1, self.num_of_lanes - 1)
-            traci.vehicle.changeLane(veh_id, target_lane_index, 0.1)
+            traci.vehicle.changeLane(veh_id, target_lane_index, 1)
         elif action_index == len(self.action_list)+2:
             pass
         else:
-            traci.vehicle.setAcceleration(veh_id, self.action_list[action_index],0.1)
+            #traci.vehicle.setAcceleration(veh_id, self.action_list[action_index],0.1)
+            self.change_vehicle_speed(veh_id, float(self.action_list[action_index]), 1)
+
+    def change_vehicle_speed(self, vehID, acceleration, duration=1.0):
+        """Fix the acceleration of a vehicle to be a specified value in the specified duration.
+
+        Args:
+            vehID (str): Vehicle ID
+            acceleration (float): Specified acceleration of vehicle.
+            duration (float, optional): Specified time interval to fix the acceleration in s. Defaults to 1.0.
+        """
+        # traci.vehicle.slowDown take duration + deltaT to reach the desired speed
+        init_speed = traci.vehicle.getSpeed(vehID)
+        final_speed = init_speed + acceleration * (duration)
+        if final_speed < 0:
+            final_speed = 0
+        traci.vehicle.slowDown(vehID, final_speed, duration)
+
+
 
     def getRunningTime(self):
         #start = traci.vehicle.getDeparture(self.ego)
         # end =
-        return traci.simulation.getTime()
+        return self.running_time
 
     def getDistance(self):
         return self.running_distance
