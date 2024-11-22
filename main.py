@@ -266,7 +266,7 @@ def train(seed = str(0), print_flag = False):
         # print("BV--> Episode : {} \t\t Timestep : {} \t\t Average Reward : {}".format(i_episode, time_step,
         #                                                                               log_avg_reward))
         log_f.flush()
-        if (total_collision_counts + 1) % save_model_freq == 0:
+        if (adversarial_counts + 1) % save_model_freq == 0:
             BV_agent.save(checkpoint_path)
 
 
