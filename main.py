@@ -31,7 +31,7 @@ def train(seed = str(0), print_flag = False):
     render_mode = ""
     has_continuous_action_space = False  # continuous action space; else discrete
     max_training_timesteps = int(3e6)  # break training loop if timeteps > max_training_timesteps
-    save_model_freq = int(1e5)  # save model frequency (in num timesteps)
+    save_model_freq = int(1e4)   # save model frequency (in num timesteps)
     action_std = 0.6  # starting std for action distribution (Multivariate Normal)这个参数在离散动作空间中没用
 
     update_timestep = 1000 # update policy every n timesteps
@@ -286,8 +286,8 @@ def train(seed = str(0), print_flag = False):
             collision_counts = 0
 
         av_speed_avg = np.mean(av_speed)
-        av_acc_avg = np.mean(av_acceleration)
-        av_dece_avg = np.mean(av_deceleration)
+        av_acc_avg = np.sum(av_acceleration) / (t+1)
+        av_dece_avg = np.sum(av_deceleration) /(t+1)
         av_left_avg = np.sum(av_left_change) / (t + 1)
         av_right_avg = np.sum(av_right_change) / (t + 1)
         av_total_risk_avg = np.mean(av_total_risk)
