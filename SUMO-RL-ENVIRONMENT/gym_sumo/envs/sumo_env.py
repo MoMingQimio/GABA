@@ -320,7 +320,7 @@ class SumoEnv(gym.Env):
         c_reward = self._collision_reward()
         if self.is_collided or self._isEgoRunning()==False:
             return c_reward
-        return (1000 * c_reward) + self._efficiency() + self._lane_change_reward(action)
+        return (10 * c_reward) + self._efficiency() + self._lane_change_reward(action)
 
     def _BVreward(self, rl_action, rb_action,index):
         c_reward = self._collision_reward()
