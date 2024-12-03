@@ -30,7 +30,7 @@ def train(seed = str(0), print_flag = False):
     # render_mode = "human"
     render_mode = ""
     has_continuous_action_space = False  # continuous action space; else discrete
-    max_training_timesteps = int(3e6)  # break training loop if timeteps > max_training_timesteps
+    max_training_timesteps = int(3e5)  # break training loop if timeteps > max_training_timesteps
     save_model_freq = int(1e5)  # save model frequency (in num timesteps)
     action_std = 0.6  # starting std for action distribution (Multivariate Normal)这个参数在离散动作空间中没用
 
@@ -201,7 +201,8 @@ def train(seed = str(0), print_flag = False):
 
             time_step += 1
             # if epsilon > 0.5:
-            if collision_rate < 0.02:
+            # if collision_rate < 0.02:
+            if collision_rate > 1.2:
                 if Adversarial_flag:
                     adversarial_counts += 1
                     # BV_reward = BV_reward + excepted_risk[BV_candidate_index]
